@@ -24,6 +24,12 @@ jobs:
         run: |
           git config --global user.name 'Data Bot'
           git config --global user.email 'bot@github.com'
-          git add data.json
-          git commit -m "Update QBO data"
-          git push
+          # Check if data.json exists before trying to add it
+          if [ -f data.json ]; then
+            git add data.json
+            # Only commit if there are actual changes to the file
+            git diff --quiet && git diff --staged --quiet || (git commit -m "Update QBO data" && git push)
+          else
+            echo "data.json was not created. Check script logs for API errors."
+            exit 1
+          fi
