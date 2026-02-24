@@ -1,35 +1,38 @@
 name: Refresh QuickBooks Data
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs every day at midnight
-  workflow_dispatch: # Allows you to run it manually
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          
       - run: npm install intuit-oauth
-      - run: node fetch_data.js
+      
+      - name: Run Fetch Script
+        run: node fetch_data.js
         env:
           QBO_CLIENT_ID: ${{ secrets.QBO_CLIENT_ID }}
           QBO_CLIENT_SECRET: ${{ secrets.QBO_CLIENT_SECRET }}
           QBO_REFRESH_TOKEN: ${{ secrets.QBO_REFRESH_TOKEN }}
           QBO_REALM_ID: ${{ secrets.QBO_REALM_ID }}
+          
       - name: Commit and push changes
         run: |
           git config --global user.name 'Data Bot'
           git config --global user.email 'bot@github.com'
-          # Check if data.json exists before trying to add it
           if [ -f data.json ]; then
             git add data.json
-            # Only commit if there are actual changes to the file
             git diff --quiet && git diff --staged --quiet || (git commit -m "Update QBO data" && git push)
           else
-            echo "data.json was not created. Check script logs for API errors."
+            echo "data.json was not created."
             exit 1
           fi
