@@ -1,75 +1,68 @@
 const OAuthClient = require('intuit-oauth');
 const fs = require('fs');
 
-// --- DIAGNOSTIC CHECK ---
-// This will prove whether GitHub Actions is actually passing your secrets to this file
-console.log("Is the Refresh Token loading from GitHub Secrets? ", process.env.QBO_REFRESH_TOKEN ? "YES" : "NO");
-console.log("Is the Client ID loading? ", process.env.QBO_CLIENT_ID ? "YES" : "NO");
-
-if (!process.env.QBO_REFRESH_TOKEN) {
-    console.error("CRITICAL ERROR: The refresh token is completely blank. The script is not seeing your GitHub Secrets.");
+if (!process.env.QBO_REFRESH_TOKEN || !process.env.QBO_CLIENT_ID) {
+    console.error("CRITICAL ERROR: Secrets are missing entirely.");
     process.exit(1);
 }
-// ------------------------
 
-// 1. Initialize the client
+// THE FIX: .trim() removes any hidden spaces or newlines accidentally pasted into GitHub
+const cleanRefreshToken = process.env.QBO_REFRESH_TOKEN.trim();
+const cleanClientId = process.env.QBO_CLIENT_ID.trim();
+const cleanClientSecret = process.env.QBO_CLIENT_SECRET.trim();
+const cleanRealmId = process.env.QBO_REALM_ID.trim();
+
+// SAFE DIAGNOSTICS: Let's check the lengths and first letters to ensure nothing got swapped
+console.log("--- CREDENTIAL HEALTH CHECK ---");
+console.log(`Client ID length: ${cleanClientId.length} (Starts with: ${cleanClientId.substring(0,4)}...)`);
+console.log(`Refresh Token length: ${cleanRefreshToken.length} (Starts with: ${cleanRefreshToken.substring(0,4)}...)`);
+console.log(`Realm ID length: ${cleanRealmId.length}`);
+console.log("-------------------------------");
+
+if (cleanRefreshToken.length > 200) {
+    console.error("🚨 WAIT! Your Refresh Token is too long. You accidentally copied the Access Token! Go back to the playground and copy the Refresh Token instead.");
+    process.exit(1);
+}
+
 const oauthClient = new OAuthClient({
-  clientId: process.env.QBO_CLIENT_ID,
-  clientSecret: process.env.QBO_CLIENT_SECRET,
+  clientId: cleanClientId,
+  clientSecret: cleanClientSecret,
   environment: 'sandbox', 
-  redirectUri: 'http://localhost:3000/callback'
+  redirectUri: 'https://developer.intuit.com/v2/OAuth2Playground/RedirectUrl' // Matched to Playground just in case
 });
 
-// 2. Set the initial Refresh Token from your GitHub Secrets
 oauthClient.getToken().setToken({
-  refresh_token: process.env.QBO_REFRESH_TOKEN
+  refresh_token: cleanRefreshToken
 });
 
 console.log("Attempting to refresh the access token...");
 
-// 3. Refresh the token and fetch data
 oauthClient.refresh()
   .then(async (authResponse) => {
-    console.log("Token refreshed successfully!");
+    console.log("🎉 SUCCESS: Connection established!");
     
-    // IMPORTANT: QuickBooks often rotates the Refresh Token. 
-    console.log("=== NEW REFRESH TOKEN (Update GitHub with this if the script succeeds!) ===");
+    console.log("=== NEW REFRESH TOKEN (Update GitHub with this if it rotated!) ===");
     console.log(authResponse.token.refresh_token);
-    console.log("=========================================================================");
+    console.log("==================================================================");
 
-    const realmId = process.env.QBO_REALM_ID;
-    
-    // We are querying for Invoices
     const query = "SELECT * FROM Invoice MAXRESULTS 20";
-    const url = `https://sandbox-quickbooks.api.intuit.com/v3/company/${realmId}/query?query=${encodeURIComponent(query)}&minorversion=65`;
+    const url = `https://sandbox-quickbooks.api.intuit.com/v3/company/${cleanRealmId}/query?query=${encodeURIComponent(query)}&minorversion=65`;
 
-    console.log("Fetching data from QuickBooks API...");
-    
     const response = await oauthClient.makeApiCall({ 
-      url, 
-      method: 'GET', 
-      headers: { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      } 
+      url, method: 'GET', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' } 
     });
     
-    // 4. Save the response to data.json
     const data = response.getJson();
     fs.writeFileSync('data.json', JSON.stringify(data, null, 2));
     
-    console.log("SUCCESS: data.json has been created with", (data.QueryResponse.Invoice || []).length, "invoices.");
+    console.log("SUCCESS: data.json has been created!");
   })
   .catch(e => {
     console.error("ERROR REFRESHING DATA:");
-    
-    // Detailed error logging to help us debug
     if (e.authResponse && e.authResponse.json) {
       console.error(JSON.stringify(e.authResponse.json, null, 2));
     } else {
       console.error(e);
     }
-    
-    // Exit with error so the GitHub Action knows it failed
     process.exit(1);
   });
