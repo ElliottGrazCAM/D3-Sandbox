@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live QuickBooks Dashboard</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f7f6;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        .bar { fill: #2ca02c; transition: fill 0.2s; }
+        .bar:hover { fill: #1f77b4; }
+        .axis text { font-size: 12px; }
+        .tooltip {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            border-radius: 4px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Recent Sandbox Invoices</h2>
+    <p>Live data fetched from QuickBooks Online via GitHub Actions.</p>
+    <div id="chart-container"></div>
+</div>
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+    // 1. Fetch the JSON file your GitHub Action just created!
+    d3.json("data.json").then(data => {
+        
+        // Navigate through the Intuit JSON structure to get the array of invoices
+        const invoices = data.QueryResponse.Invoice || [];
+
+        // Format the data: extract the Invoice Number (DocNumber) and Amount (TotalAmt)
+        const chartData = invoices.map(d => ({
+            invoiceNumber: d.DocNumber || "Unknown",
+            amount: +d.TotalAmt || 0
+        })).filter(d => d.amount > 0); // Only keep invoices with a value
+
+        // 2. Set up D3 Chart Dimensions
+        const margin = {top: 20, right: 30, bottom: 40, left: 60},
+              width = 760 - margin.left - margin.right,
+              height = 400 - margin.top - margin.bottom;
+
+        const svg = d3.select("#chart-container")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // 3. Create the Scales (X = Invoice Number, Y = Amount)
+        const x = d3.scaleBand()
+            .domain(chartData.map(d => d.invoiceNumber))
+            .range([0, width])
+            .padding(0.2);
+
+        const y = d3.scaleLinear()
+            .domain([0, d3.max(chartData, d => d.amount)])
+            .nice()
+            .range([height, 0]);
+
+        // 4. Add the Axes
+        svg.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+            .attr("transform", "translate(-10,0)rotate(-45)")
+            .style("text-anchor", "end");
+
+        svg.append("g")
+            .call(d3.axisLeft(y).tickFormat(d => "$" + d));
+
+        // 5. Draw the Bars with a simple tooltip
+        const tooltip = d3.select("#tooltip");
+
+        svg.selectAll(".bar")
+            .data(chartData)
+            .enter()
+            .append("rect")
+            .attr("class", "bar")
+            .attr("x", d => x(d.invoiceNumber))
+            .attr("y", d => y(d.amount))
+            .attr("width", x.bandwidth())
+            .attr("height", d => height - y(d.amount))
+            .on("mouseover", function(event, d) {
+                tooltip.style("opacity", 1)
+                       .html(`Invoice #${d.invoiceNumber}<br><strong>$${d.amount.toFixed(2)}</strong>`)
+                       .style("left", (event.pageX + 10) + "px")
+                       .style("top", (event.pageY - 20) + "px");
+            })
+            .on("mouseout", () => tooltip.style("opacity", 0));
+            
+    }).catch(error => {
+        console.error("Error loading the data.json file:", error);
+        d3.select("#chart-container").html("<p style='color:red;'>Waiting for GitHub Action to generate data.json...</p>");
+    });
+</script>
+
+</body>
+</html>
