@@ -6,33 +6,24 @@ if (!process.env.QBO_REFRESH_TOKEN || !process.env.QBO_CLIENT_ID) {
     process.exit(1);
 }
 
-// THE FIX: .trim() removes any hidden spaces or newlines accidentally pasted into GitHub
 const cleanRefreshToken = process.env.QBO_REFRESH_TOKEN.trim();
 const cleanClientId = process.env.QBO_CLIENT_ID.trim();
 const cleanClientSecret = process.env.QBO_CLIENT_SECRET.trim();
 const cleanRealmId = process.env.QBO_REALM_ID.trim();
 
-// SAFE DIAGNOSTICS: Let's check the lengths and first letters to ensure nothing got swapped
-console.log("--- CREDENTIAL HEALTH CHECK ---");
-console.log(`Client ID length: ${cleanClientId.length} (Starts with: ${cleanClientId.substring(0,4)}...)`);
-console.log(`Refresh Token length: ${cleanRefreshToken.length} (Starts with: ${cleanRefreshToken.substring(0,4)}...)`);
-console.log(`Realm ID length: ${cleanRealmId.length}`);
-console.log("-------------------------------");
-
-if (cleanRefreshToken.length > 200) {
-    console.error("🚨 WAIT! Your Refresh Token is too long. You accidentally copied the Access Token! Go back to the playground and copy the Refresh Token instead.");
-    process.exit(1);
-}
-
 const oauthClient = new OAuthClient({
   clientId: cleanClientId,
   clientSecret: cleanClientSecret,
   environment: 'sandbox', 
-  redirectUri: 'https://developer.intuit.com/v2/OAuth2Playground/RedirectUrl' // Matched to Playground just in case
+  redirectUri: 'https://developer.intuit.com/v2/OAuth2Playground/RedirectUrl'
 });
 
+// THE FIX: We must provide expiration metadata so the local library doesn't instantly reject it
 oauthClient.getToken().setToken({
-  refresh_token: cleanRefreshToken
+  token_type: 'bearer',
+  refresh_token: cleanRefreshToken,
+  x_refresh_token_expires_in: 8726400, // 100 days in seconds
+  expires_in: 3600                     // 1 hour in seconds
 });
 
 console.log("Attempting to refresh the access token...");
