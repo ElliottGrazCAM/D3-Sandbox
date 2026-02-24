@@ -1,11 +1,22 @@
 const OAuthClient = require('intuit-oauth');
 const fs = require('fs');
 
+// --- DIAGNOSTIC CHECK ---
+// This will prove whether GitHub Actions is actually passing your secrets to this file
+console.log("Is the Refresh Token loading from GitHub Secrets? ", process.env.QBO_REFRESH_TOKEN ? "YES" : "NO");
+console.log("Is the Client ID loading? ", process.env.QBO_CLIENT_ID ? "YES" : "NO");
+
+if (!process.env.QBO_REFRESH_TOKEN) {
+    console.error("CRITICAL ERROR: The refresh token is completely blank. The script is not seeing your GitHub Secrets.");
+    process.exit(1);
+}
+// ------------------------
+
 // 1. Initialize the client
 const oauthClient = new OAuthClient({
   clientId: process.env.QBO_CLIENT_ID,
   clientSecret: process.env.QBO_CLIENT_SECRET,
-  environment: 'sandbox', // Use 'sandbox' for testing, 'production' for real data
+  environment: 'sandbox', 
   redirectUri: 'http://localhost:3000/callback'
 });
 
@@ -22,14 +33,13 @@ oauthClient.refresh()
     console.log("Token refreshed successfully!");
     
     // IMPORTANT: QuickBooks often rotates the Refresh Token. 
-    // If you see a different token below, update your GitHub Secret with it!
-    console.log("=== NEW REFRESH TOKEN (Check if this changed!) ===");
+    console.log("=== NEW REFRESH TOKEN (Update GitHub with this if the script succeeds!) ===");
     console.log(authResponse.token.refresh_token);
-    console.log("==================================================");
+    console.log("=========================================================================");
 
     const realmId = process.env.QBO_REALM_ID;
     
-    // We are querying for Invoices. You can change this to 'Account', 'Vendor', etc.
+    // We are querying for Invoices
     const query = "SELECT * FROM Invoice MAXRESULTS 20";
     const url = `https://sandbox-quickbooks.api.intuit.com/v3/company/${realmId}/query?query=${encodeURIComponent(query)}&minorversion=65`;
 
