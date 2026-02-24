@@ -18,12 +18,11 @@ const oauthClient = new OAuthClient({
   redirectUri: 'https://developer.intuit.com/v2/OAuth2Playground/RedirectUrl'
 });
 
-// THE FIX: We must provide expiration metadata so the local library doesn't instantly reject it
 oauthClient.getToken().setToken({
   token_type: 'bearer',
   refresh_token: cleanRefreshToken,
-  x_refresh_token_expires_in: 8726400, // 100 days in seconds
-  expires_in: 3600                     // 1 hour in seconds
+  x_refresh_token_expires_in: 8726400,
+  expires_in: 3600
 });
 
 console.log("Attempting to refresh the access token...");
@@ -32,9 +31,9 @@ oauthClient.refresh()
   .then(async (authResponse) => {
     console.log("🎉 SUCCESS: Connection established!");
     
-    console.log("=== NEW REFRESH TOKEN (Update GitHub with this if it rotated!) ===");
+    console.log("=== REFRESH TOKEN ===");
     console.log(authResponse.token.refresh_token);
-    console.log("==================================================================");
+    console.log("=====================");
 
     const query = "SELECT * FROM Invoice MAXRESULTS 20";
     const url = `https://sandbox-quickbooks.api.intuit.com/v3/company/${cleanRealmId}/query?query=${encodeURIComponent(query)}&minorversion=65`;
@@ -43,7 +42,9 @@ oauthClient.refresh()
       url, method: 'GET', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' } 
     });
     
-    const data = response.getJson();
+    // THE FIX: Safely parse the JSON using the modern property instead of the outdated function
+    const data = response.json || JSON.parse(response.text?.() || '{}');
+    
     fs.writeFileSync('data.json', JSON.stringify(data, null, 2));
     
     console.log("SUCCESS: data.json has been created!");
