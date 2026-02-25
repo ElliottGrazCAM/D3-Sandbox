@@ -34,8 +34,8 @@ oauthClient.refresh()
     console.log("Saving new refresh token to temporary file...");
     fs.writeFileSync('new_token.txt', authResponse.token.refresh_token);
 
-    const query = "SELECT * FROM Invoice MAXRESULTS 20";
-    const url = `https://sandbox-quickbooks.api.intuit.com/v3/company/${cleanRealmId}/query?query=${encodeURIComponent(query)}&minorversion=65`;
+    // Using the Reports endpoint with a date macro
+    const url = `https://sandbox-quickbooks.api.intuit.com/v3/company/${cleanRealmId}/reports/ProfitAndLoss?date_macro=This%20Fiscal%20Year-to-date&minorversion=65`;
 
     const response = await oauthClient.makeApiCall({ 
       url, method: 'GET', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' } 
