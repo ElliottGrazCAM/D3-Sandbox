@@ -25,14 +25,22 @@ jobs:
           QBO_REFRESH_TOKEN: ${{ secrets.QBO_REFRESH_TOKEN }}
           QBO_REALM_ID: ${{ secrets.QBO_REALM_ID }}
           
-      - name: Commit and push changes
+      - name: Commit and push JSON data
         run: |
           git config --global user.name 'Data Bot'
           git config --global user.email 'bot@github.com'
           if [ -f data.json ]; then
             git add data.json
             git diff --quiet && git diff --staged --quiet || (git commit -m "Update QBO data" && git push)
-          else
-            echo "data.json was not created."
-            exit 1
+          fi
+
+      - name: Update GitHub Secret with New Refresh Token
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          if [ -f new_token.txt ]; then
+            NEW_TOKEN=$(cat new_token.txt)
+            gh secret set QBO_REFRESH_TOKEN --body "$NEW_TOKEN" --repo ${{ github.repository }}
+            rm new_token.txt
+            echo "Successfully updated QBO_REFRESH_TOKEN secret for the next run!"
           fi
