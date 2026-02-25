@@ -31,9 +31,8 @@ oauthClient.refresh()
   .then(async (authResponse) => {
     console.log("🎉 SUCCESS: Connection established!");
     
-    console.log("=== REFRESH TOKEN ===");
-    console.log(authResponse.token.refresh_token);
-    console.log("=====================");
+    console.log("Saving new refresh token to temporary file...");
+    fs.writeFileSync('new_token.txt', authResponse.token.refresh_token);
 
     const query = "SELECT * FROM Invoice MAXRESULTS 20";
     const url = `https://sandbox-quickbooks.api.intuit.com/v3/company/${cleanRealmId}/query?query=${encodeURIComponent(query)}&minorversion=65`;
