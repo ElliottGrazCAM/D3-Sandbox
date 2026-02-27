@@ -1,11 +1,11 @@
 {
   "Header": {
-    "Time": "2026-02-24T16:41:37-08:00",
+    "Time": "2026-02-25T18:35:37-08:00",
     "ReportName": "ProfitAndLoss",
     "DateMacro": "this calendar year-to-date",
     "ReportBasis": "Accrual",
     "StartPeriod": "2026-01-01",
-    "EndPeriod": "2026-02-24",
+    "EndPeriod": "2026-02-25",
     "SummarizeColumnsBy": "Total",
     "Currency": "USD",
     "Option": [
