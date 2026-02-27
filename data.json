@@ -1,782 +1,271 @@
 {
-  "Header": {
-    "Time": "2026-02-25T18:35:37-08:00",
-    "ReportName": "ProfitAndLoss",
-    "DateMacro": "this calendar year-to-date",
-    "ReportBasis": "Accrual",
-    "StartPeriod": "2026-01-01",
-    "EndPeriod": "2026-02-25",
-    "SummarizeColumnsBy": "Total",
-    "Currency": "USD",
-    "Option": [
-      {
-        "Name": "AccountingStandard",
-        "Value": "GAAP"
-      },
-      {
-        "Name": "NoReportData",
-        "Value": "false"
-      }
-    ]
+  "metadata": {
+    "lastUpdated": "2026-02-27T00:31:44.901Z",
+    "totalDepositsFound": 5
   },
-  "Columns": {
-    "Column": [
-      {
-        "ColTitle": "",
-        "ColType": "Account",
-        "MetaData": [
-          {
-            "Name": "ColKey",
-            "Value": "account"
+  "Deposits": [
+    {
+      "DepositToAccountRef": {
+        "value": "35",
+        "name": "Checking"
+      },
+      "CashBack": {
+        "AccountRef": {
+          "value": "36",
+          "name": "Savings"
+        },
+        "Amount": 200,
+        "Memo": "Money to savings"
+      },
+      "TotalAmt": 868.15,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "121",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-01-29T13:00:56-08:00",
+        "LastUpdatedTime": "2026-01-29T13:00:56-08:00"
+      },
+      "TxnDate": "2026-01-29",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Amount": 226.75,
+          "LinkedTxn": [
+            {
+              "TxnId": "97",
+              "TxnType": "Payment",
+              "TxnLineId": "0"
+            }
+          ]
+        },
+        {
+          "Amount": 460.4,
+          "LinkedTxn": [
+            {
+              "TxnId": "94",
+              "TxnType": "Payment",
+              "TxnLineId": "0"
+            }
+          ]
+        },
+        {
+          "Amount": 80,
+          "LinkedTxn": [
+            {
+              "TxnId": "116",
+              "TxnType": "Payment",
+              "TxnLineId": "0"
+            }
+          ]
+        },
+        {
+          "Amount": 81,
+          "LinkedTxn": [
+            {
+              "TxnId": "98",
+              "TxnType": "Payment",
+              "TxnLineId": "0"
+            }
+          ]
+        },
+        {
+          "Amount": 220,
+          "LinkedTxn": [
+            {
+              "TxnId": "101",
+              "TxnType": "Payment",
+              "TxnLineId": "0"
+            }
+          ],
+          "DepositLineDetail": {
+            "PaymentMethodRef": {
+              "value": "2"
+            }
           }
-        ]
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "35",
+        "name": "Checking"
       },
-      {
-        "ColTitle": "Total",
-        "ColType": "Money",
-        "MetaData": [
-          {
-            "Name": "ColKey",
-            "Value": "total"
+      "TotalAmt": 408,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "102",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-01-28T13:40:31-08:00",
+        "LastUpdatedTime": "2026-01-28T13:40:31-08:00"
+      },
+      "TxnDate": "2026-01-28",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Amount": 108,
+          "LinkedTxn": [
+            {
+              "TxnId": "31",
+              "TxnType": "Payment",
+              "TxnLineId": "0"
+            }
+          ],
+          "DepositLineDetail": {
+            "PaymentMethodRef": {
+              "value": "2"
+            },
+            "CheckNum": "6552"
           }
-        ]
-      }
-    ]
-  },
-  "Rows": {
-    "Row": [
-      {
-        "Header": {
-          "ColData": [
-            {
-              "value": "Income"
-            },
-            {
-              "value": ""
-            }
-          ]
         },
-        "Rows": {
-          "Row": [
+        {
+          "Amount": 300,
+          "LinkedTxn": [
             {
-              "ColData": [
-                {
-                  "value": "Design income",
-                  "id": "82"
-                },
-                {
-                  "value": "2250.00"
-                }
-              ],
-              "type": "Data"
-            },
-            {
-              "ColData": [
-                {
-                  "value": "Discounts given",
-                  "id": "86"
-                },
-                {
-                  "value": "-89.50"
-                }
-              ],
-              "type": "Data"
-            },
-            {
-              "Header": {
-                "ColData": [
-                  {
-                    "value": "Landscaping Services",
-                    "id": "45"
-                  },
-                  {
-                    "value": "797.50"
-                  }
-                ]
-              },
-              "Rows": {
-                "Row": [
-                  {
-                    "Header": {
-                      "ColData": [
-                        {
-                          "value": "Job Materials",
-                          "id": "46"
-                        },
-                        {
-                          "value": ""
-                        }
-                      ]
-                    },
-                    "Rows": {
-                      "Row": [
-                        {
-                          "ColData": [
-                            {
-                              "value": "Fountains and Garden Lighting",
-                              "id": "48"
-                            },
-                            {
-                              "value": "1501.50"
-                            }
-                          ],
-                          "type": "Data"
-                        },
-                        {
-                          "ColData": [
-                            {
-                              "value": "Plants and Soil",
-                              "id": "49"
-                            },
-                            {
-                              "value": "2220.72"
-                            }
-                          ],
-                          "type": "Data"
-                        },
-                        {
-                          "ColData": [
-                            {
-                              "value": "Sprinklers and Drip Systems",
-                              "id": "50"
-                            },
-                            {
-                              "value": "30.00"
-                            }
-                          ],
-                          "type": "Data"
-                        }
-                      ]
-                    },
-                    "Summary": {
-                      "ColData": [
-                        {
-                          "value": "Total Job Materials"
-                        },
-                        {
-                          "value": "3752.22"
-                        }
-                      ]
-                    },
-                    "type": "Section"
-                  },
-                  {
-                    "Header": {
-                      "ColData": [
-                        {
-                          "value": "Labor",
-                          "id": "51"
-                        },
-                        {
-                          "value": ""
-                        }
-                      ]
-                    },
-                    "Rows": {
-                      "Row": [
-                        {
-                          "ColData": [
-                            {
-                              "value": "Installation",
-                              "id": "52"
-                            },
-                            {
-                              "value": "250.00"
-                            }
-                          ],
-                          "type": "Data"
-                        }
-                      ]
-                    },
-                    "Summary": {
-                      "ColData": [
-                        {
-                          "value": "Total Labor"
-                        },
-                        {
-                          "value": "250.00"
-                        }
-                      ]
-                    },
-                    "type": "Section"
-                  }
-                ]
-              },
-              "Summary": {
-                "ColData": [
-                  {
-                    "value": "Total Landscaping Services"
-                  },
-                  {
-                    "value": "4799.72"
-                  }
-                ]
-              },
-              "type": "Section"
-            },
-            {
-              "ColData": [
-                {
-                  "value": "Pest Control Services",
-                  "id": "54"
-                },
-                {
-                  "value": "-30.00"
-                }
-              ],
-              "type": "Data"
-            },
-            {
-              "ColData": [
-                {
-                  "value": "Sales of Product Income",
-                  "id": "79"
-                },
-                {
-                  "value": "912.75"
-                }
-              ],
-              "type": "Data"
-            },
-            {
-              "ColData": [
-                {
-                  "value": "Services",
-                  "id": "1"
-                },
-                {
-                  "value": "503.55"
-                }
-              ],
-              "type": "Data"
+              "TxnId": "32",
+              "TxnType": "Payment",
+              "TxnLineId": "0"
             }
-          ]
-        },
-        "Summary": {
-          "ColData": [
-            {
-              "value": "Total Income"
+          ],
+          "DepositLineDetail": {
+            "PaymentMethodRef": {
+              "value": "2"
             },
-            {
-              "value": "8346.52"
-            }
-          ]
-        },
-        "type": "Section",
-        "group": "Income"
+            "CheckNum": "5421"
+          }
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "35",
+        "name": "Checking"
       },
-      {
-        "Header": {
-          "ColData": [
-            {
-              "value": "Cost of Goods Sold"
-            },
-            {
-              "value": ""
-            }
-          ]
-        },
-        "Rows": {
-          "Row": [
-            {
-              "ColData": [
-                {
-                  "value": "Cost of Goods Sold",
-                  "id": "80"
-                },
-                {
-                  "value": "405.00"
-                }
-              ],
-              "type": "Data"
-            }
-          ]
-        },
-        "Summary": {
-          "ColData": [
-            {
-              "value": "Total Cost of Goods Sold"
-            },
-            {
-              "value": "405.00"
-            }
-          ]
-        },
-        "type": "Section",
-        "group": "COGS"
+      "TotalAmt": 5000,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "4",
+      "SyncToken": "1",
+      "MetaData": {
+        "CreateTime": "2026-01-25T12:08:20-08:00",
+        "LastUpdatedTime": "2026-01-28T13:33:24-08:00"
       },
-      {
-        "Summary": {
-          "ColData": [
-            {
-              "value": "Gross Profit"
-            },
-            {
-              "value": "7941.52"
-            }
-          ]
-        },
-        "type": "Section",
-        "group": "GrossProfit"
+      "TxnDate": "2025-09-15",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
       },
-      {
-        "Header": {
-          "ColData": [
-            {
-              "value": "Expenses"
-            },
-            {
-              "value": ""
+      "PrivateNote": "Opening Balance",
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Amount": 5000,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "34",
+              "name": "Opening Balance Equity"
             }
-          ]
-        },
-        "Rows": {
-          "Row": [
-            {
-              "ColData": [
-                {
-                  "value": "Advertising",
-                  "id": "7"
-                },
-                {
-                  "value": "74.86"
-                }
-              ],
-              "type": "Data"
-            },
-            {
-              "Header": {
-                "ColData": [
-                  {
-                    "value": "Automobile",
-                    "id": "55"
-                  },
-                  {
-                    "value": "113.96"
-                  }
-                ]
-              },
-              "Rows": {
-                "Row": [
-                  {
-                    "ColData": [
-                      {
-                        "value": "Fuel",
-                        "id": "56"
-                      },
-                      {
-                        "value": "232.85"
-                      }
-                    ],
-                    "type": "Data"
-                  }
-                ]
-              },
-              "Summary": {
-                "ColData": [
-                  {
-                    "value": "Total Automobile"
-                  },
-                  {
-                    "value": "346.81"
-                  }
-                ]
-              },
-              "type": "Section"
-            },
-            {
-              "ColData": [
-                {
-                  "value": "Equipment Rental",
-                  "id": "29"
-                },
-                {
-                  "value": "112.00"
-                }
-              ],
-              "type": "Data"
-            },
-            {
-              "ColData": [
-                {
-                  "value": "Insurance",
-                  "id": "11"
-                },
-                {
-                  "value": "241.23"
-                }
-              ],
-              "type": "Data"
-            },
-            {
-              "Header": {
-                "ColData": [
-                  {
-                    "value": "Job Expenses",
-                    "id": "58"
-                  },
-                  {
-                    "value": "46.98"
-                  }
-                ]
-              },
-              "Rows": {
-                "Row": [
-                  {
-                    "Header": {
-                      "ColData": [
-                        {
-                          "value": "Job Materials",
-                          "id": "63"
-                        },
-                        {
-                          "value": ""
-                        }
-                      ]
-                    },
-                    "Rows": {
-                      "Row": [
-                        {
-                          "ColData": [
-                            {
-                              "value": "Decks and Patios",
-                              "id": "64"
-                            },
-                            {
-                              "value": "234.04"
-                            }
-                          ],
-                          "type": "Data"
-                        },
-                        {
-                          "ColData": [
-                            {
-                              "value": "Plants and Soil",
-                              "id": "66"
-                            },
-                            {
-                              "value": "105.95"
-                            }
-                          ],
-                          "type": "Data"
-                        },
-                        {
-                          "ColData": [
-                            {
-                              "value": "Sprinklers and Drip Systems",
-                              "id": "67"
-                            },
-                            {
-                              "value": "215.66"
-                            }
-                          ],
-                          "type": "Data"
-                        }
-                      ]
-                    },
-                    "Summary": {
-                      "ColData": [
-                        {
-                          "value": "Total Job Materials"
-                        },
-                        {
-                          "value": "555.65"
-                        }
-                      ]
-                    },
-                    "type": "Section"
-                  }
-                ]
-              },
-              "Summary": {
-                "ColData": [
-                  {
-                    "value": "Total Job Expenses"
-                  },
-                  {
-                    "value": "602.63"
-                  }
-                ]
-              },
-              "type": "Section"
-            },
-            {
-              "Header": {
-                "ColData": [
-                  {
-                    "value": "Legal & Professional Fees",
-                    "id": "12"
-                  },
-                  {
-                    "value": "75.00"
-                  }
-                ]
-              },
-              "Rows": {
-                "Row": [
-                  {
-                    "ColData": [
-                      {
-                        "value": "Accounting",
-                        "id": "69"
-                      },
-                      {
-                        "value": "390.00"
-                      }
-                    ],
-                    "type": "Data"
-                  },
-                  {
-                    "ColData": [
-                      {
-                        "value": "Lawyer",
-                        "id": "71"
-                      },
-                      {
-                        "value": "100.00"
-                      }
-                    ],
-                    "type": "Data"
-                  }
-                ]
-              },
-              "Summary": {
-                "ColData": [
-                  {
-                    "value": "Total Legal & Professional Fees"
-                  },
-                  {
-                    "value": "565.00"
-                  }
-                ]
-              },
-              "type": "Section"
-            },
-            {
-              "Header": {
-                "ColData": [
-                  {
-                    "value": "Maintenance and Repair",
-                    "id": "72"
-                  },
-                  {
-                    "value": "185.00"
-                  }
-                ]
-              },
-              "Rows": {
-                "Row": [
-                  {
-                    "ColData": [
-                      {
-                        "value": "Equipment Repairs",
-                        "id": "75"
-                      },
-                      {
-                        "value": "755.00"
-                      }
-                    ],
-                    "type": "Data"
-                  }
-                ]
-              },
-              "Summary": {
-                "ColData": [
-                  {
-                    "value": "Total Maintenance and Repair"
-                  },
-                  {
-                    "value": "940.00"
-                  }
-                ]
-              },
-              "type": "Section"
-            },
-            {
-              "ColData": [
-                {
-                  "value": "Meals and Entertainment",
-                  "id": "13"
-                },
-                {
-                  "value": "28.49"
-                }
-              ],
-              "type": "Data"
-            },
-            {
-              "ColData": [
-                {
-                  "value": "Office Expenses",
-                  "id": "15"
-                },
-                {
-                  "value": "18.08"
-                }
-              ],
-              "type": "Data"
-            },
-            {
-              "ColData": [
-                {
-                  "value": "Rent or Lease",
-                  "id": "17"
-                },
-                {
-                  "value": "900.00"
-                }
-              ],
-              "type": "Data"
-            },
-            {
-              "Header": {
-                "ColData": [
-                  {
-                    "value": "Utilities",
-                    "id": "24"
-                  },
-                  {
-                    "value": ""
-                  }
-                ]
-              },
-              "Rows": {
-                "Row": [
-                  {
-                    "ColData": [
-                      {
-                        "value": "Gas and Electric",
-                        "id": "76"
-                      },
-                      {
-                        "value": "114.09"
-                      }
-                    ],
-                    "type": "Data"
-                  },
-                  {
-                    "ColData": [
-                      {
-                        "value": "Telephone",
-                        "id": "77"
-                      },
-                      {
-                        "value": "74.36"
-                      }
-                    ],
-                    "type": "Data"
-                  }
-                ]
-              },
-              "Summary": {
-                "ColData": [
-                  {
-                    "value": "Total Utilities"
-                  },
-                  {
-                    "value": "188.45"
-                  }
-                ]
-              },
-              "type": "Section"
-            }
-          ]
-        },
-        "Summary": {
-          "ColData": [
-            {
-              "value": "Total Expenses"
-            },
-            {
-              "value": "4017.55"
-            }
-          ]
-        },
-        "type": "Section",
-        "group": "Expenses"
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "35",
+        "name": "Checking"
       },
-      {
-        "Summary": {
-          "ColData": [
-            {
-              "value": "Net Operating Income"
-            },
-            {
-              "value": "3923.97"
-            }
-          ]
-        },
-        "type": "Section",
-        "group": "NetOperatingIncome"
+      "TotalAmt": 218.75,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "62",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-01-27T15:22:31-08:00",
+        "LastUpdatedTime": "2026-01-27T15:22:31-08:00"
       },
-      {
-        "Header": {
-          "ColData": [
-            {
-              "value": "Other Expenses"
-            },
-            {
-              "value": ""
-            }
-          ]
-        },
-        "Rows": {
-          "Row": [
-            {
-              "ColData": [
-                {
-                  "value": "Miscellaneous",
-                  "id": "14"
-                },
-                {
-                  "value": "2666.00"
-                }
-              ],
-              "type": "Data"
-            }
-          ]
-        },
-        "Summary": {
-          "ColData": [
-            {
-              "value": "Total Other Expenses"
-            },
-            {
-              "value": "2666.00"
-            }
-          ]
-        },
-        "type": "Section",
-        "group": "OtherExpenses"
+      "TxnDate": "2026-01-27",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
       },
-      {
-        "Summary": {
-          "ColData": [
+      "Line": [
+        {
+          "Amount": 140,
+          "LinkedTxn": [
             {
-              "value": "Net Other Income"
-            },
-            {
-              "value": "-2666.00"
+              "TxnId": "47",
+              "TxnType": "SalesReceipt",
+              "TxnLineId": "0"
             }
           ]
         },
-        "type": "Section",
-        "group": "NetOtherIncome"
+        {
+          "Amount": 78.75,
+          "LinkedTxn": [
+            {
+              "TxnId": "38",
+              "TxnType": "SalesReceipt",
+              "TxnLineId": "0"
+            }
+          ],
+          "DepositLineDetail": {
+            "PaymentMethodRef": {
+              "value": "1"
+            }
+          }
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "36",
+        "name": "Savings"
       },
-      {
-        "Summary": {
-          "ColData": [
-            {
-              "value": "Net Income"
-            },
-            {
-              "value": "1257.97"
+      "TotalAmt": 600,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "5",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-01-25T12:09:00-08:00",
+        "LastUpdatedTime": "2026-01-25T12:09:00-08:00"
+      },
+      "TxnDate": "2026-01-25",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "PrivateNote": "Opening Balance",
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Amount": 600,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "34",
+              "name": "Opening Balance Equity"
             }
-          ]
-        },
-        "type": "Section",
-        "group": "NetIncome"
-      }
-    ]
-  }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    }
+  ]
 }
