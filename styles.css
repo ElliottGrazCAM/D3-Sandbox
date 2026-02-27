@@ -1,0 +1,70 @@
+/* Base Page Styling */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f3f4f6;
+    /* Soft gray background */
+    color: #1f2937;
+    margin: 0;
+    padding: 40px 20px;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+    max-width: 1000px;
+    margin: 0 auto 30px auto;
+    text-align: center;
+}
+
+.dashboard-header h1 {
+    margin: 0 0 5px 0;
+    color: #111827;
+}
+
+.dashboard-header p {
+    color: #6b7280;
+    margin: 0;
+}
+
+/* Grid Layout for Multiple Charts */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* The Card Look */
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 24px;
+}
+
+.card h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #374151;
+    font-size: 1.25rem;
+    border-bottom: 2px solid #f3f4f6;
+    padding-bottom: 10px;
+}
+
+/* D3 Specifics */
+.axis text {
+    font-size: 13px;
+    fill: #6b7280;
+}
+
+.axis path,
+.axis line {
+    stroke: #e5e7eb;
+}
+
+.label {
+    font-size: 14px;
+    font-weight: bold;
+    fill: white;
+    text-anchor: middle;
+}
