@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "intuit-oauth": "^4.2.2"
+  }
+}

@@ -68,3 +68,35 @@ body {
     fill: white;
     text-anchor: middle;
 }
+
+/* Tooltip Styling */
+.tooltip {
+    position: absolute;
+    text-align: left;
+    padding: 12px;
+    font-size: 14px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.2s ease;
+    z-index: 100;
+}
+
+.tooltip strong {
+    color: #111827;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.tooltip span.inc {
+    color: #10b981;
+    font-weight: bold;
+}
+
+.tooltip span.exp {
+    color: #ef4444;
+    font-weight: bold;
+}

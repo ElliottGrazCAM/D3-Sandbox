@@ -37,7 +37,7 @@ oauthClient.refresh()
     // --- THE DATA HARVESTER LOOP ---
     let allDeposits = [];
     let startPosition = 1;
-    const maxResults = 2;
+    const maxResults = 1000;
     let keepFetching = true;
 
     console.log("Starting full data harvest for Deposits (2024 to Present)...");
