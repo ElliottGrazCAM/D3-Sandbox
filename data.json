@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "lastUpdated": "2026-03-01T08:22:20.336Z",
-    "totalDepositsFound": 145,
+    "lastUpdated": "2026-03-01T08:23:43.564Z",
+    "totalDepositsFound": 185,
     "totalExpensesFound": 138
   },
   "Deposits": [
@@ -1473,6 +1473,1486 @@
           "LineNum": 1,
           "Description": "Historical Ticket Registration",
           "Amount": 230,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 80,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "394",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:45-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:45-08:00"
+      },
+      "TxnDate": "2023-07-18",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 80,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 184,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "393",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:44-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:44-08:00"
+      },
+      "TxnDate": "2023-08-12",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 184,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 2000,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "392",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:44-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:44-08:00"
+      },
+      "TxnDate": "2023-07-27",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Sponsorship",
+          "Amount": 2000,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 242,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "391",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:44-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:44-08:00"
+      },
+      "TxnDate": "2023-09-11",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 242,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 238,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "390",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:43-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:43-08:00"
+      },
+      "TxnDate": "2023-09-21",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 238,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 207,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "389",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:43-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:43-08:00"
+      },
+      "TxnDate": "2023-08-26",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 207,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 157,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "388",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:43-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:43-08:00"
+      },
+      "TxnDate": "2023-07-16",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 157,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 318,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "387",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:42-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:42-08:00"
+      },
+      "TxnDate": "2023-09-11",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 318,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 5000,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "386",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:42-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:42-08:00"
+      },
+      "TxnDate": "2023-07-04",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Sponsorship",
+          "Amount": 5000,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 165,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "385",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:41-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:41-08:00"
+      },
+      "TxnDate": "2023-08-15",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 165,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 151,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "384",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:41-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:41-08:00"
+      },
+      "TxnDate": "2023-09-15",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 151,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 197,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "383",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:41-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:41-08:00"
+      },
+      "TxnDate": "2023-09-27",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 197,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 196,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "382",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:40-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:40-08:00"
+      },
+      "TxnDate": "2023-07-20",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 196,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 69,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "381",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:40-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:40-08:00"
+      },
+      "TxnDate": "2023-08-04",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 69,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 229,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "380",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:40-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:40-08:00"
+      },
+      "TxnDate": "2023-09-28",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 229,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 58,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "379",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:39-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:39-08:00"
+      },
+      "TxnDate": "2023-08-30",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 58,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 5000,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "378",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:39-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:39-08:00"
+      },
+      "TxnDate": "2023-09-16",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Sponsorship",
+          "Amount": 5000,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 255,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "377",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:39-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:39-08:00"
+      },
+      "TxnDate": "2023-08-14",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 255,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 93,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "376",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:38-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:38-08:00"
+      },
+      "TxnDate": "2023-09-01",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 93,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 282,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "375",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:38-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:38-08:00"
+      },
+      "TxnDate": "2023-08-09",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 282,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 226,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "374",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:37-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:37-08:00"
+      },
+      "TxnDate": "2023-08-15",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 226,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 66,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "373",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:37-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:37-08:00"
+      },
+      "TxnDate": "2023-09-15",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 66,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 340,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "372",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:37-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:37-08:00"
+      },
+      "TxnDate": "2023-07-06",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 340,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 4000,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "371",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:36-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:36-08:00"
+      },
+      "TxnDate": "2023-09-24",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Sponsorship",
+          "Amount": 4000,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 304,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "370",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:36-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:36-08:00"
+      },
+      "TxnDate": "2023-09-03",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 304,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 5000,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "369",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:36-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:36-08:00"
+      },
+      "TxnDate": "2023-09-10",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Sponsorship",
+          "Amount": 5000,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 264,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "368",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:35-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:35-08:00"
+      },
+      "TxnDate": "2023-07-29",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 264,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 179,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "367",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:35-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:35-08:00"
+      },
+      "TxnDate": "2023-07-12",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 179,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 154,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "366",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:35-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:35-08:00"
+      },
+      "TxnDate": "2023-07-06",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 154,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 224,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "365",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:34-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:34-08:00"
+      },
+      "TxnDate": "2023-09-22",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 224,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 1000,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "364",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:34-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:34-08:00"
+      },
+      "TxnDate": "2023-07-24",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Sponsorship",
+          "Amount": 1000,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 345,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "363",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:34-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:34-08:00"
+      },
+      "TxnDate": "2023-08-24",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 345,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 5000,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "362",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:33-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:33-08:00"
+      },
+      "TxnDate": "2023-09-18",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Sponsorship",
+          "Amount": 5000,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 145,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "361",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:33-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:33-08:00"
+      },
+      "TxnDate": "2023-07-20",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 145,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 223,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "360",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:32-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:32-08:00"
+      },
+      "TxnDate": "2023-09-24",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 223,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 255,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "359",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:32-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:32-08:00"
+      },
+      "TxnDate": "2023-09-08",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 255,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 2000,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "358",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:32-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:32-08:00"
+      },
+      "TxnDate": "2023-09-03",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Sponsorship",
+          "Amount": 2000,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 148,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "357",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:31-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:31-08:00"
+      },
+      "TxnDate": "2023-07-12",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 148,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 302,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "356",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:31-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:31-08:00"
+      },
+      "TxnDate": "2023-07-09",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Ticket Registration",
+          "Amount": 302,
+          "DetailType": "DepositLineDetail",
+          "DepositLineDetail": {
+            "AccountRef": {
+              "value": "1150040008",
+              "name": "Annual Luncheon:Sponsorship"
+            }
+          },
+          "CustomExtensions": []
+        }
+      ],
+      "TxnTaxDetail": {}
+    },
+    {
+      "DepositToAccountRef": {
+        "value": "91",
+        "name": "Checking Acc"
+      },
+      "TotalAmt": 5000,
+      "domain": "QBO",
+      "sparse": false,
+      "Id": "355",
+      "SyncToken": "0",
+      "MetaData": {
+        "CreateTime": "2026-03-01T00:04:31-08:00",
+        "LastUpdatedTime": "2026-03-01T00:04:31-08:00"
+      },
+      "TxnDate": "2023-09-26",
+      "CurrencyRef": {
+        "value": "USD",
+        "name": "United States Dollar"
+      },
+      "Line": [
+        {
+          "Id": "1",
+          "LineNum": 1,
+          "Description": "Historical Sponsorship",
+          "Amount": 5000,
           "DetailType": "DepositLineDetail",
           "DepositLineDetail": {
             "AccountRef": {
