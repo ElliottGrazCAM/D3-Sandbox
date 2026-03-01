@@ -166,3 +166,134 @@ svg .tick line {
     color: #ef4444;
     font-weight: 600;
 }
+
+/* --- KPI SCORECARDS --- */
+.kpi-grid {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.kpi-card {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    flex: 1;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+.kpi-card h3 {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.kpi-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #f8fafc;
+}
+
+/* --- SPLIT LEDGERS STYLING --- */
+.tables-grid {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 40px;
+    align-items: flex-start;
+}
+
+.table-card {
+    background: #1e293b;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    padding: 20px;
+    flex: 1;
+    min-width: 0;
+    /* Prevents flexbox blowout */
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.table-card h3 {
+    font-size: 1.1rem;
+    color: #f8fafc;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #334155;
+}
+
+/* This makes the table scrollable inside the card */
+.table-wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 6px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+/* Sticky Header so it stays visible while scrolling */
+.data-table th {
+    position: sticky;
+    top: 0;
+    background: #0f172a;
+    padding: 12px;
+    color: #94a3b8;
+    font-size: 0.80rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    user-select: none;
+    z-index: 1;
+    transition: color 0.2s;
+}
+
+.data-table th:hover {
+    color: #f8fafc;
+}
+
+.data-table td {
+    padding: 12px;
+    font-size: 0.90rem;
+    color: #cbd5e1;
+    border-bottom: 1px solid #334155;
+}
+
+/* Subtle striping so it's not just floating text */
+.data-table tbody tr:nth-child(even) {
+    background-color: rgba(15, 23, 42, 0.4);
+}
+
+.data-table tbody tr:hover td {
+    background-color: #0f172a;
+}
+
+/* Badge styling for Type */
+.badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.badge.sponsor {
+    background: rgba(5, 150, 105, 0.2);
+    color: #10b981;
+    border: 1px solid #059669;
+}
+
+.badge.registrant {
+    background: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
+    border: 1px solid #3b82f6;
+}
+
+.badge.expense {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid #ef4444;
+}
