@@ -41,20 +41,41 @@
         <div id="page-luncheon" class="dashboard-page" style="display: block;">
             <h1>Annual Luncheon Tracker</h1>
             <p>Real-time revenue and expenses synced from QuickBooks.</p>
-
-            <div class="chart-container">
+        
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <h3>Total Registrants</h3>
+                    <p id="kpi-registrants" class="kpi-value">--</p>
+                </div>
+                <div class="kpi-card">
+                    <h3>Total Sponsors</h3>
+                    <p id="kpi-sponsors" class="kpi-value">--</p>
+                </div>
+                <div class="kpi-card">
+                    <h3>Net Revenue</h3>
+                    <p id="kpi-net" class="kpi-value">--</p>
+                </div>
+            </div>
+        
+            <div class="chart-container" style="margin-bottom: 24px;">
                 <div id="chart-events">Loading data...</div>
             </div>
-        </div>
-
-        <div id="page-gala" class="dashboard-page" style="display: none;">
-            <h1>Winter Gala</h1>
-            <p>Coming soon...</p>
-        </div>
-
-        <div id="page-golf" class="dashboard-page" style="display: none;">
-            <h1>Golf Tournament</h1>
-            <p>Coming soon...</p>
+        
+            <div class="table-container">
+                <h3>Transaction Ledger</h3>
+                <table class="data-table" id="txn-table">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable(0)">Date ⇕</th>
+                            <th onclick="sortTable(1)">Contributor / Vendor ⇕</th>
+                            <th onclick="sortTable(2)">Type ⇕</th>
+                            <th onclick="sortTable(3)">Amount ⇕</th>
+                        </tr>
+                    </thead>
+                    <tbody id="txn-tbody">
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </main>
