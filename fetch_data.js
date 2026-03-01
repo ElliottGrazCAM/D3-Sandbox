@@ -25,75 +25,68 @@ oauthClient.getToken().setToken({
   expires_in: 3600
 });
 
-console.log("Attempting to refresh the access token...");
-
 oauthClient.refresh()
   .then(async (authResponse) => {
     console.log("🎉 SUCCESS: Connection established!");
-
-    console.log("Saving new refresh token to temporary file...");
     fs.writeFileSync('new_token.txt', authResponse.token.refresh_token);
 
-    // --- THE DATA HARVESTER LOOP ---
-    let allDeposits = [];
-    let startPosition = 1;
-    const maxResults = 1000;
-    let keepFetching = true;
+    // --- HELPER FUNCTION FOR PAGINATION ---
+    async function fetchAll(entityName) {
+      let allRecords = [];
+      let startPosition = 1;
+      const maxResults = 1000;
+      let keepFetching = true;
 
-    console.log("Starting full data harvest for Deposits (2024 to Present)...");
+      console.log(`Starting full harvest for ${entityName} (2024 to Present)...`);
 
-    while (keepFetching) {
-      // Querying all deposits from Jan 1, 2024 to today
-      const query = `SELECT * FROM Deposit WHERE TxnDate >= '2024-01-01' STARTPOSITION ${startPosition} MAXRESULTS ${maxResults}`;
-      const url = `https://sandbox-quickbooks.api.intuit.com/v3/company/${cleanRealmId}/query?query=${encodeURIComponent(query)}&minorversion=65`;
+      while (keepFetching) {
+        const query = `SELECT * FROM ${entityName} WHERE TxnDate >= '2024-01-01' STARTPOSITION ${startPosition} MAXRESULTS ${maxResults}`;
+        const url = `https://sandbox-quickbooks.api.intuit.com/v3/company/${cleanRealmId}/query?query=${encodeURIComponent(query)}&minorversion=65`;
 
-      console.log(`Fetching records ${startPosition} to ${startPosition + maxResults - 1}...`);
+        console.log(`Fetching ${entityName} records ${startPosition} to ${startPosition + maxResults - 1}...`);
 
-      const response = await oauthClient.makeApiCall({
-        url, method: 'GET', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-      });
+        const response = await oauthClient.makeApiCall({
+          url, method: 'GET', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
+        });
 
-      const responseData = response.json || JSON.parse(response.text?.() || '{}');
+        const responseData = response.json || JSON.parse(response.text?.() || '{}');
 
-      // Check if there are deposits in this batch
-      if (responseData.QueryResponse && responseData.QueryResponse.Deposit) {
-        const deposits = responseData.QueryResponse.Deposit;
+        if (responseData.QueryResponse && responseData.QueryResponse[entityName]) {
+          const records = responseData.QueryResponse[entityName];
+          allRecords = allRecords.concat(records);
 
-        // Add this batch to our master list
-        allDeposits = allDeposits.concat(deposits);
-
-        // If QBO returns fewer than 1000 records, we have reached the end!
-        if (deposits.length < maxResults) {
-          keepFetching = false;
+          if (records.length < maxResults) {
+            keepFetching = false;
+          } else {
+            startPosition += maxResults;
+          }
         } else {
-          // Otherwise, bump the start position for the next loop
-          startPosition += maxResults;
+          keepFetching = false;
         }
-      } else {
-        // No deposits found at all, stop the loop
-        keepFetching = false;
       }
+      return allRecords;
     }
 
-    // Wrap the master array in a clean JSON structure
+    // --- EXECUTE BOTH LOOPS ---
+    const allDeposits = await fetchAll('Deposit');
+    const allExpenses = await fetchAll('Purchase'); // QBO calls standard expenses "Purchases"
+
+    // Wrap the master arrays in a clean JSON structure
     const finalData = {
       metadata: {
         lastUpdated: new Date().toISOString(),
-        totalDepositsFound: allDeposits.length
+        totalDepositsFound: allDeposits.length,
+        totalExpensesFound: allExpenses.length
       },
-      Deposits: allDeposits
+      Deposits: allDeposits,
+      Expenses: allExpenses
     };
 
     fs.writeFileSync('data.json', JSON.stringify(finalData, null, 2));
 
-    console.log(`✅ SUCCESS: Harvested ${allDeposits.length} deposits and saved to data.json!`);
+    console.log(`✅ SUCCESS: Harvested ${allDeposits.length} deposits and ${allExpenses.length} expenses!`);
   })
   .catch(e => {
-    console.error("ERROR REFRESHING DATA:");
-    if (e.authResponse && e.authResponse.json) {
-      console.error(JSON.stringify(e.authResponse.json, null, 2));
-    } else {
-      console.error(e);
-    }
+    console.error("ERROR REFRESHING DATA:", e);
     process.exit(1);
   });
