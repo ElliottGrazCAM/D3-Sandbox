@@ -1,37 +1,80 @@
 d3.json("data.json").then(data => {
 
     // ==========================================
-    // PART 1: THE D3 BAR CHART
+    // THE STRICT FILTER: ONLY "LUNCHEON" DATA
     // ==========================================
-    const monthlyData = {};
+    const luncheonDeposits = [];
+    const luncheonExpenses = [];
 
-    function processRecords(records, type) {
-        if (!records) return;
-        records.forEach(record => {
-            const date = new Date(record.TxnDate);
-            const monthYear = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-            const displayMonth = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-
-            if (!monthlyData[monthYear]) {
-                monthlyData[monthYear] = { sortDate: monthYear, display: displayMonth, income: 0, expense: 0 };
-            }
-
-            if (type === 'income') {
-                record.Line.forEach(line => {
-                    if (line.Amount && line.DetailType === "DepositLineDetail") monthlyData[monthYear].income += line.Amount;
-                });
-            }
-            if (type === 'expense') {
-                monthlyData[monthYear].expense += record.TotalAmt || 0;
+    // Filter Deposits
+    if (data.Deposits) {
+        data.Deposits.forEach(record => {
+            let recordHasLuncheon = false;
+            const validLines = [];
+            record.Line.forEach(line => {
+                if (line.Amount && line.DetailType === "DepositLineDetail" && line.DepositLineDetail.AccountRef) {
+                    const accountName = line.DepositLineDetail.AccountRef.name.toLowerCase();
+                    if (accountName.includes("luncheon")) {
+                        recordHasLuncheon = true;
+                        validLines.push(line);
+                    }
+                }
+            });
+            // If this transaction belongs to the luncheon, keep it (with only the valid lines)
+            if (recordHasLuncheon) {
+                luncheonDeposits.push({ ...record, Line: validLines });
             }
         });
     }
 
-    processRecords(data.Deposits, 'income');
-    processRecords(data.Expenses, 'expense');
+    // Filter Expenses
+    if (data.Expenses) {
+        data.Expenses.forEach(record => {
+            let recordHasLuncheon = false;
+            record.Line.forEach(line => {
+                if (line.DetailType === "AccountBasedExpenseLineDetail" && line.AccountBasedExpenseLineDetail.AccountRef) {
+                    const accountName = line.AccountBasedExpenseLineDetail.AccountRef.name.toLowerCase();
+                    if (accountName.includes("luncheon")) {
+                        recordHasLuncheon = true;
+                    }
+                }
+            });
+            if (recordHasLuncheon) {
+                luncheonExpenses.push(record);
+            }
+        });
+    }
 
-    const chartData = Object.values(monthlyData).sort((a, b) => a.sortDate.localeCompare(b.sortDate));
-    d3.select("#chart-events").html("");
+
+    // ==========================================
+    // PART 1: THE YoY GROUPED BAR CHART
+    // ==========================================
+    const yearlyData = {};
+
+    function processYearly(records, type) {
+        records.forEach(record => {
+            const year = new Date(record.TxnDate).getFullYear().toString();
+
+            if (!yearlyData[year]) {
+                yearlyData[year] = { year: year, income: 0, expense: 0 };
+            }
+
+            if (type === 'income') {
+                record.Line.forEach(line => {
+                    yearlyData[year].income += line.Amount;
+                });
+            }
+            if (type === 'expense') {
+                yearlyData[year].expense += record.TotalAmt || 0;
+            }
+        });
+    }
+
+    processYearly(luncheonDeposits, 'income');
+    processYearly(luncheonExpenses, 'expense');
+
+    const chartData = Object.values(yearlyData).sort((a, b) => a.year.localeCompare(b.year));
+    d3.select("#chart-events").html(""); // Clear loading text
 
     const margin = { top: 40, right: 30, bottom: 50, left: 60 },
         width = 800 - margin.left - margin.right,
@@ -46,20 +89,21 @@ d3.json("data.json").then(data => {
     const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
     const subgroups = ["income", "expense"];
-    const x = d3.scaleBand().domain(chartData.map(d => d.display)).range([0, width]).padding(0.2);
+    const x = d3.scaleBand().domain(chartData.map(d => d.year)).range([0, width]).padding(0.2);
     const xSubgroup = d3.scaleBand().domain(subgroups).range([0, x.bandwidth()]).padding(0.05);
 
     const maxY = d3.max(chartData, d => Math.max(d.income, d.expense)) || 0;
     const y = d3.scaleLinear().domain([0, maxY * 1.1]).nice().range([height, 0]);
     const color = d3.scaleOrdinal().domain(subgroups).range(["#10b981", "#ef4444"]);
 
+    // Draw Axes
     svg.append("g")
         .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(x).tickSizeOuter(0))
         .selectAll("text")
-        .attr("transform", "translate(-10,0)rotate(-45)")
-        .style("text-anchor", "end")
-        .style("font-size", "12px");
+        .style("font-size", "14px")
+        .style("font-weight", "bold")
+        .attr("transform", "translate(0, 5)");
 
     svg.append("g")
         .call(d3.axisLeft(y).tickFormat(d => "$" + d.toLocaleString()).ticks(5))
@@ -71,12 +115,13 @@ d3.json("data.json").then(data => {
         .style("stroke-dasharray", "3,3")
         .style("opacity", 0.1);
 
-    const monthGroups = svg.selectAll(".monthGroup")
+    // Draw Bars
+    const yearGroups = svg.selectAll(".yearGroup")
         .data(chartData).enter().append("g")
-        .attr("transform", d => `translate(${x(d.display)},0)`);
+        .attr("transform", d => `translate(${x(d.year)},0)`);
 
-    monthGroups.selectAll("rect")
-        .data(d => subgroups.map(key => ({ key: key, value: d[key], display: d.display, fullData: d })))
+    yearGroups.selectAll("rect")
+        .data(d => subgroups.map(key => ({ key: key, value: d[key], year: d.year, fullData: d })))
         .enter().append("rect")
         .attr("x", d => xSubgroup(d.key))
         .attr("y", height)
@@ -88,11 +133,11 @@ d3.json("data.json").then(data => {
             d3.select(this).style("opacity", 0.8);
             tooltip.transition().duration(200).style("opacity", 1);
             tooltip.html(`
-                <strong>${d.display}</strong>
-                <span class="inc">Revenue: $${d.fullData.income.toLocaleString()}</span><br>
-                <span class="exp">Expenses: $${d.fullData.expense.toLocaleString()}</span><br>
+                <strong>${d.year} Luncheon</strong>
+                <span class="inc">Revenue: $${d.fullData.income.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span><br>
+                <span class="exp">Expenses: $${d.fullData.expense.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span><br>
                 <hr style="margin:6px 0; border:0; border-top:1px solid #334155;">
-                <span style="color:#f8fafc; font-weight:bold;">Net: $${(d.fullData.income - d.fullData.expense).toLocaleString()}</span>
+                <span style="color:#f8fafc; font-weight:bold;">Net: $${(d.fullData.income - d.fullData.expense).toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
             `)
                 .style("left", (event.pageX + 15) + "px")
                 .style("top", (event.pageY - 28) + "px");
@@ -101,15 +146,16 @@ d3.json("data.json").then(data => {
             d3.select(this).style("opacity", 1);
             tooltip.transition().duration(500).style("opacity", 0);
         })
-        .transition().duration(1000).delay((d, i) => i * 50)
+        .transition().duration(1000).delay((d, i) => i * 100)
         .attr("y", d => y(d.value))
         .attr("height", d => height - y(d.value));
 
+    // Legend
     const legend = svg.append("g").attr("transform", `translate(${width - 150}, -20)`);
     legend.append("rect").attr("x", 0).attr("y", 0).attr("width", 12).attr("height", 12).attr("fill", "#10b981").attr("rx", 2);
-    legend.append("text").attr("x", 20).attr("y", 10).text("Event Revenue").style("font-size", "12px").attr("alignment-baseline", "middle");
+    legend.append("text").attr("x", 20).attr("y", 10).text("Total Revenue").style("font-size", "12px").attr("alignment-baseline", "middle");
     legend.append("rect").attr("x", 0).attr("y", 20).attr("width", 12).attr("height", 12).attr("fill", "#ef4444").attr("rx", 2);
-    legend.append("text").attr("x", 20).attr("y", 30).text("Event Expenses").style("font-size", "12px").attr("alignment-baseline", "middle");
+    legend.append("text").attr("x", 20).attr("y", 30).text("Total Expenses").style("font-size", "12px").attr("alignment-baseline", "middle");
 
 
     // ==========================================
@@ -122,61 +168,50 @@ d3.json("data.json").then(data => {
     const revenueRows = [];
     const expenseRows = [];
 
-    // Process Income for Revenue Table
-    if (data.Deposits) {
-        data.Deposits.forEach(record => {
-            const date = record.TxnDate;
-            record.Line.forEach(line => {
-                if (line.Amount && line.DetailType === "DepositLineDetail") {
-                    totalIncome += line.Amount;
+    // Note: We are now looping over the FILTERED arrays
+    luncheonDeposits.forEach(record => {
+        const date = record.TxnDate;
+        record.Line.forEach(line => {
+            totalIncome += line.Amount;
 
-                    let accountName = "";
-                    if (line.DepositLineDetail && line.DepositLineDetail.AccountRef) {
-                        accountName = line.DepositLineDetail.AccountRef.name || "";
-                    }
+            const accountName = line.DepositLineDetail.AccountRef.name.toLowerCase();
+            const isSponsor = accountName.includes("sponsor");
+            if (isSponsor) totalSponsors++; else totalRegistrants++;
 
-                    const isSponsor = accountName.toLowerCase().includes("sponsor");
-                    if (isSponsor) totalSponsors++; else totalRegistrants++;
+            const typeClass = isSponsor ? 'sponsor' : 'registrant';
+            const typeLabel = isSponsor ? 'Sponsor' : 'Registrant';
 
-                    const typeClass = isSponsor ? 'sponsor' : 'registrant';
-                    const typeLabel = isSponsor ? 'Sponsor' : 'Registrant';
+            let name = "Online Contributor";
+            if (line.Entity?.EntityRef?.name) name = line.Entity.EntityRef.name;
+            else if (line.Description) name = line.Description;
 
-                    let name = "Online Contributor";
-                    if (line.Entity?.EntityRef?.name) name = line.Entity.EntityRef.name;
-                    else if (line.Description) name = line.Description;
-
-                    revenueRows.push({
-                        date: date,
-                        name: name,
-                        typeHTML: `<span class="badge ${typeClass}">${typeLabel}</span>`,
-                        amount: line.Amount
-                    });
-                }
-            });
-        });
-    }
-
-    // Process Expenses for Expense Table
-    if (data.Expenses) {
-        data.Expenses.forEach(record => {
-            const date = record.TxnDate;
-            const name = record.EntityRef?.name || "Vendor";
-            totalExpense += record.TotalAmt || 0;
-
-            expenseRows.push({
+            revenueRows.push({
                 date: date,
                 name: name,
-                amount: record.TotalAmt || 0
+                typeHTML: `<span class="badge ${typeClass}">${typeLabel}</span>`,
+                amount: line.Amount
             });
         });
-    }
+    });
 
-    // Update the KPI Cards in HTML
+    luncheonExpenses.forEach(record => {
+        const date = record.TxnDate;
+        const name = record.EntityRef?.name || "Vendor";
+        totalExpense += record.TotalAmt || 0;
+
+        expenseRows.push({
+            date: date,
+            name: name,
+            amount: record.TotalAmt || 0
+        });
+    });
+
+    // Update KPIs
     document.getElementById("kpi-registrants").innerText = totalRegistrants.toLocaleString();
     document.getElementById("kpi-sponsors").innerText = totalSponsors.toLocaleString();
     document.getElementById("kpi-net").innerText = "$" + (totalIncome - totalExpense).toLocaleString(undefined, { minimumFractionDigits: 2 });
 
-    // Populate Revenue Table (Default sort: Newest First)
+    // Populate Revenue Table
     revenueRows.sort((a, b) => new Date(b.date) - new Date(a.date));
     const revBody = document.getElementById("rev-tbody");
     revenueRows.forEach(row => {
@@ -190,7 +225,7 @@ d3.json("data.json").then(data => {
         revBody.appendChild(tr);
     });
 
-    // Populate Expense Table (Default sort: Newest First)
+    // Populate Expense Table
     expenseRows.sort((a, b) => new Date(b.date) - new Date(a.date));
     const expBody = document.getElementById("exp-tbody");
     expenseRows.forEach(row => {
@@ -218,7 +253,6 @@ function sortTable(tableId, columnIndex) {
     const tbody = table.querySelector("tbody");
     const rows = Array.from(tbody.rows);
 
-    // Toggle sort direction for this specific table
     sortDirs[tableId] = !sortDirs[tableId];
     const isAscending = sortDirs[tableId];
 
@@ -232,6 +266,5 @@ function sortTable(tableId, columnIndex) {
         return isAscending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
     });
 
-    // Re-append sorted rows
     rows.forEach(row => tbody.appendChild(row));
 }
