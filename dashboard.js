@@ -113,15 +113,16 @@ d3.json("data.json").then(data => {
 
 
     // ==========================================
-    // PART 2: KPIs AND SORTABLE TABLE
+    // PART 2: KPIs AND SPLIT TABLES
     // ==========================================
     let totalRegistrants = 0;
     let totalSponsors = 0;
     let totalIncome = 0;
     let totalExpense = 0;
-    const tableRows = [];
+    const revenueRows = [];
+    const expenseRows = [];
 
-    // Process Income for Table
+    // Process Income for Revenue Table
     if (data.Deposits) {
         data.Deposits.forEach(record => {
             const date = record.TxnDate;
@@ -129,7 +130,6 @@ d3.json("data.json").then(data => {
                 if (line.Amount && line.DetailType === "DepositLineDetail") {
                     totalIncome += line.Amount;
 
-                    // Production-grade categorization based on QBO Account Name
                     let accountName = "";
                     if (line.DepositLineDetail && line.DepositLineDetail.AccountRef) {
                         accountName = line.DepositLineDetail.AccountRef.name || "";
@@ -141,36 +141,32 @@ d3.json("data.json").then(data => {
                     const typeClass = isSponsor ? 'sponsor' : 'registrant';
                     const typeLabel = isSponsor ? 'Sponsor' : 'Registrant';
 
-                    // Try to get Name, fallback to Description
                     let name = "Online Contributor";
                     if (line.Entity?.EntityRef?.name) name = line.Entity.EntityRef.name;
                     else if (line.Description) name = line.Description;
 
-                    tableRows.push({
+                    revenueRows.push({
                         date: date,
                         name: name,
                         typeHTML: `<span class="badge ${typeClass}">${typeLabel}</span>`,
-                        amount: line.Amount,
-                        rawType: typeLabel
+                        amount: line.Amount
                     });
                 }
             });
         });
     }
 
-    // Process Expenses for Table
+    // Process Expenses for Expense Table
     if (data.Expenses) {
         data.Expenses.forEach(record => {
             const date = record.TxnDate;
             const name = record.EntityRef?.name || "Vendor";
             totalExpense += record.TotalAmt || 0;
 
-            tableRows.push({
+            expenseRows.push({
                 date: date,
                 name: name,
-                typeHTML: `<span class="badge expense">Expense</span>`,
-                amount: record.TotalAmt || 0,
-                rawType: "Expense"
+                amount: record.TotalAmt || 0
             });
         });
     }
@@ -180,19 +176,31 @@ d3.json("data.json").then(data => {
     document.getElementById("kpi-sponsors").innerText = totalSponsors.toLocaleString();
     document.getElementById("kpi-net").innerText = "$" + (totalIncome - totalExpense).toLocaleString(undefined, { minimumFractionDigits: 2 });
 
-    // Populate Table (Default sort: Newest First)
-    tableRows.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    const tbody = document.getElementById("txn-tbody");
-    tableRows.forEach(row => {
+    // Populate Revenue Table (Default sort: Newest First)
+    revenueRows.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const revBody = document.getElementById("rev-tbody");
+    revenueRows.forEach(row => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td>${row.date}</td>
             <td><strong>${row.name}</strong></td>
             <td>${row.typeHTML}</td>
-            <td style="font-family: monospace; font-size:14px;">$${row.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
+            <td style="font-family: monospace; font-size:14px; color:#10b981;">$${row.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
         `;
-        tbody.appendChild(tr);
+        revBody.appendChild(tr);
+    });
+
+    // Populate Expense Table (Default sort: Newest First)
+    expenseRows.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const expBody = document.getElementById("exp-tbody");
+    expenseRows.forEach(row => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${row.date}</td>
+            <td><strong>${row.name}</strong></td>
+            <td style="font-family: monospace; font-size:14px; color:#ef4444;">$${row.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
+        `;
+        expBody.appendChild(tr);
     });
 
 }).catch(error => {
@@ -201,25 +209,29 @@ d3.json("data.json").then(data => {
 });
 
 // ==========================================
-// PART 3: THE SORTING FUNCTION
+// PART 3: THE DYNAMIC SORTING FUNCTION
 // ==========================================
-let sortDirection = false;
-function sortTable(columnIndex) {
-    const table = document.getElementById("txn-table");
-    const rows = Array.from(table.rows).slice(1); // Exclude header
-    sortDirection = !sortDirection;
+let sortDirs = { 'rev-table': false, 'exp-table': false };
+
+function sortTable(tableId, columnIndex) {
+    const table = document.getElementById(tableId);
+    const tbody = table.querySelector("tbody");
+    const rows = Array.from(tbody.rows);
+
+    // Toggle sort direction for this specific table
+    sortDirs[tableId] = !sortDirs[tableId];
+    const isAscending = sortDirs[tableId];
 
     rows.sort((a, b) => {
         let cellA = a.cells[columnIndex].innerText.replace(/[^0-9a-zA-Z.-]+/g, "");
         let cellB = b.cells[columnIndex].innerText.replace(/[^0-9a-zA-Z.-]+/g, "");
 
-        // If numeric, sort by numbers. If text, sort alphabetically.
         if (!isNaN(cellA) && !isNaN(cellB)) {
-            return sortDirection ? cellA - cellB : cellB - cellA;
+            return isAscending ? cellA - cellB : cellB - cellA;
         }
-        return sortDirection ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+        return isAscending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
     });
 
-    const tbody = document.getElementById("txn-tbody");
+    // Re-append sorted rows
     rows.forEach(row => tbody.appendChild(row));
 }
