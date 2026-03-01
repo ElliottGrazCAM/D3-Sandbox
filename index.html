@@ -10,25 +10,60 @@
 </head>
 
 <body>
+    <nav class="sidebar">
+    
+        <div class="brand-container">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+            <h2>Non-Profit OS</h2>
+        </div>
+    
+        <button class="nav-btn active" onclick="switchPage('page-general')">General Financials</button>
 
-    <div class="dashboard-header">
-        <h1>Company Financial Overview</h1>
-        <p>Live data fetched automatically from QuickBooks</p>
-    </div>
+    <main class="content">
 
-    <div class="dashboard-grid">
-        <div class="card">
-            <h3>YTD Profit & Loss Summary</h3>
-            <div id="chart-pnl"></div>
+        <div id="page-general" class="dashboard-page active">
+            <h1>General Financials</h1>
+            <p>High-level overview of the organization's health.</p>
         </div>
 
-        <div class="card">
-            <h3>Event Revenue Tracker</h3>
-            <div id="chart-events">
-                <p style="color: #6b7280; text-align: center; margin-top: 50px;">Coming soon...</p>
-            </div>
+        <div id="page-luncheon" class="dashboard-page" style="display: none;">
+            <h1>Annual Luncheon Tracker</h1>
+            <p>Revenue and Expenses specific to the Luncheon.</p>
+            <div id="chart-events" class="chart-container">Loading data...</div>
         </div>
-    </div>
+
+        <div id="page-gala" class="dashboard-page" style="display: none;">
+            <h1>Winter Gala</h1>
+            <p>Coming soon...</p>
+        </div>
+        <div id="page-golf" class="dashboard-page" style="display: none;">
+            <h1>Golf Tournament</h1>
+            <p>Coming soon...</p>
+        </div>
+        <div id="page-conference" class="dashboard-page" style="display: none;">
+            <h1>Fall Conference</h1>
+            <p>Coming soon...</p>
+        </div>
+
+    </main>
+
+    <script>
+        function switchPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.dashboard-page').forEach(page => {
+                page.style.display = 'none';
+            });
+            // Show the selected page
+            document.getElementById(pageId).style.display = 'block';
+
+            // Update button styles (optional polish)
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
 
     <script src="dashboard.js"></script>
 </body>
