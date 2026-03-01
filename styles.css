@@ -25,24 +25,34 @@ body {
     border-right: 1px solid #1e293b;
     display: flex;
     flex-direction: column;
-    padding: 24px 16px;
+    padding: 32px 16px;
     z-index: 10;
 }
 
-/* The SVG Logo and Title Container */
+/* Logo Area */
 .brand-container {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 40px;
-    padding-left: 12px;
+    padding-left: 8px;
 }
 
 .brand-container h2 {
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 1.4rem;
+    font-weight: 800;
     letter-spacing: -0.5px;
     color: #f8fafc;
+}
+
+/* Nav Headers */
+.nav-header {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #475569;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    padding-left: 12px;
 }
 
 /* Navigation Buttons */
@@ -50,7 +60,6 @@ body {
     background: none;
     border: none;
     color: #94a3b8;
-    /* Muted gray text */
     text-align: left;
     padding: 12px 16px;
     font-size: 0.95rem;
@@ -67,12 +76,12 @@ body {
     color: white;
 }
 
-/* The Active State (Forest Green) */
+/* The Active Tab (Forest Green) */
 .nav-btn.active {
     background-color: #059669;
     /* Forest Green */
     color: white;
-    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.25);
 }
 
 /* --- MAIN DASHBOARD AREA --- */
@@ -86,6 +95,7 @@ body {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 8px;
+    letter-spacing: -0.5px;
 }
 
 .dashboard-page p {
@@ -97,11 +107,10 @@ body {
 /* --- CHART CONTAINER STYLING --- */
 .chart-container {
     background: #1e293b;
-    /* Slightly lighter slate for the card */
     padding: 24px;
     border-radius: 12px;
     border: 1px solid #334155;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
     width: 100%;
     max-width: 900px;
 }
@@ -112,22 +121,17 @@ svg text {
     font-family: 'Inter', sans-serif;
 }
 
-/* Light gray axis text */
 svg .domain {
     stroke: #475569 !important;
 }
 
-/* Darker axis lines */
 svg .tick line {
     stroke: #475569 !important;
 }
 
-/* Darker tick marks */
 .grid line {
     stroke: #334155 !important;
 }
-
-/* Subtle dark grid lines */
 
 /* --- TOOLTIP STYLING --- */
 .tooltip {
@@ -158,7 +162,6 @@ svg .tick line {
     font-weight: 600;
 }
 
-/* Lighter emerald for visibility */
 .tooltip span.exp {
     color: #ef4444;
     font-weight: 600;

@@ -4,54 +4,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Dashboard</title>
+    <title>CNCA Financial Dashboard</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 
 <body>
     <nav class="sidebar">
-    
+
         <div class="brand-container">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"
                 stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                <path
+                    d="M12 22V15C12 15 20 15 20 9C20 6 18 4 15 4C12 4 12 8 12 8C12 8 12 4 9 4C6 4 4 6 4 9C4 15 12 15 12 15Z">
+                </path>
             </svg>
-            <h2>Non-Profit OS</h2>
+            <h2>CNCA</h2>
         </div>
-    
-        <button class="nav-btn active" onclick="switchPage('page-general')">General Financials</button>
+
+        <p class="nav-header">FINANCIALS</p>
+        <button class="nav-btn" onclick="switchPage('page-general', this)">General Overview</button>
+
+        <p class="nav-header" style="margin-top: 24px;">EVENT TRACKING</p>
+        <button class="nav-btn active" onclick="switchPage('page-luncheon', this)">Annual Luncheon</button>
+        <button class="nav-btn" onclick="switchPage('page-gala', this)">Winter Gala</button>
+        <button class="nav-btn" onclick="switchPage('page-golf', this)">Golf Tournament</button>
+    </nav>
 
     <main class="content">
 
-        <div id="page-general" class="dashboard-page active">
-            <h1>General Financials</h1>
-            <p>High-level overview of the organization's health.</p>
+        <div id="page-general" class="dashboard-page" style="display: none;">
+            <h1>General Overview</h1>
+            <p>High-level financial health for the Chicago Nature Conservationists Association.</p>
         </div>
 
-        <div id="page-luncheon" class="dashboard-page" style="display: none;">
+        <div id="page-luncheon" class="dashboard-page" style="display: block;">
             <h1>Annual Luncheon Tracker</h1>
-            <p>Revenue and Expenses specific to the Luncheon.</p>
-            <div id="chart-events" class="chart-container">Loading data...</div>
+            <p>Real-time revenue and expenses synced from QuickBooks.</p>
+
+            <div class="chart-container">
+                <div id="chart-events">Loading data...</div>
+            </div>
         </div>
 
         <div id="page-gala" class="dashboard-page" style="display: none;">
             <h1>Winter Gala</h1>
             <p>Coming soon...</p>
         </div>
+
         <div id="page-golf" class="dashboard-page" style="display: none;">
             <h1>Golf Tournament</h1>
-            <p>Coming soon...</p>
-        </div>
-        <div id="page-conference" class="dashboard-page" style="display: none;">
-            <h1>Fall Conference</h1>
             <p>Coming soon...</p>
         </div>
 
     </main>
 
     <script>
-        function switchPage(pageId) {
+        function switchPage(pageId, btnElement) {
             // Hide all pages
             document.querySelectorAll('.dashboard-page').forEach(page => {
                 page.style.display = 'none';
@@ -59,9 +68,9 @@
             // Show the selected page
             document.getElementById(pageId).style.display = 'block';
 
-            // Update button styles (optional polish)
+            // Update button styles
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            btnElement.classList.add('active');
         }
     </script>
 
