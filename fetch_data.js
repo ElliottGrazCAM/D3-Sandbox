@@ -40,7 +40,7 @@ oauthClient.refresh()
       console.log(`Starting full harvest for ${entityName} (2024 to Present)...`);
 
       while (keepFetching) {
-        const query = `SELECT * FROM ${entityName} WHERE TxnDate >= '2024-01-01' STARTPOSITION ${startPosition} MAXRESULTS ${maxResults}`;
+        const query = `SELECT * FROM ${entityName} WHERE TxnDate >= '2023-01-01' STARTPOSITION ${startPosition} MAXRESULTS ${maxResults}`;
         const url = `https://sandbox-quickbooks.api.intuit.com/v3/company/${cleanRealmId}/query?query=${encodeURIComponent(query)}&minorversion=65`;
 
         console.log(`Fetching ${entityName} records ${startPosition} to ${startPosition + maxResults - 1}...`);
