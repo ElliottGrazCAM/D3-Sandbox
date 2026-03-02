@@ -47,117 +47,194 @@ d3.json("data.json").then(data => {
 
 
     // ==========================================
-    // PART 1: THE YoY GROUPED BAR CHART
+    // PART 1: THE CURRENT YEAR STACKED BAR CHART
     // ==========================================
-    const yearlyData = {};
+    const TARGET_YEAR = 2025;
+    const EVENT_MONTH = 10; // October
+    const START_MONTH = EVENT_MONTH - 8; // February (2)
+    const END_MONTH = EVENT_MONTH + 2;   // December (12)
 
-    function processYearly(records, type) {
+    const revBuckets = {};
+    const expBuckets = {};
+    let totalRev = 0;
+    let totalExp = 0;
+
+    // Helper to filter by date and aggregate
+    function aggregateData(records, isExpense, bucketsObj) {
         records.forEach(record => {
-            const year = new Date(record.TxnDate).getFullYear().toString();
+            const date = new Date(record.TxnDate);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
 
-            if (!yearlyData[year]) {
-                yearlyData[year] = { year: year, income: 0, expense: 0 };
-            }
+            // Only grab transactions for the target year and within our exact month window
+            if (year === TARGET_YEAR && month >= START_MONTH && month <= END_MONTH) {
 
-            if (type === 'income') {
                 record.Line.forEach(line => {
-                    yearlyData[year].income += line.Amount;
+                    const amt = line.Amount;
+                    if (!amt) return;
+
+                    let acctName = "";
+                    if (isExpense && line.DetailType === "AccountBasedExpenseLineDetail") {
+                        acctName = line.AccountBasedExpenseLineDetail.AccountRef.name.split(':').pop(); // Get just the last part of the name
+                    } else if (!isExpense && line.DetailType === "DepositLineDetail") {
+                        acctName = line.DepositLineDetail.AccountRef.name.split(':').pop();
+                    }
+
+                    if (acctName) {
+                        if (!bucketsObj[acctName]) {
+                            bucketsObj[acctName] = { name: acctName, total: 0, txns: [] };
+                        }
+                        bucketsObj[acctName].total += amt;
+
+                        let desc = line.Description || (record.EntityRef ? record.EntityRef.name : "Online Transaction");
+                        bucketsObj[acctName].txns.push({ date: record.TxnDate, desc: desc, amount: amt });
+
+                        if (isExpense) totalExp += amt;
+                        else totalRev += amt;
+                    }
                 });
-            }
-            if (type === 'expense') {
-                yearlyData[year].expense += record.TotalAmt || 0;
             }
         });
     }
 
-    processYearly(luncheonDeposits, 'income');
-    processYearly(luncheonExpenses, 'expense');
+    aggregateData(luncheonDeposits, false, revBuckets);
+    aggregateData(luncheonExpenses, true, expBuckets);
 
-    const chartData = Object.values(yearlyData).sort((a, b) => a.year.localeCompare(b.year));
-    d3.select("#chart-events").html(""); // Clear loading text
+    // Convert to arrays and sort from Largest to Smallest
+    const sortedRev = Object.values(revBuckets).sort((a, b) => b.total - a.total);
+    const sortedExp = Object.values(expBuckets).sort((a, b) => b.total - a.total);
 
-    const margin = { top: 40, right: 30, bottom: 50, left: 60 },
-        width = 800 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
+    // Setup D3 Canvas
+    d3.select("#chart-current-year").html("");
+    const margin = { top: 20, right: 120, bottom: 20, left: 100 },
+        width = 900 - margin.left - margin.right,
+        barHeight = 60,
+        gap = 40,
+        height = (barHeight * 2) + gap + margin.top + margin.bottom;
 
-    const svg = d3.select("#chart-events")
+    const svg = d3.select("#chart-current-year")
         .append("svg")
-        .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
+        .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height}`)
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
     const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
-    const subgroups = ["income", "expense"];
-    const x = d3.scaleBand().domain(chartData.map(d => d.year)).range([0, width]).padding(0.2);
-    const xSubgroup = d3.scaleBand().domain(subgroups).range([0, x.bandwidth()]).padding(0.05);
+    // X Scale based on whichever is larger: Total Rev or Total Exp
+    const maxX = Math.max(totalRev, totalExp) || 1;
+    const x = d3.scaleLinear().domain([0, maxX]).range([0, width]);
 
-    const maxY = d3.max(chartData, d => Math.max(d.income, d.expense)) || 0;
-    const y = d3.scaleLinear().domain([0, maxY * 1.1]).nice().range([height, 0]);
-    const color = d3.scaleOrdinal().domain(subgroups).range(["#10b981", "#ef4444"]);
+    // Color Scales (Dark theme friendly)
+    const colorRev = d3.scaleOrdinal().range(["#059669", "#10b981", "#34d399", "#6ee7b7"]); // Greens
+    const colorExp = d3.scaleOrdinal().range(["#b91c1c", "#ef4444", "#f87171", "#fca5a5", "#fecaca"]); // Reds
 
-    // Draw Axes
-    svg.append("g")
-        .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x).tickSizeOuter(0))
-        .selectAll("text")
-        .style("font-size", "14px")
-        .style("font-weight", "bold")
-        .attr("transform", "translate(0, 5)");
+    // --- DRAW REVENUE BAR (Top) ---
+    svg.append("text")
+        .attr("x", -15).attr("y", barHeight / 2).attr("dy", ".35em")
+        .style("text-anchor", "end").style("fill", "#f8fafc").style("font-weight", "bold")
+        .text("REVENUE");
 
-    svg.append("g")
-        .call(d3.axisLeft(y).tickFormat(d => "$" + d.toLocaleString()).ticks(5))
-        .select(".domain").remove();
+    let currentX = 0;
+    sortedRev.forEach((bucket, i) => {
+        const segWidth = x(bucket.total);
+        const g = svg.append("g").attr("transform", `translate(${currentX}, 0)`);
 
-    svg.append("g")
-        .attr("class", "grid")
-        .call(d3.axisLeft(y).tickSize(-width).tickFormat("").ticks(5))
-        .style("stroke-dasharray", "3,3")
-        .style("opacity", 0.1);
+        g.append("rect")
+            .attr("width", segWidth).attr("height", barHeight)
+            .attr("fill", colorRev(i)).attr("stroke", "#0f172a").attr("stroke-width", 2)
+            .on("mouseover", (event) => showTooltip(event, bucket, false))
+            .on("mouseout", hideTooltip);
 
-    // Draw Bars
-    const yearGroups = svg.selectAll(".yearGroup")
-        .data(chartData).enter().append("g")
-        .attr("transform", d => `translate(${x(d.year)},0)`);
+        // Inline Label (Only if segment is wide enough, e.g., > 60px)
+        if (segWidth > 80) {
+            g.append("text")
+                .attr("x", segWidth / 2).attr("y", barHeight / 2).attr("dy", ".35em")
+                .style("text-anchor", "middle").style("fill", "#020617").style("font-size", "12px").style("font-weight", "600")
+                .style("pointer-events", "none") // let mouseover pass through to rect
+                .text(bucket.name);
+        }
+        currentX += segWidth;
+    });
 
-    yearGroups.selectAll("rect")
-        .data(d => subgroups.map(key => ({ key: key, value: d[key], year: d.year, fullData: d })))
-        .enter().append("rect")
-        .attr("x", d => xSubgroup(d.key))
-        .attr("y", height)
-        .attr("width", xSubgroup.bandwidth())
-        .attr("height", 0)
-        .attr("fill", d => color(d.key))
-        .attr("rx", 4)
-        .on("mouseover", function (event, d) {
-            d3.select(this).style("opacity", 0.8);
-            tooltip.transition().duration(200).style("opacity", 1);
-            tooltip.html(`
-                <strong>${d.year} Luncheon</strong>
-                <span class="inc">Revenue: $${d.fullData.income.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span><br>
-                <span class="exp">Expenses: $${d.fullData.expense.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span><br>
-                <hr style="margin:6px 0; border:0; border-top:1px solid #334155;">
-                <span style="color:#f8fafc; font-weight:bold;">Net: $${(d.fullData.income - d.fullData.expense).toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
-            `)
-                .style("left", (event.pageX + 15) + "px")
-                .style("top", (event.pageY - 28) + "px");
-        })
-        .on("mouseout", function () {
-            d3.select(this).style("opacity", 1);
-            tooltip.transition().duration(500).style("opacity", 0);
-        })
-        .transition().duration(1000).delay((d, i) => i * 100)
-        .attr("y", d => y(d.value))
-        .attr("height", d => height - y(d.value));
+    // Revenue Total Label
+    svg.append("text")
+        .attr("x", currentX + 15).attr("y", barHeight / 2).attr("dy", ".35em")
+        .style("fill", "#10b981").style("font-weight", "bold").style("font-size", "18px")
+        .text(`$${totalRev.toLocaleString(undefined, { minimumFractionDigits: 0 })}`);
 
-    // Legend
-    const legend = svg.append("g").attr("transform", `translate(${width - 150}, -20)`);
-    legend.append("rect").attr("x", 0).attr("y", 0).attr("width", 12).attr("height", 12).attr("fill", "#10b981").attr("rx", 2);
-    legend.append("text").attr("x", 20).attr("y", 10).text("Total Revenue").style("font-size", "12px").attr("alignment-baseline", "middle");
-    legend.append("rect").attr("x", 0).attr("y", 20).attr("width", 12).attr("height", 12).attr("fill", "#ef4444").attr("rx", 2);
-    legend.append("text").attr("x", 20).attr("y", 30).text("Total Expenses").style("font-size", "12px").attr("alignment-baseline", "middle");
+    // --- DRAW EXPENSE BAR (Bottom) ---
+    const expY = barHeight + gap;
+    svg.append("text")
+        .attr("x", -15).attr("y", expY + (barHeight / 2)).attr("dy", ".35em")
+        .style("text-anchor", "end").style("fill", "#f8fafc").style("font-weight", "bold")
+        .text("EXPENSES");
+
+    currentX = 0;
+    sortedExp.forEach((bucket, i) => {
+        const segWidth = x(bucket.total);
+        const g = svg.append("g").attr("transform", `translate(${currentX}, ${expY})`);
+
+        g.append("rect")
+            .attr("width", segWidth).attr("height", barHeight)
+            .attr("fill", colorExp(i)).attr("stroke", "#0f172a").attr("stroke-width", 2)
+            .on("mouseover", (event) => showTooltip(event, bucket, true))
+            .on("mouseout", hideTooltip);
+
+        // Inline Label
+        if (segWidth > 80) {
+            g.append("text")
+                .attr("x", segWidth / 2).attr("y", barHeight / 2).attr("dy", ".35em")
+                .style("text-anchor", "middle").style("fill", "#540000").style("font-size", "12px").style("font-weight", "600")
+                .style("pointer-events", "none")
+                .text(bucket.name);
+        }
+        currentX += segWidth;
+    });
+
+    // Expense Total Label
+    svg.append("text")
+        .attr("x", currentX + 15).attr("y", expY + (barHeight / 2)).attr("dy", ".35em")
+        .style("fill", "#ef4444").style("font-weight", "bold").style("font-size", "18px")
+        .text(`$${totalExp.toLocaleString(undefined, { minimumFractionDigits: 0 })}`);
 
 
+    // --- TOOLTIP LOGIC ---
+    function showTooltip(event, bucket, isExp) {
+        d3.select(event.currentTarget).style("opacity", 0.7);
+
+        // Sort transactions highest to lowest
+        bucket.txns.sort((a, b) => b.amount - a.amount);
+
+        const topTxns = bucket.txns.slice(0, 5);
+        let txnsHtml = topTxns.map(t =>
+            `<div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                <span style="color:#cbd5e1; padding-right:16px;">${t.date} | ${t.desc.substring(0, 25)}${t.desc.length > 25 ? '...' : ''}</span>
+                <span style="font-family:monospace;">$${t.amount.toLocaleString()}</span>
+            </div>`
+        ).join("");
+
+        const remaining = bucket.txns.length - 5;
+        if (remaining > 0) {
+            txnsHtml += `<div style="color:#64748b; margin-top:8px; font-size:11px; text-align:center;">+ ${remaining} more transactions...</div>`;
+        }
+
+        tooltip.transition().duration(200).style("opacity", 1);
+        tooltip.html(`
+            <div style="border-bottom: 1px solid #334155; padding-bottom: 8px; margin-bottom: 8px;">
+                <span style="color:${isExp ? '#ef4444' : '#10b981'}; font-weight:bold; font-size: 14px;">${bucket.name.toUpperCase()}</span><br>
+                <span style="color:#f8fafc; font-size: 18px; font-weight: 700;">$${bucket.total.toLocaleString()} Total</span>
+            </div>
+            ${txnsHtml}
+        `)
+            .style("left", (event.pageX + 15) + "px")
+            .style("top", (event.pageY - 28) + "px");
+    }
+
+    function hideTooltip(event) {
+        d3.select(event.currentTarget).style("opacity", 1);
+        tooltip.transition().duration(500).style("opacity", 0);
+    }
+    
     // ==========================================
     // PART 2: KPIs AND SPLIT TABLES
     // ==========================================
