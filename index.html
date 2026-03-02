@@ -58,73 +58,88 @@
             </div>
 
             <div class="chart-container" style="margin-bottom: 40px;">
-                <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 16px;">2025 Net Performance</h3>
+                <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 16px;">2025 Net Performance vs. Budget</h3>
                 <div id="chart-net-performance">Loading...</div>
             </div>
-
+            
+            <div class="chart-container" style="margin-bottom: 40px; border-top: 2px solid #1e293b; padding-top: 24px;">
+                <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 16px;">Budget vs. Actuals by Account</h3>
+                <div id="chart-budget-actuals">Loading...</div>
+            </div>
+            
             <div class="chart-container" style="margin-bottom: 40px; border-top: 2px solid #1e293b; padding-top: 24px;">
                 <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 4px;">Revenue Composition</h3>
-                <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">Click any category on the bar chart
-                    below to instantly filter the ledger.</p>
-                <div id="chart-rev-composition" style="margin-bottom: 24px;"></div>
-
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <h4 style="color: #f8fafc; margin: 0; font-size: 1.1rem;">Revenue Ledger</h4>
-                    <div style="display: flex; gap: 8px;">
-                        <input type="text" id="rev-search" onkeyup="searchTable('rev-table', this.value)"
-                            placeholder="Search contributors..."
-                            style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #f8fafc; width: 250px;">
-                        <button onclick="resetFilters('rev-table')"
-                            style="padding: 8px 16px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #f8fafc; cursor: pointer; font-weight: bold;">Reset</button>
+                <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">Click any category on the bar chart to instantly
+                    filter the ledger.</p>
+                <div id="chart-rev-composition" style="margin-bottom: 12px;"></div>
+            
+                <button onclick="toggleLedger('rev-ledger-container', this)"
+                    style="background: transparent; border: 1px solid #334155; color: #94a3b8; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; margin-bottom: 16px;">👁️
+                    Show Transaction Ledger</button>
+            
+                <div id="rev-ledger-container" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <h4 style="color: #f8fafc; margin: 0; font-size: 1.1rem;">Revenue Ledger</h4>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="rev-search" onkeyup="searchTable('rev-table', this.value)"
+                                placeholder="Search contributors..."
+                                style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #f8fafc; width: 250px;">
+                            <button onclick="resetFilters('rev-table')"
+                                style="padding: 8px 16px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #f8fafc; cursor: pointer; font-weight: bold;">Reset</button>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="data-table" id="rev-table">
+                            <thead>
+                                <tr>
+                                    <th onclick="sortTable('rev-table', 0)">Date ⇕</th>
+                                    <th onclick="sortTable('rev-table', 1)">Contributor ⇕</th>
+                                    <th onclick="sortTable('rev-table', 2)">Account ⇕</th>
+                                    <th onclick="sortTable('rev-table', 3)">Amount ⇕</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rev-tbody"></tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="table-wrapper">
-                    <table class="data-table" id="rev-table">
-                        <thead>
-                            <tr>
-                                <th onclick="sortTable('rev-table', 0)">Date ⇕</th>
-                                <th onclick="sortTable('rev-table', 1)">Contributor ⇕</th>
-                                <th onclick="sortTable('rev-table', 2)">Account ⇕</th>
-                                <th onclick="sortTable('rev-table', 3)">Amount ⇕</th>
-                            </tr>
-                        </thead>
-                        <tbody id="rev-tbody"></tbody>
-                    </table>
-                </div>
             </div>
-
+            
             <div class="chart-container" style="margin-bottom: 40px; border-top: 2px solid #1e293b; padding-top: 24px;">
                 <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 4px;">Expense Composition</h3>
-                <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">Click any category on the bar chart
-                    below to instantly filter the ledger.</p>
-                <div id="chart-exp-composition" style="margin-bottom: 24px;"></div>
-
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <h4 style="color: #f8fafc; margin: 0; font-size: 1.1rem;">Expense Ledger</h4>
-                    <div style="display: flex; gap: 8px;">
-                        <input type="text" id="exp-search" onkeyup="searchTable('exp-table', this.value)"
-                            placeholder="Search vendors..."
-                            style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #f8fafc; width: 250px;">
-                        <button onclick="resetFilters('exp-table')"
-                            style="padding: 8px 16px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #f8fafc; cursor: pointer; font-weight: bold;">Reset</button>
+                <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">Click any category on the bar chart to instantly
+                    filter the ledger.</p>
+                <div id="chart-exp-composition" style="margin-bottom: 12px;"></div>
+            
+                <button onclick="toggleLedger('exp-ledger-container', this)"
+                    style="background: transparent; border: 1px solid #334155; color: #94a3b8; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; margin-bottom: 16px;">👁️
+                    Show Transaction Ledger</button>
+            
+                <div id="exp-ledger-container" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <h4 style="color: #f8fafc; margin: 0; font-size: 1.1rem;">Expense Ledger</h4>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="exp-search" onkeyup="searchTable('exp-table', this.value)"
+                                placeholder="Search vendors..."
+                                style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #f8fafc; width: 250px;">
+                            <button onclick="resetFilters('exp-table')"
+                                style="padding: 8px 16px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #f8fafc; cursor: pointer; font-weight: bold;">Reset</button>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="data-table" id="exp-table">
+                            <thead>
+                                <tr>
+                                    <th onclick="sortTable('exp-table', 0)">Date ⇕</th>
+                                    <th onclick="sortTable('exp-table', 1)">Vendor ⇕</th>
+                                    <th onclick="sortTable('exp-table', 2)">Account ⇕</th>
+                                    <th onclick="sortTable('exp-table', 3)">Amount ⇕</th>
+                                </tr>
+                            </thead>
+                            <tbody id="exp-tbody"></tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="table-wrapper">
-                    <table class="data-table" id="exp-table">
-                        <thead>
-                            <tr>
-                                <th onclick="sortTable('exp-table', 0)">Date ⇕</th>
-                                <th onclick="sortTable('exp-table', 1)">Vendor ⇕</th>
-                                <th onclick="sortTable('exp-table', 2)">Account ⇕</th>
-                                <th onclick="sortTable('exp-table', 3)">Amount ⇕</th>
-                            </tr>
-                        </thead>
-                        <tbody id="exp-tbody"></tbody>
-                    </table>
-                </div>
             </div>
-
-        </div>
 
         <div id="page-gala" class="dashboard-page" style="display: none;">
             <h1>Winter Gala</h1>

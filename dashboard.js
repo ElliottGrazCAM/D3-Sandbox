@@ -40,17 +40,30 @@ d3.json("data.json").then(data => {
     }
 
     // ==========================================
-    // PART 1: THE 3-TIER EVENT DASHBOARD
+    // DATA AGGREGATION & DYNAMIC YEAR SETUP
     // ==========================================
-    const TARGET_YEAR = 2025;
+    const CURRENT_YEAR = new Date().getFullYear(); // 2026
+    const TARGET_YEAR = CURRENT_YEAR - 1; // Evaluates to 2025
+
+    // Update the UI Titles dynamically based on the target year
+    document.querySelectorAll("h3").forEach(h3 => {
+        if (h3.innerText.includes("2025")) {
+            h3.innerText = h3.innerText.replace("2025", TARGET_YEAR);
+        }
+    });
+
     const EVENT_MONTH = 10; // October
     const START_MONTH = EVENT_MONTH - 8;
     const END_MONTH = EVENT_MONTH + 2;
 
     const revBuckets = {};
     const expBuckets = {};
-    let totalRev = 0;
-    let totalExp = 0;
+    let totalRev = 0; let totalExp = 0;
+    let totalRevBudget = 0; let totalExpBudget = 0;
+
+    function initBucket(obj, name, id) {
+        if (!obj[name]) obj[name] = { name: name, id: id, total: 0, budget: 0, txns: [] };
+    }
 
     function aggregateData(records, isExpense, bucketsObj) {
         records.forEach(record => {
@@ -64,14 +77,17 @@ d3.json("data.json").then(data => {
                     if (!amt) return;
 
                     let acctName = "";
+                    let acctId = "";
                     if (isExpense && line.DetailType === "AccountBasedExpenseLineDetail") {
                         acctName = line.AccountBasedExpenseLineDetail.AccountRef.name.split(':').pop();
+                        acctId = line.AccountBasedExpenseLineDetail.AccountRef.value;
                     } else if (!isExpense && line.DetailType === "DepositLineDetail") {
                         acctName = line.DepositLineDetail.AccountRef.name.split(':').pop();
+                        acctId = line.DepositLineDetail.AccountRef.value;
                     }
 
                     if (acctName) {
-                        if (!bucketsObj[acctName]) bucketsObj[acctName] = { name: acctName, total: 0, txns: [] };
+                        initBucket(bucketsObj, acctName, acctId);
                         bucketsObj[acctName].total += amt;
 
                         let desc = line.Description || (record.EntityRef ? record.EntityRef.name : "Online Transaction");
@@ -88,22 +104,50 @@ d3.json("data.json").then(data => {
     aggregateData(luncheonDeposits, false, revBuckets);
     aggregateData(luncheonExpenses, true, expBuckets);
 
+    // ==========================================
+    // PARSE THE BUDGET FOR THE TARGET YEAR
+    // ==========================================
+    if (data.Budgets) {
+        // Find the budget that matches our dynamic TARGET_YEAR
+        const targetBudget = data.Budgets.find(b =>
+            (b.Name && b.Name.includes(TARGET_YEAR.toString())) ||
+            (b.StartDate && b.StartDate.startsWith(TARGET_YEAR.toString()))
+        );
+
+        if (targetBudget && targetBudget.Line) {
+            targetBudget.Line.forEach(line => {
+                const accId = line.AccountRef.value;
+                const amt = line.Amount;
+
+                Object.values(revBuckets).forEach(b => {
+                    if (b.id === accId) { b.budget += amt; totalRevBudget += amt; }
+                });
+                Object.values(expBuckets).forEach(b => {
+                    if (b.id === accId) { b.budget += amt; totalExpBudget += amt; }
+                });
+            });
+        }
+    }
+
     const sortedRev = Object.values(revBuckets).sort((a, b) => b.total - a.total);
     const sortedExp = Object.values(expBuckets).sort((a, b) => b.total - a.total);
     const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
-    // --- CHART 1: NET PERFORMANCE ---
+    // ==========================================
+    // CHART 1: NET PERFORMANCE W/ BUDGET OVERLAY
+    // ==========================================
     d3.select("#chart-net-performance").html("");
     const marginNet = { top: 30, right: 30, bottom: 30, left: 60 },
         widthNet = 800 - marginNet.left - marginNet.right,
-        heightNet = 300 - marginNet.top - marginNet.bottom;
+        heightNet = 250 - marginNet.top - marginNet.bottom;
 
     const svgNet = d3.select("#chart-net-performance")
         .append("svg").attr("viewBox", `0 0 ${widthNet + marginNet.left + marginNet.right} ${heightNet + marginNet.top + marginNet.bottom}`)
         .append("g").attr("transform", `translate(${marginNet.left},${marginNet.top})`);
 
     const xNet = d3.scaleBand().domain(["Total Revenue", "Total Expenses"]).range([0, widthNet]).padding(0.4);
-    const yNet = d3.scaleLinear().domain([0, Math.max(totalRev, totalExp) * 1.1 || 1]).range([heightNet, 0]);
+    const maxVal = Math.max(totalRev, totalExp, totalRevBudget, totalExpBudget) * 1.1 || 1;
+    const yNet = d3.scaleLinear().domain([0, maxVal]).range([heightNet, 0]);
 
     svgNet.append("g").attr("transform", `translate(0,${heightNet})`)
         .call(d3.axisBottom(xNet).tickSizeOuter(0)).selectAll("text").style("font-size", "14px").style("font-weight", "bold");
@@ -112,21 +156,81 @@ d3.json("data.json").then(data => {
     svgNet.select(".domain").remove();
 
     const netData = [
-        { label: "Total Revenue", value: totalRev, color: "#10b981" },
-        { label: "Total Expenses", value: totalExp, color: "#ef4444" }
+        { label: "Total Revenue", actual: totalRev, budget: totalRevBudget, color: "#10b981", bg: "rgba(16, 185, 129, 0.2)" },
+        { label: "Total Expenses", actual: totalExp, budget: totalExpBudget, color: "#ef4444", bg: "rgba(239, 68, 68, 0.2)" }
     ];
 
-    svgNet.selectAll(".net-bar").data(netData).enter().append("rect")
-        .attr("x", d => xNet(d.label)).attr("y", d => yNet(d.value))
-        .attr("width", xNet.bandwidth()).attr("height", d => heightNet - yNet(d.value))
-        .attr("fill", d => d.color).attr("rx", 4);
+    svgNet.selectAll(".bg-bar").data(netData).enter().append("rect")
+        .attr("x", d => xNet(d.label) - 10).attr("y", d => yNet(d.budget))
+        .attr("width", xNet.bandwidth() + 20).attr("height", d => heightNet - yNet(d.budget))
+        .attr("fill", d => d.bg).attr("rx", 4);
 
-    svgNet.selectAll(".net-label").data(netData).enter().append("text")
-        .attr("x", d => xNet(d.label) + xNet.bandwidth() / 2).attr("y", d => yNet(d.value) - 10)
-        .style("text-anchor", "middle").style("fill", "#f8fafc").style("font-weight", "bold").style("font-size", "14px")
-        .text(d => `$${d.value.toLocaleString(undefined, { minimumFractionDigits: 0 })}`);
+    svgNet.selectAll(".fg-bar").data(netData).enter().append("rect")
+        .attr("x", d => xNet(d.label)).attr("y", d => yNet(d.actual))
+        .attr("width", xNet.bandwidth()).attr("height", d => heightNet - yNet(d.actual))
+        .attr("fill", d => d.color).attr("rx", 4)
+        .on("mouseover", function (event, d) {
+            d3.select(this).style("opacity", 0.8);
+            tooltip.transition().duration(200).style("opacity", 1);
+            const diff = d.actual - d.budget;
+            const diffText = diff > 0 ? `+$${diff.toLocaleString()}` : `-$${Math.abs(diff).toLocaleString()}`;
+            tooltip.html(`
+                <div style="font-weight:bold; font-size:14px; margin-bottom:4px;">${d.label}</div>
+                <div>Actual: <b style="color:${d.color}">$${d.actual.toLocaleString()}</b></div>
+                <div>Budget: <b style="color:#cbd5e1">$${d.budget.toLocaleString()}</b></div>
+                <div style="font-size: 12px; margin-top:4px; color:#94a3b8;">Variance: ${diffText}</div>
+            `).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
+        })
+        .on("mouseout", function () {
+            d3.select(this).style("opacity", 1);
+            tooltip.transition().duration(500).style("opacity", 0);
+        });
 
-    // --- CHARTS 2 & 3: COMPOSITION BARS ---
+    // ==========================================
+    // CHART 1.5: ACCOUNT-LEVEL BUDGET VS ACTUALS
+    // ==========================================
+    d3.select("#chart-budget-actuals").html("");
+    const combinedData = [...sortedRev.map(d => ({ ...d, type: 'Rev' })), ...sortedExp.map(d => ({ ...d, type: 'Exp' }))];
+
+    const marginAcc = { top: 20, right: 30, bottom: 40, left: 120 },
+        widthAcc = 800 - marginAcc.left - marginAcc.right,
+        heightAcc = (combinedData.length * 40) || 100;
+
+    const svgAcc = d3.select("#chart-budget-actuals")
+        .append("svg").attr("viewBox", `0 0 ${widthAcc + marginAcc.left + marginAcc.right} ${heightAcc + marginAcc.top + marginAcc.bottom}`)
+        .append("g").attr("transform", `translate(${marginAcc.left},${marginAcc.top})`);
+
+    const yAcc = d3.scaleBand().domain(combinedData.map(d => d.name)).range([0, heightAcc]).padding(0.4);
+    const maxAccVal = d3.max(combinedData, d => Math.max(d.total, d.budget)) * 1.1 || 1;
+    const xAcc = d3.scaleLinear().domain([0, maxAccVal]).range([0, widthAcc]);
+
+    svgAcc.append("g").call(d3.axisLeft(yAcc).tickSize(0)).selectAll("text").style("font-size", "12px").style("fill", "#cbd5e1");
+    svgAcc.select(".domain").remove();
+
+    svgAcc.selectAll(".bg-acc").data(combinedData).enter().append("rect")
+        .attr("y", d => yAcc(d.name) - 4).attr("x", 0).attr("height", yAcc.bandwidth() + 8).attr("width", d => xAcc(d.budget))
+        .attr("fill", d => d.type === 'Rev' ? "rgba(16, 185, 129, 0.2)" : "rgba(239, 68, 68, 0.2)").attr("rx", 2);
+
+    svgAcc.selectAll(".fg-acc").data(combinedData).enter().append("rect")
+        .attr("y", d => yAcc(d.name)).attr("x", 0).attr("height", yAcc.bandwidth()).attr("width", d => xAcc(d.total))
+        .attr("fill", d => d.type === 'Rev' ? "#10b981" : "#ef4444").attr("rx", 2)
+        .on("mouseover", function (event, d) {
+            d3.select(this).style("opacity", 0.8);
+            tooltip.transition().duration(200).style("opacity", 1);
+            tooltip.html(`
+                <div style="font-weight:bold; font-size:14px; margin-bottom:4px;">${d.name}</div>
+                <div>Actual: <b>$${d.total.toLocaleString()}</b></div>
+                <div>Budget: <b>$${d.budget.toLocaleString()}</b></div>
+            `).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
+        })
+        .on("mouseout", function () {
+            d3.select(this).style("opacity", 1);
+            tooltip.transition().duration(500).style("opacity", 0);
+        });
+
+    // ==========================================
+    // CHARTS 2 & 3: COMPOSITION BARS
+    // ==========================================
     function drawCompositionChart(containerId, sortedData, totalAmount, colorScale, isExp) {
         d3.select(containerId).html("");
         const compHeight = 60, widthComp = 900;
@@ -296,3 +400,15 @@ function sortTable(tableId, columnIndex) {
 
     rows.forEach(row => tbody.appendChild(row));
 }
+
+// Toggle Ledger Visibility
+window.toggleLedger = function (containerId, btnElement) {
+    const container = document.getElementById(containerId);
+    if (container.style.display === "none") {
+        container.style.display = "block";
+        btnElement.innerText = "👁️‍🗨️ Hide Transaction Ledger";
+    } else {
+        container.style.display = "none";
+        btnElement.innerText = "👁️ Show Transaction Ledger";
+    }
+};
