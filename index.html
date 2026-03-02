@@ -70,9 +70,13 @@
 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <h4 style="color: #f8fafc; margin: 0; font-size: 1.1rem;">Revenue Ledger</h4>
-                    <input type="text" id="rev-search" onkeyup="searchTable('rev-table', this.value)"
-                        placeholder="Search contributors..."
-                        style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #f8fafc; width: 250px;">
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" id="rev-search" onkeyup="searchTable('rev-table', this.value)"
+                            placeholder="Search contributors..."
+                            style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #f8fafc; width: 250px;">
+                        <button onclick="resetFilters('rev-table')"
+                            style="padding: 8px 16px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #f8fafc; cursor: pointer; font-weight: bold;">Reset</button>
+                    </div>
                 </div>
                 <div class="table-wrapper">
                     <table class="data-table" id="rev-table">
@@ -97,9 +101,13 @@
 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <h4 style="color: #f8fafc; margin: 0; font-size: 1.1rem;">Expense Ledger</h4>
-                    <input type="text" id="exp-search" onkeyup="searchTable('exp-table', this.value)"
-                        placeholder="Search vendors..."
-                        style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #f8fafc; width: 250px;">
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" id="exp-search" onkeyup="searchTable('exp-table', this.value)"
+                            placeholder="Search vendors..."
+                            style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #f8fafc; width: 250px;">
+                        <button onclick="resetFilters('exp-table')"
+                            style="padding: 8px 16px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #f8fafc; cursor: pointer; font-weight: bold;">Reset</button>
+                    </div>
                 </div>
                 <div class="table-wrapper">
                     <table class="data-table" id="exp-table">

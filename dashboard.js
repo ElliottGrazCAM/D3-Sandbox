@@ -1,50 +1,43 @@
 d3.json("data.json").then(data => {
 
     // ==========================================
-    // THE STRICT FILTER: ONLY "LUNCHEON" DATA
+    // THE HIERARCHY FILTER: DYNAMIC & ACCURATE
     // ==========================================
+    const LUNCHEON_REV_PARENT = "Events and Programs:Annual Luncheon Revenue";
+    const LUNCHEON_EXP_PARENT = "Events and Program Expenses:Annual Luncheon Expenses";
+
     const luncheonDeposits = [];
     const luncheonExpenses = [];
 
-    // Filter Deposits
     if (data.Deposits) {
         data.Deposits.forEach(record => {
             let recordHasLuncheon = false;
             const validLines = [];
             record.Line.forEach(line => {
                 if (line.Amount && line.DetailType === "DepositLineDetail" && line.DepositLineDetail.AccountRef) {
-                    const accountName = line.DepositLineDetail.AccountRef.name.toLowerCase();
-                    if (accountName.includes("luncheon")) {
+                    const accountName = line.DepositLineDetail.AccountRef.name || "";
+                    if (accountName.startsWith(LUNCHEON_REV_PARENT)) {
                         recordHasLuncheon = true;
                         validLines.push(line);
                     }
                 }
             });
-            // If this transaction belongs to the luncheon, keep it (with only the valid lines)
-            if (recordHasLuncheon) {
-                luncheonDeposits.push({ ...record, Line: validLines });
-            }
+            if (recordHasLuncheon) luncheonDeposits.push({ ...record, Line: validLines });
         });
     }
 
-    // Filter Expenses
     if (data.Expenses) {
         data.Expenses.forEach(record => {
             let recordHasLuncheon = false;
             record.Line.forEach(line => {
                 if (line.DetailType === "AccountBasedExpenseLineDetail" && line.AccountBasedExpenseLineDetail.AccountRef) {
-                    const accountName = line.AccountBasedExpenseLineDetail.AccountRef.name.toLowerCase();
-                    if (accountName.includes("luncheon")) {
-                        recordHasLuncheon = true;
-                    }
+                    const accountName = line.AccountBasedExpenseLineDetail.AccountRef.name || "";
+                    if (accountName.startsWith(LUNCHEON_EXP_PARENT)) recordHasLuncheon = true;
                 }
             });
-            if (recordHasLuncheon) {
-                luncheonExpenses.push(record);
-            }
+            if (recordHasLuncheon) luncheonExpenses.push(record);
         });
     }
-
 
     // ==========================================
     // PART 1: THE 3-TIER EVENT DASHBOARD
@@ -59,7 +52,6 @@ d3.json("data.json").then(data => {
     let totalRev = 0;
     let totalExp = 0;
 
-    // Aggregate Data
     function aggregateData(records, isExpense, bucketsObj) {
         records.forEach(record => {
             const date = new Date(record.TxnDate);
@@ -79,9 +71,7 @@ d3.json("data.json").then(data => {
                     }
 
                     if (acctName) {
-                        if (!bucketsObj[acctName]) {
-                            bucketsObj[acctName] = { name: acctName, total: 0, txns: [] };
-                        }
+                        if (!bucketsObj[acctName]) bucketsObj[acctName] = { name: acctName, total: 0, txns: [] };
                         bucketsObj[acctName].total += amt;
 
                         let desc = line.Description || (record.EntityRef ? record.EntityRef.name : "Online Transaction");
@@ -102,7 +92,7 @@ d3.json("data.json").then(data => {
     const sortedExp = Object.values(expBuckets).sort((a, b) => b.total - a.total);
     const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
-    // --- CHART 1: NET PERFORMANCE (Vertical Bar) ---
+    // --- CHART 1: NET PERFORMANCE ---
     d3.select("#chart-net-performance").html("");
     const marginNet = { top: 30, right: 30, bottom: 30, left: 60 },
         widthNet = 800 - marginNet.left - marginNet.right,
@@ -136,7 +126,7 @@ d3.json("data.json").then(data => {
         .style("text-anchor", "middle").style("fill", "#f8fafc").style("font-weight", "bold").style("font-size", "14px")
         .text(d => `$${d.value.toLocaleString(undefined, { minimumFractionDigits: 0 })}`);
 
-    // --- CHARTS 2 & 3: COMPOSITION BARS WITH CROSS-FILTERING ---
+    // --- CHARTS 2 & 3: COMPOSITION BARS ---
     function drawCompositionChart(containerId, sortedData, totalAmount, colorScale, isExp) {
         d3.select(containerId).html("");
         const compHeight = 60, widthComp = 900;
@@ -151,7 +141,7 @@ d3.json("data.json").then(data => {
             g.append("rect")
                 .attr("width", segWidth).attr("height", compHeight)
                 .attr("fill", colorScale(i)).attr("stroke", "#0f172a").attr("stroke-width", 2)
-                .style("cursor", "pointer") // Makes it look clickable
+                .style("cursor", "pointer")
                 .on("mouseover", (event) => showTooltip(event, bucket, isExp, totalAmount))
                 .on("mouseout", hideTooltip)
                 .on("click", () => filterByAccount(isExp ? 'exp-table' : 'rev-table', bucket.name, isExp));
@@ -169,7 +159,6 @@ d3.json("data.json").then(data => {
     drawCompositionChart("#chart-rev-composition", sortedRev, totalRev, d3.scaleOrdinal().range(["#059669", "#10b981", "#34d399", "#6ee7b7"]), false);
     drawCompositionChart("#chart-exp-composition", sortedExp, totalExp, d3.scaleOrdinal().range(["#b91c1c", "#ef4444", "#f87171", "#fca5a5", "#fecaca"]), true);
 
-    // --- ADVANCED TOOLTIP LOGIC ---
     function showTooltip(event, bucket, isExp, grandTotal) {
         d3.select(event.currentTarget).style("opacity", 0.7);
         tooltip.transition().duration(200).style("opacity", 1);
@@ -196,9 +185,7 @@ d3.json("data.json").then(data => {
                 </div>`
             ).join("");
 
-            if (bucket.txns.length - 5 > 0) {
-                innerHtml += `<div style="color:#64748b; margin-top:8px; font-size:11px; text-align:center;">+ ${bucket.txns.length - 5} more transactions...</div>`;
-            }
+            if (bucket.txns.length - 5 > 0) innerHtml += `<div style="color:#64748b; margin-top:8px; font-size:11px; text-align:center;">+ ${bucket.txns.length - 5} more transactions...</div>`;
         } else {
             innerHtml += `
                 <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;">
@@ -226,11 +213,11 @@ d3.json("data.json").then(data => {
         let allTxns = [];
         Object.values(buckets).forEach(b => b.txns.forEach(t => allTxns.push({ ...t, account: b.name })));
 
-        allTxns.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort newest first
+        allTxns.sort((a, b) => new Date(b.date) - new Date(a.date));
 
         allTxns.forEach(t => {
             const tr = document.createElement("tr");
-            tr.setAttribute("data-account", t.account); // Hidden tag for chart filtering
+            tr.setAttribute("data-account", t.account);
             tr.innerHTML = `
                 <td>${t.date}</td>
                 <td><strong>${t.desc}</strong></td>
@@ -244,133 +231,53 @@ d3.json("data.json").then(data => {
     populateTable("rev-tbody", revBuckets, false);
     populateTable("exp-tbody", expBuckets, true);
 
-    // Filter states
     let activeRevFilter = null;
     let activeExpFilter = null;
 
-    // Cross-Filter function triggered by clicking the chart
     window.filterByAccount = function (tableId, accountName, isExp) {
         if (isExp) {
             activeExpFilter = (activeExpFilter === accountName) ? null : accountName;
             accountName = activeExpFilter;
-            document.getElementById('exp-search').value = ""; // Clear text search
+            document.getElementById('exp-search').value = "";
         } else {
             activeRevFilter = (activeRevFilter === accountName) ? null : accountName;
             accountName = activeRevFilter;
-            document.getElementById('rev-search').value = ""; // Clear text search
+            document.getElementById('rev-search').value = "";
         }
 
         const rows = document.getElementById(tableId).querySelector("tbody").getElementsByTagName("tr");
         for (let row of rows) {
-            if (!accountName || row.getAttribute("data-account") === accountName) row.style.display = "";
-            else row.style.display = "none";
+            row.style.display = (!accountName || row.getAttribute("data-account") === accountName) ? "" : "none";
         }
     };
 
-    // Text Search Function
     window.searchTable = function (tableId, query) {
         query = query.toLowerCase();
-
-        // Reset chart filters if typing
         if (tableId === 'rev-table') activeRevFilter = null;
         if (tableId === 'exp-table') activeExpFilter = null;
 
         const rows = document.getElementById(tableId).querySelector("tbody").getElementsByTagName("tr");
-        for (let row of rows) {
-            row.style.display = row.innerText.toLowerCase().includes(query) ? "" : "none";
-        }
+        for (let row of rows) row.style.display = row.innerText.toLowerCase().includes(query) ? "" : "none";
     };
-    
-    // ==========================================
-    // PART 2: KPIs AND SPLIT TABLES
-    // ==========================================
-    let totalRegistrants = 0;
-    let totalSponsors = 0;
-    let totalIncome = 0;
-    let totalExpense = 0;
-    const revenueRows = [];
-    const expenseRows = [];
 
-    // Note: We are now looping over the FILTERED arrays
-    luncheonDeposits.forEach(record => {
-        const date = record.TxnDate;
-        record.Line.forEach(line => {
-            totalIncome += line.Amount;
-
-            const accountName = line.DepositLineDetail.AccountRef.name.toLowerCase();
-            const isSponsor = accountName.includes("sponsor");
-            if (isSponsor) totalSponsors++; else totalRegistrants++;
-
-            const typeClass = isSponsor ? 'sponsor' : 'registrant';
-            const typeLabel = isSponsor ? 'Sponsor' : 'Registrant';
-
-            let name = "Online Contributor";
-            if (line.Entity?.EntityRef?.name) name = line.Entity.EntityRef.name;
-            else if (line.Description) name = line.Description;
-
-            revenueRows.push({
-                date: date,
-                name: name,
-                typeHTML: `<span class="badge ${typeClass}">${typeLabel}</span>`,
-                amount: line.Amount
-            });
-        });
-    });
-
-    luncheonExpenses.forEach(record => {
-        const date = record.TxnDate;
-        const name = record.EntityRef?.name || "Vendor";
-        totalExpense += record.TotalAmt || 0;
-
-        expenseRows.push({
-            date: date,
-            name: name,
-            amount: record.TotalAmt || 0
-        });
-    });
-
-    // Update KPIs
-    document.getElementById("kpi-registrants").innerText = totalRegistrants.toLocaleString();
-    document.getElementById("kpi-sponsors").innerText = totalSponsors.toLocaleString();
-    document.getElementById("kpi-net").innerText = "$" + (totalIncome - totalExpense).toLocaleString(undefined, { minimumFractionDigits: 2 });
-
-    // Populate Revenue Table
-    revenueRows.sort((a, b) => new Date(b.date) - new Date(a.date));
-    const revBody = document.getElementById("rev-tbody");
-    revenueRows.forEach(row => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td>${row.date}</td>
-            <td><strong>${row.name}</strong></td>
-            <td>${row.typeHTML}</td>
-            <td style="font-family: monospace; font-size:14px; color:#10b981;">$${row.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
-        `;
-        revBody.appendChild(tr);
-    });
-
-    // Populate Expense Table
-    expenseRows.sort((a, b) => new Date(b.date) - new Date(a.date));
-    const expBody = document.getElementById("exp-tbody");
-    expenseRows.forEach(row => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td>${row.date}</td>
-            <td><strong>${row.name}</strong></td>
-            <td style="font-family: monospace; font-size:14px; color:#ef4444;">$${row.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
-        `;
-        expBody.appendChild(tr);
-    });
+    window.resetFilters = function (tableId) {
+        if (tableId === 'rev-table') {
+            activeRevFilter = null;
+            document.getElementById('rev-search').value = "";
+        } else {
+            activeExpFilter = null;
+            document.getElementById('exp-search').value = "";
+        }
+        const rows = document.getElementById(tableId).querySelector("tbody").getElementsByTagName("tr");
+        for (let row of rows) row.style.display = "";
+    };
 
 }).catch(error => {
     console.error("Error loading data:", error);
-    d3.select("#chart-events").html("<p style='color:red;'>Waiting for data...</p>");
 });
 
-// ==========================================
-// PART 3: THE DYNAMIC SORTING FUNCTION
-// ==========================================
+// Sorting Logic
 let sortDirs = { 'rev-table': false, 'exp-table': false };
-
 function sortTable(tableId, columnIndex) {
     const table = document.getElementById(tableId);
     const tbody = table.querySelector("tbody");
@@ -383,9 +290,7 @@ function sortTable(tableId, columnIndex) {
         let cellA = a.cells[columnIndex].innerText.replace(/[^0-9a-zA-Z.-]+/g, "");
         let cellB = b.cells[columnIndex].innerText.replace(/[^0-9a-zA-Z.-]+/g, "");
 
-        if (!isNaN(cellA) && !isNaN(cellB)) {
-            return isAscending ? cellA - cellB : cellB - cellA;
-        }
+        if (!isNaN(cellA) && !isNaN(cellB)) return isAscending ? cellA - cellB : cellB - cellA;
         return isAscending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
     });
 
