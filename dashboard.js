@@ -105,10 +105,10 @@ d3.json("data.json").then(data => {
     aggregateData(luncheonExpenses, true, expBuckets);
 
     // ==========================================
-    // PARSE THE BUDGET FOR THE TARGET YEAR
+    // PARSE THE BUDGET (SUMMING MONTHLY LINES)
     // ==========================================
     if (data.Budgets) {
-        // Find the budget that matches our dynamic TARGET_YEAR
+        // Find the "2025 Master Budget"
         const targetBudget = data.Budgets.find(b =>
             (b.Name && b.Name.includes(TARGET_YEAR.toString())) ||
             (b.StartDate && b.StartDate.startsWith(TARGET_YEAR.toString()))
@@ -116,22 +116,41 @@ d3.json("data.json").then(data => {
 
         if (targetBudget && targetBudget.Line) {
             targetBudget.Line.forEach(line => {
-                const accId = line.AccountRef.value;
-                const amt = line.Amount;
+                // If QBO provides a flat Amount on the main line, use it.
+                // Otherwise, loop through the monthly sub-lines and sum them up.
+                let annualAmt = 0;
+                if (line.Amount) {
+                    annualAmt = parseFloat(line.Amount);
+                } else if (line.Line && Array.isArray(line.Line)) {
+                    // This handles the $916.67 monthly installments you see in your JSON
+                    line.Line.forEach(monthLine => {
+                        const mDate = new Date(monthLine.BudgetDate);
+                        if (mDate.getFullYear() === TARGET_YEAR) {
+                            annualAmt += parseFloat(monthLine.Amount || 0);
+                        }
+                    });
+                }
 
-                Object.values(revBuckets).forEach(b => {
-                    if (b.id === accId) { b.budget += amt; totalRevBudget += amt; }
-                });
-                Object.values(expBuckets).forEach(b => {
-                    if (b.id === accId) { b.budget += amt; totalExpBudget += amt; }
-                });
+                if (annualAmt === 0) return;
+
+                const accName = line.AccountRef.name || "";
+                const accId = line.AccountRef.value;
+
+                // Route to Revenue or Expenses using our Hierarchy Filter
+                if (accName.startsWith(LUNCHEON_REV_PARENT)) {
+                    const shortName = accName.split(':').pop();
+                    initBucket(revBuckets, shortName, accId);
+                    revBuckets[shortName].budget += annualAmt;
+                    totalRevBudget += annualAmt;
+                } else if (accName.startsWith(LUNCHEON_EXP_PARENT)) {
+                    const shortName = accName.split(':').pop();
+                    initBucket(expBuckets, shortName, accId);
+                    expBuckets[shortName].budget += annualAmt;
+                    totalExpBudget += annualAmt;
+                }
             });
         }
     }
-
-    const sortedRev = Object.values(revBuckets).sort((a, b) => b.total - a.total);
-    const sortedExp = Object.values(expBuckets).sort((a, b) => b.total - a.total);
-    const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
     // ==========================================
     // CHART 1: NET PERFORMANCE W/ BUDGET OVERLAY
