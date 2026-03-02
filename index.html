@@ -61,18 +61,26 @@
                 <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 16px;">2025 Net Performance</h3>
                 <div id="chart-net-performance">Loading...</div>
             </div>
-            
+
             <div class="chart-container" style="margin-bottom: 40px; border-top: 2px solid #1e293b; padding-top: 24px;">
-                <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 8px;">Revenue Composition</h3>
+                <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 4px;">Revenue Composition</h3>
+                <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">Click any category on the bar chart
+                    below to instantly filter the ledger.</p>
                 <div id="chart-rev-composition" style="margin-bottom: 24px;"></div>
-            
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <h4 style="color: #f8fafc; margin: 0; font-size: 1.1rem;">Revenue Ledger</h4>
+                    <input type="text" id="rev-search" onkeyup="searchTable('rev-table', this.value)"
+                        placeholder="Search contributors..."
+                        style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #f8fafc; width: 250px;">
+                </div>
                 <div class="table-wrapper">
                     <table class="data-table" id="rev-table">
                         <thead>
                             <tr>
                                 <th onclick="sortTable('rev-table', 0)">Date ⇕</th>
                                 <th onclick="sortTable('rev-table', 1)">Contributor ⇕</th>
-                                <th onclick="sortTable('rev-table', 2)">Type ⇕</th>
+                                <th onclick="sortTable('rev-table', 2)">Account ⇕</th>
                                 <th onclick="sortTable('rev-table', 3)">Amount ⇕</th>
                             </tr>
                         </thead>
@@ -80,18 +88,27 @@
                     </table>
                 </div>
             </div>
-            
+
             <div class="chart-container" style="margin-bottom: 40px; border-top: 2px solid #1e293b; padding-top: 24px;">
-                <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 8px;">Expense Composition</h3>
+                <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 4px;">Expense Composition</h3>
+                <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">Click any category on the bar chart
+                    below to instantly filter the ledger.</p>
                 <div id="chart-exp-composition" style="margin-bottom: 24px;"></div>
-            
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <h4 style="color: #f8fafc; margin: 0; font-size: 1.1rem;">Expense Ledger</h4>
+                    <input type="text" id="exp-search" onkeyup="searchTable('exp-table', this.value)"
+                        placeholder="Search vendors..."
+                        style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #f8fafc; width: 250px;">
+                </div>
                 <div class="table-wrapper">
                     <table class="data-table" id="exp-table">
                         <thead>
                             <tr>
                                 <th onclick="sortTable('exp-table', 0)">Date ⇕</th>
                                 <th onclick="sortTable('exp-table', 1)">Vendor ⇕</th>
-                                <th onclick="sortTable('exp-table', 2)">Amount ⇕</th>
+                                <th onclick="sortTable('exp-table', 2)">Account ⇕</th>
+                                <th onclick="sortTable('exp-table', 3)">Amount ⇕</th>
                             </tr>
                         </thead>
                         <tbody id="exp-tbody"></tbody>
@@ -99,44 +116,6 @@
                 </div>
             </div>
 
-            <div class="tables-grid">
-
-                <div class="table-card">
-                    <h3>Revenue Ledger</h3>
-                    <div class="table-wrapper">
-                        <table class="data-table" id="rev-table">
-                            <thead>
-                                <tr>
-                                    <th onclick="sortTable('rev-table', 0)">Date ⇕</th>
-                                    <th onclick="sortTable('rev-table', 1)">Contributor ⇕</th>
-                                    <th onclick="sortTable('rev-table', 2)">Type ⇕</th>
-                                    <th onclick="sortTable('rev-table', 3)">Amount ⇕</th>
-                                </tr>
-                            </thead>
-                            <tbody id="rev-tbody">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="table-card">
-                    <h3>Expense Ledger</h3>
-                    <div class="table-wrapper">
-                        <table class="data-table" id="exp-table">
-                            <thead>
-                                <tr>
-                                    <th onclick="sortTable('exp-table', 0)">Date ⇕</th>
-                                    <th onclick="sortTable('exp-table', 1)">Vendor ⇕</th>
-                                    <th onclick="sortTable('exp-table', 2)">Amount ⇕</th>
-                                </tr>
-                            </thead>
-                            <tbody id="exp-tbody">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
         </div>
 
         <div id="page-gala" class="dashboard-page" style="display: none;">

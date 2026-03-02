@@ -100,32 +100,25 @@ d3.json("data.json").then(data => {
 
     const sortedRev = Object.values(revBuckets).sort((a, b) => b.total - a.total);
     const sortedExp = Object.values(expBuckets).sort((a, b) => b.total - a.total);
-
     const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
-    // --- CHART 1: NET PERFORMANCE (Vertical Bar Chart) ---
+    // --- CHART 1: NET PERFORMANCE (Vertical Bar) ---
     d3.select("#chart-net-performance").html("");
     const marginNet = { top: 30, right: 30, bottom: 30, left: 60 },
         widthNet = 800 - marginNet.left - marginNet.right,
         heightNet = 300 - marginNet.top - marginNet.bottom;
 
     const svgNet = d3.select("#chart-net-performance")
-        .append("svg")
-        .attr("viewBox", `0 0 ${widthNet + marginNet.left + marginNet.right} ${heightNet + marginNet.top + marginNet.bottom}`)
-        .append("g")
-        .attr("transform", `translate(${marginNet.left},${marginNet.top})`);
+        .append("svg").attr("viewBox", `0 0 ${widthNet + marginNet.left + marginNet.right} ${heightNet + marginNet.top + marginNet.bottom}`)
+        .append("g").attr("transform", `translate(${marginNet.left},${marginNet.top})`);
 
     const xNet = d3.scaleBand().domain(["Total Revenue", "Total Expenses"]).range([0, widthNet]).padding(0.4);
-    const maxNet = Math.max(totalRev, totalExp) * 1.1 || 1;
-    const yNet = d3.scaleLinear().domain([0, maxNet]).range([heightNet, 0]);
+    const yNet = d3.scaleLinear().domain([0, Math.max(totalRev, totalExp) * 1.1 || 1]).range([heightNet, 0]);
 
     svgNet.append("g").attr("transform", `translate(0,${heightNet})`)
-        .call(d3.axisBottom(xNet).tickSizeOuter(0))
-        .selectAll("text").style("font-size", "14px").style("font-weight", "bold");
-
+        .call(d3.axisBottom(xNet).tickSizeOuter(0)).selectAll("text").style("font-size", "14px").style("font-weight", "bold");
     svgNet.append("g").attr("class", "grid")
-        .call(d3.axisLeft(yNet).tickSize(-widthNet).tickFormat(d => "$" + d.toLocaleString()).ticks(5))
-        .style("stroke-dasharray", "3,3").style("opacity", 0.1);
+        .call(d3.axisLeft(yNet).tickSize(-widthNet).tickFormat(d => "$" + d.toLocaleString()).ticks(5)).style("stroke-dasharray", "3,3").style("opacity", 0.1);
     svgNet.select(".domain").remove();
 
     const netData = [
@@ -133,32 +126,21 @@ d3.json("data.json").then(data => {
         { label: "Total Expenses", value: totalExp, color: "#ef4444" }
     ];
 
-    svgNet.selectAll(".net-bar")
-        .data(netData).enter().append("rect")
-        .attr("x", d => xNet(d.label))
-        .attr("y", d => yNet(d.value))
-        .attr("width", xNet.bandwidth())
-        .attr("height", d => heightNet - yNet(d.value))
-        .attr("fill", d => d.color)
-        .attr("rx", 4);
+    svgNet.selectAll(".net-bar").data(netData).enter().append("rect")
+        .attr("x", d => xNet(d.label)).attr("y", d => yNet(d.value))
+        .attr("width", xNet.bandwidth()).attr("height", d => heightNet - yNet(d.value))
+        .attr("fill", d => d.color).attr("rx", 4);
 
-    // Labels on top of bars
-    svgNet.selectAll(".net-label")
-        .data(netData).enter().append("text")
-        .attr("x", d => xNet(d.label) + xNet.bandwidth() / 2)
-        .attr("y", d => yNet(d.value) - 10)
+    svgNet.selectAll(".net-label").data(netData).enter().append("text")
+        .attr("x", d => xNet(d.label) + xNet.bandwidth() / 2).attr("y", d => yNet(d.value) - 10)
         .style("text-anchor", "middle").style("fill", "#f8fafc").style("font-weight", "bold").style("font-size", "14px")
         .text(d => `$${d.value.toLocaleString(undefined, { minimumFractionDigits: 0 })}`);
 
-    // --- HELPER FUNCTION FOR HORIZONTAL BARS ---
+    // --- CHARTS 2 & 3: COMPOSITION BARS WITH CROSS-FILTERING ---
     function drawCompositionChart(containerId, sortedData, totalAmount, colorScale, isExp) {
         d3.select(containerId).html("");
-        const compHeight = 60;
-        const widthComp = 900;
-
-        const svgComp = d3.select(containerId).append("svg")
-            .attr("viewBox", `0 0 ${widthComp} ${compHeight}`);
-
+        const compHeight = 60, widthComp = 900;
+        const svgComp = d3.select(containerId).append("svg").attr("viewBox", `0 0 ${widthComp} ${compHeight}`);
         const xComp = d3.scaleLinear().domain([0, totalAmount || 1]).range([0, widthComp]);
         let currentX = 0;
 
@@ -169,44 +151,44 @@ d3.json("data.json").then(data => {
             g.append("rect")
                 .attr("width", segWidth).attr("height", compHeight)
                 .attr("fill", colorScale(i)).attr("stroke", "#0f172a").attr("stroke-width", 2)
+                .style("cursor", "pointer") // Makes it look clickable
                 .on("mouseover", (event) => showTooltip(event, bucket, isExp, totalAmount))
-                .on("mouseout", hideTooltip);
+                .on("mouseout", hideTooltip)
+                .on("click", () => filterByAccount(isExp ? 'exp-table' : 'rev-table', bucket.name, isExp));
 
             if (segWidth > 80) {
                 g.append("text")
                     .attr("x", segWidth / 2).attr("y", compHeight / 2).attr("dy", ".35em")
                     .style("text-anchor", "middle").style("fill", isExp ? "#540000" : "#020617").style("font-size", "12px").style("font-weight", "600")
-                    .style("pointer-events", "none")
-                    .text(bucket.name);
+                    .style("pointer-events", "none").text(bucket.name);
             }
             currentX += segWidth;
         });
     }
 
-    // DRAW CHART 2: REVENUE COMPOSITION
-    const colorRev = d3.scaleOrdinal().range(["#059669", "#10b981", "#34d399", "#6ee7b7"]);
-    drawCompositionChart("#chart-rev-composition", sortedRev, totalRev, colorRev, false);
-
-    // DRAW CHART 3: EXPENSE COMPOSITION
-    const colorExp = d3.scaleOrdinal().range(["#b91c1c", "#ef4444", "#f87171", "#fca5a5", "#fecaca"]);
-    drawCompositionChart("#chart-exp-composition", sortedExp, totalExp, colorExp, true);
+    drawCompositionChart("#chart-rev-composition", sortedRev, totalRev, d3.scaleOrdinal().range(["#059669", "#10b981", "#34d399", "#6ee7b7"]), false);
+    drawCompositionChart("#chart-exp-composition", sortedExp, totalExp, d3.scaleOrdinal().range(["#b91c1c", "#ef4444", "#f87171", "#fca5a5", "#fecaca"]), true);
 
     // --- ADVANCED TOOLTIP LOGIC ---
     function showTooltip(event, bucket, isExp, grandTotal) {
         d3.select(event.currentTarget).style("opacity", 0.7);
         tooltip.transition().duration(200).style("opacity", 1);
+        const percent = ((bucket.total / grandTotal) * 100).toFixed(1);
 
         let innerHtml = `
             <div style="border-bottom: 1px solid #334155; padding-bottom: 8px; margin-bottom: 8px;">
                 <span style="color:${isExp ? '#ef4444' : '#10b981'}; font-weight:bold; font-size: 14px;">${bucket.name.toUpperCase()}</span><br>
                 <span style="color:#f8fafc; font-size: 18px; font-weight: 700;">$${bucket.total.toLocaleString()} Total</span>
             </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px; border-bottom: 1px dashed #475569; padding-bottom: 8px;">
+                <span style="color:#94a3b8;">Share of Total:</span> 
+                <span style="color:#f8fafc; font-weight:bold;">${percent}%</span>
+            </div>
         `;
 
         if (isExp) {
             bucket.txns.sort((a, b) => b.amount - a.amount);
             const topTxns = bucket.txns.slice(0, 5);
-
             innerHtml += topTxns.map(t =>
                 `<div style="display:flex; justify-content:space-between; margin-bottom:4px;">
                     <span style="color:#cbd5e1; padding-right:16px;">${t.date} | ${t.desc.substring(0, 25)}${t.desc.length > 25 ? '...' : ''}</span>
@@ -214,40 +196,90 @@ d3.json("data.json").then(data => {
                 </div>`
             ).join("");
 
-            const remaining = bucket.txns.length - 5;
-            if (remaining > 0) {
-                innerHtml += `<div style="color:#64748b; margin-top:8px; font-size:11px; text-align:center;">+ ${remaining} more transactions...</div>`;
+            if (bucket.txns.length - 5 > 0) {
+                innerHtml += `<div style="color:#64748b; margin-top:8px; font-size:11px; text-align:center;">+ ${bucket.txns.length - 5} more transactions...</div>`;
             }
         } else {
-            const count = bucket.txns.length;
-            const avg = bucket.total / count;
-            const percent = ((bucket.total / grandTotal) * 100).toFixed(1);
-
             innerHtml += `
                 <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;">
                     <span style="color:#94a3b8;">Total Contributions:</span> 
-                    <span style="color:#f8fafc; font-weight:bold;">${count}</span>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;">
-                    <span style="color:#94a3b8;">Average Amount:</span> 
-                    <span style="color:#f8fafc; font-weight:bold;">$${avg.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    <span style="color:#f8fafc; font-weight:bold;">${bucket.txns.length}</span>
                 </div>
                 <div style="display:flex; justify-content:space-between; font-size:13px;">
-                    <span style="color:#94a3b8;">Share of Revenue:</span> 
-                    <span style="color:#f8fafc; font-weight:bold;">${percent}%</span>
+                    <span style="color:#94a3b8;">Average Amount:</span> 
+                    <span style="color:#f8fafc; font-weight:bold;">$${(bucket.total / bucket.txns.length).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
             `;
         }
-
-        tooltip.html(innerHtml)
-            .style("left", (event.pageX + 15) + "px")
-            .style("top", (event.pageY - 28) + "px");
+        tooltip.html(innerHtml).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
     }
 
     function hideTooltip(event) {
         d3.select(event.currentTarget).style("opacity", 1);
         tooltip.transition().duration(500).style("opacity", 0);
     }
+
+    // --- POPULATE TABLES & SEARCH LOGIC ---
+    function populateTable(tbodyId, buckets, isExp) {
+        const tbody = document.getElementById(tbodyId);
+        tbody.innerHTML = "";
+        let allTxns = [];
+        Object.values(buckets).forEach(b => b.txns.forEach(t => allTxns.push({ ...t, account: b.name })));
+
+        allTxns.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort newest first
+
+        allTxns.forEach(t => {
+            const tr = document.createElement("tr");
+            tr.setAttribute("data-account", t.account); // Hidden tag for chart filtering
+            tr.innerHTML = `
+                <td>${t.date}</td>
+                <td><strong>${t.desc}</strong></td>
+                <td><span class="badge ${isExp ? 'expense' : 'sponsor'}">${t.account}</span></td>
+                <td style="font-family: monospace; font-size:14px; color:${isExp ? '#ef4444' : '#10b981'};">$${t.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    populateTable("rev-tbody", revBuckets, false);
+    populateTable("exp-tbody", expBuckets, true);
+
+    // Filter states
+    let activeRevFilter = null;
+    let activeExpFilter = null;
+
+    // Cross-Filter function triggered by clicking the chart
+    window.filterByAccount = function (tableId, accountName, isExp) {
+        if (isExp) {
+            activeExpFilter = (activeExpFilter === accountName) ? null : accountName;
+            accountName = activeExpFilter;
+            document.getElementById('exp-search').value = ""; // Clear text search
+        } else {
+            activeRevFilter = (activeRevFilter === accountName) ? null : accountName;
+            accountName = activeRevFilter;
+            document.getElementById('rev-search').value = ""; // Clear text search
+        }
+
+        const rows = document.getElementById(tableId).querySelector("tbody").getElementsByTagName("tr");
+        for (let row of rows) {
+            if (!accountName || row.getAttribute("data-account") === accountName) row.style.display = "";
+            else row.style.display = "none";
+        }
+    };
+
+    // Text Search Function
+    window.searchTable = function (tableId, query) {
+        query = query.toLowerCase();
+
+        // Reset chart filters if typing
+        if (tableId === 'rev-table') activeRevFilter = null;
+        if (tableId === 'exp-table') activeExpFilter = null;
+
+        const rows = document.getElementById(tableId).querySelector("tbody").getElementsByTagName("tr");
+        for (let row of rows) {
+            row.style.display = row.innerText.toLowerCase().includes(query) ? "" : "none";
+        }
+    };
     
     // ==========================================
     // PART 2: KPIs AND SPLIT TABLES
