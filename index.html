@@ -57,12 +57,46 @@
                 </div>
             </div>
 
-            <div class="chart-container" style="margin-bottom: 24px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                    <h3 style="color: #f8fafc; font-size: 1.2rem;">2025 Current Year Snapshot</h3>
-                    <span style="color: #94a3b8; font-size: 0.85rem;">Filter: 8 Months Prior to 2 Months Post Event</span>
+            <div class="chart-container" style="margin-bottom: 40px;">
+                <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 16px;">2025 Net Performance</h3>
+                <div id="chart-net-performance">Loading...</div>
+            </div>
+            
+            <div class="chart-container" style="margin-bottom: 40px; border-top: 2px solid #1e293b; padding-top: 24px;">
+                <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 8px;">Revenue Composition</h3>
+                <div id="chart-rev-composition" style="margin-bottom: 24px;"></div>
+            
+                <div class="table-wrapper">
+                    <table class="data-table" id="rev-table">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable('rev-table', 0)">Date ⇕</th>
+                                <th onclick="sortTable('rev-table', 1)">Contributor ⇕</th>
+                                <th onclick="sortTable('rev-table', 2)">Type ⇕</th>
+                                <th onclick="sortTable('rev-table', 3)">Amount ⇕</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rev-tbody"></tbody>
+                    </table>
                 </div>
-                <div id="chart-current-year">Loading current year data...</div>
+            </div>
+            
+            <div class="chart-container" style="margin-bottom: 40px; border-top: 2px solid #1e293b; padding-top: 24px;">
+                <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 8px;">Expense Composition</h3>
+                <div id="chart-exp-composition" style="margin-bottom: 24px;"></div>
+            
+                <div class="table-wrapper">
+                    <table class="data-table" id="exp-table">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable('exp-table', 0)">Date ⇕</th>
+                                <th onclick="sortTable('exp-table', 1)">Vendor ⇕</th>
+                                <th onclick="sortTable('exp-table', 2)">Amount ⇕</th>
+                            </tr>
+                        </thead>
+                        <tbody id="exp-tbody"></tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="tables-grid">
