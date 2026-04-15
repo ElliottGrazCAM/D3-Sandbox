@@ -1,51 +1,15 @@
 d3.json("data.json").then(data => {
 
     // ==========================================
-    // THE HIERARCHY FILTER: DYNAMIC & ACCURATE
+    // 1. SETUP & CONSTANTS
     // ==========================================
     const LUNCHEON_REV_PARENT = "Events and Programs:Annual Luncheon Revenue";
     const LUNCHEON_EXP_PARENT = "Events and Program Expenses:Annual Luncheon Expenses";
 
-    const luncheonDeposits = [];
-    const luncheonExpenses = [];
-
-    if (data.Deposits) {
-        data.Deposits.forEach(record => {
-            let recordHasLuncheon = false;
-            const validLines = [];
-            record.Line.forEach(line => {
-                if (line.Amount && line.DetailType === "DepositLineDetail" && line.DepositLineDetail.AccountRef) {
-                    const accountName = line.DepositLineDetail.AccountRef.name || "";
-                    if (accountName.startsWith(LUNCHEON_REV_PARENT)) {
-                        recordHasLuncheon = true;
-                        validLines.push(line);
-                    }
-                }
-            });
-            if (recordHasLuncheon) luncheonDeposits.push({ ...record, Line: validLines });
-        });
-    }
-
-    if (data.Expenses) {
-        data.Expenses.forEach(record => {
-            let recordHasLuncheon = false;
-            record.Line.forEach(line => {
-                if (line.DetailType === "AccountBasedExpenseLineDetail" && line.AccountBasedExpenseLineDetail.AccountRef) {
-                    const accountName = line.AccountBasedExpenseLineDetail.AccountRef.name || "";
-                    if (accountName.startsWith(LUNCHEON_EXP_PARENT)) recordHasLuncheon = true;
-                }
-            });
-            if (recordHasLuncheon) luncheonExpenses.push(record);
-        });
-    }
-
-    // ==========================================
-    // DATA AGGREGATION & DYNAMIC YEAR SETUP
-    // ==========================================
-    const CURRENT_YEAR = new Date().getFullYear(); // 2026
+    const CURRENT_YEAR = new Date().getFullYear();
     const TARGET_YEAR = CURRENT_YEAR - 1; // Evaluates to 2025
 
-    // Update the UI Titles dynamically based on the target year
+    // Update the UI Titles dynamically
     document.querySelectorAll("h3").forEach(h3 => {
         if (h3.innerText.includes("2025")) {
             h3.innerText = h3.innerText.replace("2025", TARGET_YEAR);
@@ -65,33 +29,41 @@ d3.json("data.json").then(data => {
         if (!obj[name]) obj[name] = { name: name, id: id, total: 0, budget: 0, txns: [] };
     }
 
-    function aggregateData(records, isExpense, bucketsObj) {
+    // ==========================================
+    // 2. PARSE ACTUAL TRANSACTIONS (DEPOSITS/EXPENSES)
+    // ==========================================
+    function processTransactions(records, isExpense, bucketsObj, parentFilter) {
+        if (!records) return;
         records.forEach(record => {
             const date = new Date(record.TxnDate);
             const year = date.getFullYear();
             const month = date.getMonth() + 1;
 
             if (year === TARGET_YEAR && month >= START_MONTH && month <= END_MONTH) {
+                if (!record.Line) return;
+
                 record.Line.forEach(line => {
                     const amt = line.Amount;
-                    if (!amt) return;
+                    if (!amt || amt === 0) return;
 
                     let acctName = "";
                     let acctId = "";
-                    if (isExpense && line.DetailType === "AccountBasedExpenseLineDetail") {
-                        acctName = line.AccountBasedExpenseLineDetail.AccountRef.name.split(':').pop();
-                        acctId = line.AccountBasedExpenseLineDetail.AccountRef.value;
-                    } else if (!isExpense && line.DetailType === "DepositLineDetail") {
-                        acctName = line.DepositLineDetail.AccountRef.name.split(':').pop();
-                        acctId = line.DepositLineDetail.AccountRef.value;
+
+                    if (isExpense && line.DetailType === "AccountBasedExpenseLineDetail" && line.AccountBasedExpenseLineDetail.AccountRef) {
+                        acctName = line.AccountBasedExpenseLineDetail.AccountRef.name || "";
+                        acctId = line.AccountBasedExpenseLineDetail.AccountRef.value || "";
+                    } else if (!isExpense && line.DetailType === "DepositLineDetail" && line.DepositLineDetail.AccountRef) {
+                        acctName = line.DepositLineDetail.AccountRef.name || "";
+                        acctId = line.DepositLineDetail.AccountRef.value || "";
                     }
 
-                    if (acctName) {
-                        initBucket(bucketsObj, acctName, acctId);
-                        bucketsObj[acctName].total += amt;
+                    if (acctName.startsWith(parentFilter)) {
+                        const shortName = acctName.split(':').pop();
+                        initBucket(bucketsObj, shortName, acctId);
+                        bucketsObj[shortName].total += amt;
 
                         let desc = line.Description || (record.EntityRef ? record.EntityRef.name : "Online Transaction");
-                        bucketsObj[acctName].txns.push({ date: record.TxnDate, desc: desc, amount: amt });
+                        bucketsObj[shortName].txns.push({ date: record.TxnDate, desc: desc, amount: amt });
 
                         if (isExpense) totalExp += amt;
                         else totalRev += amt;
@@ -101,41 +73,33 @@ d3.json("data.json").then(data => {
         });
     }
 
-    aggregateData(luncheonDeposits, false, revBuckets);
-    aggregateData(luncheonExpenses, true, expBuckets);
+    processTransactions(data.Deposits, false, revBuckets, LUNCHEON_REV_PARENT);
+    processTransactions(data.Expenses, true, expBuckets, LUNCHEON_EXP_PARENT);
 
     // ==========================================
-    // PARSE THE BUDGET (FIXED: USING BUDGETDETAIL)
+    // 3. PARSE THE BUDGET (USING BUDGETDETAIL)
     // ==========================================
     if (data.Budgets && data.Budgets.length > 0) {
-        // Find the "2025 Master Budget"
         const targetBudget = data.Budgets.find(b =>
             (b.Name && b.Name.includes(TARGET_YEAR.toString())) ||
             (b.StartDate && b.StartDate.startsWith(TARGET_YEAR.toString()))
         );
 
-        // We look in 'BudgetDetail' which is where your data.json stores these lines
         const budgetLines = (targetBudget && targetBudget.BudgetDetail) ? targetBudget.BudgetDetail : [];
 
         budgetLines.forEach(item => {
             const accName = item.AccountRef ? item.AccountRef.name : "";
             const accId = item.AccountRef ? item.AccountRef.value : "";
-            const bDate = new Date(item.BudgetDate);
+            const bDate = item.BudgetDate ? new Date(item.BudgetDate) : null;
             const amt = parseFloat(item.Amount || 0);
 
-            // 1. Only process if it belongs to our target year (2025)
-            // 2. Only process if there is actually a dollar amount
-            if (bDate.getFullYear() === TARGET_YEAR && amt !== 0) {
-
-                // Route to Revenue using the Parent Name
+            if (bDate && bDate.getFullYear() === TARGET_YEAR && amt !== 0) {
                 if (accName.startsWith(LUNCHEON_REV_PARENT)) {
                     const shortName = accName.split(':').pop();
                     initBucket(revBuckets, shortName, accId);
                     revBuckets[shortName].budget += amt;
                     totalRevBudget += amt;
-                }
-                // Route to Expenses using the Parent Name
-                else if (accName.startsWith(LUNCHEON_EXP_PARENT)) {
+                } else if (accName.startsWith(LUNCHEON_EXP_PARENT)) {
                     const shortName = accName.split(':').pop();
                     initBucket(expBuckets, shortName, accId);
                     expBuckets[shortName].budget += amt;
@@ -144,107 +108,116 @@ d3.json("data.json").then(data => {
             }
         });
     }
-    
+
+    const sortedRev = Object.values(revBuckets).sort((a, b) => b.total - a.total);
+    const sortedExp = Object.values(expBuckets).sort((a, b) => b.total - a.total);
+    const tooltip = d3.select("body").append("div").attr("class", "tooltip");
+
     // ==========================================
-    // CHART 1: NET PERFORMANCE W/ BUDGET OVERLAY
+    // 4. CHART: NET PERFORMANCE W/ BUDGET OVERLAY
     // ==========================================
     d3.select("#chart-net-performance").html("");
-    const marginNet = { top: 30, right: 30, bottom: 30, left: 60 },
-        widthNet = 800 - marginNet.left - marginNet.right,
-        heightNet = 250 - marginNet.top - marginNet.bottom;
+    if (sortedRev.length > 0 || sortedExp.length > 0) {
+        const marginNet = { top: 30, right: 30, bottom: 30, left: 60 },
+            widthNet = 800 - marginNet.left - marginNet.right,
+            heightNet = 250 - marginNet.top - marginNet.bottom;
 
-    const svgNet = d3.select("#chart-net-performance")
-        .append("svg").attr("viewBox", `0 0 ${widthNet + marginNet.left + marginNet.right} ${heightNet + marginNet.top + marginNet.bottom}`)
-        .append("g").attr("transform", `translate(${marginNet.left},${marginNet.top})`);
+        const svgNet = d3.select("#chart-net-performance")
+            .append("svg").attr("viewBox", `0 0 ${widthNet + marginNet.left + marginNet.right} ${heightNet + marginNet.top + marginNet.bottom}`)
+            .append("g").attr("transform", `translate(${marginNet.left},${marginNet.top})`);
 
-    const xNet = d3.scaleBand().domain(["Total Revenue", "Total Expenses"]).range([0, widthNet]).padding(0.4);
-    const maxVal = Math.max(totalRev, totalExp, totalRevBudget, totalExpBudget) * 1.1 || 1;
-    const yNet = d3.scaleLinear().domain([0, maxVal]).range([heightNet, 0]);
+        const xNet = d3.scaleBand().domain(["Total Revenue", "Total Expenses"]).range([0, widthNet]).padding(0.4);
+        const maxVal = Math.max(totalRev, totalExp, totalRevBudget, totalExpBudget) * 1.1 || 1;
+        const yNet = d3.scaleLinear().domain([0, maxVal]).range([heightNet, 0]);
 
-    svgNet.append("g").attr("transform", `translate(0,${heightNet})`)
-        .call(d3.axisBottom(xNet).tickSizeOuter(0)).selectAll("text").style("font-size", "14px").style("font-weight", "bold");
-    svgNet.append("g").attr("class", "grid")
-        .call(d3.axisLeft(yNet).tickSize(-widthNet).tickFormat(d => "$" + d.toLocaleString()).ticks(5)).style("stroke-dasharray", "3,3").style("opacity", 0.1);
-    svgNet.select(".domain").remove();
+        svgNet.append("g").attr("transform", `translate(0,${heightNet})`)
+            .call(d3.axisBottom(xNet).tickSizeOuter(0)).selectAll("text").style("font-size", "14px").style("font-weight", "bold");
+        svgNet.append("g").attr("class", "grid")
+            .call(d3.axisLeft(yNet).tickSize(-widthNet).tickFormat(d => "$" + d.toLocaleString()).ticks(5)).style("stroke-dasharray", "3,3").style("opacity", 0.1);
+        svgNet.select(".domain").remove();
 
-    const netData = [
-        { label: "Total Revenue", actual: totalRev, budget: totalRevBudget, color: "#10b981", bg: "rgba(16, 185, 129, 0.2)" },
-        { label: "Total Expenses", actual: totalExp, budget: totalExpBudget, color: "#ef4444", bg: "rgba(239, 68, 68, 0.2)" }
-    ];
+        const netData = [
+            { label: "Total Revenue", actual: totalRev, budget: totalRevBudget, color: "#10b981", bg: "rgba(16, 185, 129, 0.2)" },
+            { label: "Total Expenses", actual: totalExp, budget: totalExpBudget, color: "#ef4444", bg: "rgba(239, 68, 68, 0.2)" }
+        ];
 
-    svgNet.selectAll(".bg-bar").data(netData).enter().append("rect")
-        .attr("x", d => xNet(d.label) - 10).attr("y", d => yNet(d.budget))
-        .attr("width", xNet.bandwidth() + 20).attr("height", d => heightNet - yNet(d.budget))
-        .attr("fill", d => d.bg).attr("rx", 4);
+        svgNet.selectAll(".bg-bar").data(netData).enter().append("rect")
+            .attr("x", d => xNet(d.label) - 10).attr("y", d => yNet(d.budget))
+            .attr("width", xNet.bandwidth() + 20).attr("height", d => heightNet - yNet(d.budget))
+            .attr("fill", d => d.bg).attr("rx", 4);
 
-    svgNet.selectAll(".fg-bar").data(netData).enter().append("rect")
-        .attr("x", d => xNet(d.label)).attr("y", d => yNet(d.actual))
-        .attr("width", xNet.bandwidth()).attr("height", d => heightNet - yNet(d.actual))
-        .attr("fill", d => d.color).attr("rx", 4)
-        .on("mouseover", function (event, d) {
-            d3.select(this).style("opacity", 0.8);
-            tooltip.transition().duration(200).style("opacity", 1);
-            const diff = d.actual - d.budget;
-            const diffText = diff > 0 ? `+$${diff.toLocaleString()}` : `-$${Math.abs(diff).toLocaleString()}`;
-            tooltip.html(`
-                <div style="font-weight:bold; font-size:14px; margin-bottom:4px;">${d.label}</div>
-                <div>Actual: <b style="color:${d.color}">$${d.actual.toLocaleString()}</b></div>
-                <div>Budget: <b style="color:#cbd5e1">$${d.budget.toLocaleString()}</b></div>
-                <div style="font-size: 12px; margin-top:4px; color:#94a3b8;">Variance: ${diffText}</div>
-            `).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
-        })
-        .on("mouseout", function () {
-            d3.select(this).style("opacity", 1);
-            tooltip.transition().duration(500).style("opacity", 0);
-        });
+        svgNet.selectAll(".fg-bar").data(netData).enter().append("rect")
+            .attr("x", d => xNet(d.label)).attr("y", d => yNet(d.actual))
+            .attr("width", xNet.bandwidth()).attr("height", d => heightNet - yNet(d.actual))
+            .attr("fill", d => d.color).attr("rx", 4)
+            .on("mouseover", function (event, d) {
+                d3.select(this).style("opacity", 0.8);
+                tooltip.transition().duration(200).style("opacity", 1);
+                const diff = d.actual - d.budget;
+                const diffText = diff > 0 ? `+$${diff.toLocaleString()}` : `-$${Math.abs(diff).toLocaleString()}`;
+                tooltip.html(`
+                    <div style="font-weight:bold; font-size:14px; margin-bottom:4px;">${d.label}</div>
+                    <div>Actual: <b style="color:${d.color}">$${d.actual.toLocaleString()}</b></div>
+                    <div>Budget: <b style="color:#cbd5e1">$${d.budget.toLocaleString()}</b></div>
+                    <div style="font-size: 12px; margin-top:4px; color:#94a3b8;">Variance: ${diffText}</div>
+                `).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function () {
+                d3.select(this).style("opacity", 1);
+                tooltip.transition().duration(500).style("opacity", 0);
+            });
+    }
 
     // ==========================================
-    // CHART 1.5: ACCOUNT-LEVEL BUDGET VS ACTUALS
+    // 5. CHART: ACCOUNT-LEVEL BUDGET VS ACTUALS
     // ==========================================
     d3.select("#chart-budget-actuals").html("");
     const combinedData = [...sortedRev.map(d => ({ ...d, type: 'Rev' })), ...sortedExp.map(d => ({ ...d, type: 'Exp' }))];
 
-    const marginAcc = { top: 20, right: 30, bottom: 40, left: 120 },
-        widthAcc = 800 - marginAcc.left - marginAcc.right,
-        heightAcc = (combinedData.length * 40) || 100;
+    if (combinedData.length > 0) {
+        const marginAcc = { top: 20, right: 30, bottom: 40, left: 120 },
+            widthAcc = 800 - marginAcc.left - marginAcc.right,
+            heightAcc = (combinedData.length * 40) || 100;
 
-    const svgAcc = d3.select("#chart-budget-actuals")
-        .append("svg").attr("viewBox", `0 0 ${widthAcc + marginAcc.left + marginAcc.right} ${heightAcc + marginAcc.top + marginAcc.bottom}`)
-        .append("g").attr("transform", `translate(${marginAcc.left},${marginAcc.top})`);
+        const svgAcc = d3.select("#chart-budget-actuals")
+            .append("svg").attr("viewBox", `0 0 ${widthAcc + marginAcc.left + marginAcc.right} ${heightAcc + marginAcc.top + marginAcc.bottom}`)
+            .append("g").attr("transform", `translate(${marginAcc.left},${marginAcc.top})`);
 
-    const yAcc = d3.scaleBand().domain(combinedData.map(d => d.name)).range([0, heightAcc]).padding(0.4);
-    const maxAccVal = d3.max(combinedData, d => Math.max(d.total, d.budget)) * 1.1 || 1;
-    const xAcc = d3.scaleLinear().domain([0, maxAccVal]).range([0, widthAcc]);
+        const yAcc = d3.scaleBand().domain(combinedData.map(d => d.name)).range([0, heightAcc]).padding(0.4);
+        const maxAccVal = d3.max(combinedData, d => Math.max(d.total, d.budget)) * 1.1 || 1;
+        const xAcc = d3.scaleLinear().domain([0, maxAccVal]).range([0, widthAcc]);
 
-    svgAcc.append("g").call(d3.axisLeft(yAcc).tickSize(0)).selectAll("text").style("font-size", "12px").style("fill", "#cbd5e1");
-    svgAcc.select(".domain").remove();
+        svgAcc.append("g").call(d3.axisLeft(yAcc).tickSize(0)).selectAll("text").style("font-size", "12px").style("fill", "#cbd5e1");
+        svgAcc.select(".domain").remove();
 
-    svgAcc.selectAll(".bg-acc").data(combinedData).enter().append("rect")
-        .attr("y", d => yAcc(d.name) - 4).attr("x", 0).attr("height", yAcc.bandwidth() + 8).attr("width", d => xAcc(d.budget))
-        .attr("fill", d => d.type === 'Rev' ? "rgba(16, 185, 129, 0.2)" : "rgba(239, 68, 68, 0.2)").attr("rx", 2);
+        svgAcc.selectAll(".bg-acc").data(combinedData).enter().append("rect")
+            .attr("y", d => yAcc(d.name) - 4).attr("x", 0).attr("height", yAcc.bandwidth() + 8).attr("width", d => xAcc(d.budget))
+            .attr("fill", d => d.type === 'Rev' ? "rgba(16, 185, 129, 0.2)" : "rgba(239, 68, 68, 0.2)").attr("rx", 2);
 
-    svgAcc.selectAll(".fg-acc").data(combinedData).enter().append("rect")
-        .attr("y", d => yAcc(d.name)).attr("x", 0).attr("height", yAcc.bandwidth()).attr("width", d => xAcc(d.total))
-        .attr("fill", d => d.type === 'Rev' ? "#10b981" : "#ef4444").attr("rx", 2)
-        .on("mouseover", function (event, d) {
-            d3.select(this).style("opacity", 0.8);
-            tooltip.transition().duration(200).style("opacity", 1);
-            tooltip.html(`
-                <div style="font-weight:bold; font-size:14px; margin-bottom:4px;">${d.name}</div>
-                <div>Actual: <b>$${d.total.toLocaleString()}</b></div>
-                <div>Budget: <b>$${d.budget.toLocaleString()}</b></div>
-            `).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
-        })
-        .on("mouseout", function () {
-            d3.select(this).style("opacity", 1);
-            tooltip.transition().duration(500).style("opacity", 0);
-        });
+        svgAcc.selectAll(".fg-acc").data(combinedData).enter().append("rect")
+            .attr("y", d => yAcc(d.name)).attr("x", 0).attr("height", yAcc.bandwidth()).attr("width", d => xAcc(d.total))
+            .attr("fill", d => d.type === 'Rev' ? "#10b981" : "#ef4444").attr("rx", 2)
+            .on("mouseover", function (event, d) {
+                d3.select(this).style("opacity", 0.8);
+                tooltip.transition().duration(200).style("opacity", 1);
+                tooltip.html(`
+                    <div style="font-weight:bold; font-size:14px; margin-bottom:4px;">${d.name}</div>
+                    <div>Actual: <b>$${d.total.toLocaleString()}</b></div>
+                    <div>Budget: <b>$${d.budget.toLocaleString()}</b></div>
+                `).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function () {
+                d3.select(this).style("opacity", 1);
+                tooltip.transition().duration(500).style("opacity", 0);
+            });
+    }
 
     // ==========================================
-    // CHARTS 2 & 3: COMPOSITION BARS
+    // 6. CHARTS & LEDGERS: COMPOSITION BARS
     // ==========================================
     function drawCompositionChart(containerId, sortedData, totalAmount, colorScale, isExp) {
         d3.select(containerId).html("");
+        if (sortedData.length === 0) return;
         const compHeight = 60, widthComp = 900;
         const svgComp = d3.select(containerId).append("svg").attr("viewBox", `0 0 ${widthComp} ${compHeight}`);
         const xComp = d3.scaleLinear().domain([0, totalAmount || 1]).range([0, widthComp]);
@@ -278,7 +251,7 @@ d3.json("data.json").then(data => {
     function showTooltip(event, bucket, isExp, grandTotal) {
         d3.select(event.currentTarget).style("opacity", 0.7);
         tooltip.transition().duration(200).style("opacity", 1);
-        const percent = ((bucket.total / grandTotal) * 100).toFixed(1);
+        const percent = grandTotal ? ((bucket.total / grandTotal) * 100).toFixed(1) : 0;
 
         let innerHtml = `
             <div style="border-bottom: 1px solid #334155; padding-bottom: 8px; margin-bottom: 8px;">
@@ -310,7 +283,7 @@ d3.json("data.json").then(data => {
                 </div>
                 <div style="display:flex; justify-content:space-between; font-size:13px;">
                     <span style="color:#94a3b8;">Average Amount:</span> 
-                    <span style="color:#f8fafc; font-weight:bold;">$${(bucket.total / bucket.txns.length).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    <span style="color:#f8fafc; font-weight:bold;">$${bucket.txns.length ? (bucket.total / bucket.txns.length).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0}</span>
                 </div>
             `;
         }
@@ -322,9 +295,9 @@ d3.json("data.json").then(data => {
         tooltip.transition().duration(500).style("opacity", 0);
     }
 
-    // --- POPULATE TABLES & SEARCH LOGIC ---
     function populateTable(tbodyId, buckets, isExp) {
         const tbody = document.getElementById(tbodyId);
+        if (!tbody) return;
         tbody.innerHTML = "";
         let allTxns = [];
         Object.values(buckets).forEach(b => b.txns.forEach(t => allTxns.push({ ...t, account: b.name })));
@@ -361,9 +334,12 @@ d3.json("data.json").then(data => {
             document.getElementById('rev-search').value = "";
         }
 
-        const rows = document.getElementById(tableId).querySelector("tbody").getElementsByTagName("tr");
-        for (let row of rows) {
-            row.style.display = (!accountName || row.getAttribute("data-account") === accountName) ? "" : "none";
+        const tbody = document.getElementById(tableId).querySelector("tbody");
+        if (tbody) {
+            const rows = tbody.getElementsByTagName("tr");
+            for (let row of rows) {
+                row.style.display = (!accountName || row.getAttribute("data-account") === accountName) ? "" : "none";
+            }
         }
     };
 
@@ -372,8 +348,11 @@ d3.json("data.json").then(data => {
         if (tableId === 'rev-table') activeRevFilter = null;
         if (tableId === 'exp-table') activeExpFilter = null;
 
-        const rows = document.getElementById(tableId).querySelector("tbody").getElementsByTagName("tr");
-        for (let row of rows) row.style.display = row.innerText.toLowerCase().includes(query) ? "" : "none";
+        const tbody = document.getElementById(tableId).querySelector("tbody");
+        if (tbody) {
+            const rows = tbody.getElementsByTagName("tr");
+            for (let row of rows) row.style.display = row.innerText.toLowerCase().includes(query) ? "" : "none";
+        }
     };
 
     window.resetFilters = function (tableId) {
@@ -384,18 +363,24 @@ d3.json("data.json").then(data => {
             activeExpFilter = null;
             document.getElementById('exp-search').value = "";
         }
-        const rows = document.getElementById(tableId).querySelector("tbody").getElementsByTagName("tr");
-        for (let row of rows) row.style.display = "";
+        const tbody = document.getElementById(tableId).querySelector("tbody");
+        if (tbody) {
+            const rows = tbody.getElementsByTagName("tr");
+            for (let row of rows) row.style.display = "";
+        }
     };
 
 }).catch(error => {
-    console.error("Error loading data:", error);
+    console.error("CRITICAL ERROR: Failed to load or parse data.json", error);
 });
 
-// Sorting Logic
+// ==========================================
+// 7. EXTERNAL UI FUNCTIONS
+// ==========================================
 let sortDirs = { 'rev-table': false, 'exp-table': false };
-function sortTable(tableId, columnIndex) {
+window.sortTable = function (tableId, columnIndex) {
     const table = document.getElementById(tableId);
+    if (!table) return;
     const tbody = table.querySelector("tbody");
     const rows = Array.from(tbody.rows);
 
@@ -411,11 +396,11 @@ function sortTable(tableId, columnIndex) {
     });
 
     rows.forEach(row => tbody.appendChild(row));
-}
+};
 
-// Toggle Ledger Visibility
 window.toggleLedger = function (containerId, btnElement) {
     const container = document.getElementById(containerId);
+    if (!container) return;
     if (container.style.display === "none") {
         container.style.display = "block";
         btnElement.innerText = "👁️‍🗨️ Hide Transaction Ledger";
