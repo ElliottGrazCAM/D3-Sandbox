@@ -1,7 +1,7 @@
 d3.json("data.json").then(data => {
 
     // ==========================================
-    // 1. SETUP & CONSTANTS
+    // SETUP, DATES, & FILTERS
     // ==========================================
     const LUNCHEON_REV_PARENT = "Events and Programs:Annual Luncheon Revenue";
     const LUNCHEON_EXP_PARENT = "Events and Program Expenses:Annual Luncheon Expenses";
@@ -9,12 +9,9 @@ d3.json("data.json").then(data => {
     const CURRENT_YEAR = new Date().getFullYear();
     const TARGET_YEAR = CURRENT_YEAR - 1; // Evaluates to 2025
 
-    // Update the UI Titles dynamically
-    document.querySelectorAll("h3").forEach(h3 => {
-        if (h3.innerText.includes("2025")) {
-            h3.innerText = h3.innerText.replace("2025", TARGET_YEAR);
-        }
-    });
+    // Updates the Blue Badge at the top of the HTML page
+    const yearBadge = document.getElementById("dynamic-year-badge");
+    if (yearBadge) yearBadge.innerText = TARGET_YEAR;
 
     const EVENT_MONTH = 10; // October
     const START_MONTH = EVENT_MONTH - 8;
@@ -30,7 +27,7 @@ d3.json("data.json").then(data => {
     }
 
     // ==========================================
-    // 2. PARSE ACTUAL TRANSACTIONS (DEPOSITS/EXPENSES)
+    // DATA CRUNCHING: ACTUAL TRANSACTIONS
     // ==========================================
     function processTransactions(records, isExpense, bucketsObj, parentFilter) {
         if (!records) return;
@@ -77,7 +74,7 @@ d3.json("data.json").then(data => {
     processTransactions(data.Expenses, true, expBuckets, LUNCHEON_EXP_PARENT);
 
     // ==========================================
-    // 3. PARSE THE BUDGET (USING BUDGETDETAIL)
+    // DATA CRUNCHING: BUDGET DETAIL PARSER
     // ==========================================
     if (data.Budgets && data.Budgets.length > 0) {
         const targetBudget = data.Budgets.find(b =>
@@ -113,17 +110,39 @@ d3.json("data.json").then(data => {
     const sortedExp = Object.values(expBuckets).sort((a, b) => b.total - a.total);
     const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
+
     // ==========================================
-    // 4. CHART: NET PERFORMANCE W/ BUDGET OVERLAY
+    // POPULATING THE TOP 3 KPI BOXES
     // ==========================================
-    d3.select("#chart-net-performance").html("");
+    const numRegistrants = revBuckets["Registration"] ? revBuckets["Registration"].txns.length : 0;
+    const numSponsors = (revBuckets["Gold Sponsorship"] ? revBuckets["Gold Sponsorship"].txns.length : 0) +
+        (revBuckets["Silver Sponsorship"] ? revBuckets["Silver Sponsorship"].txns.length : 0);
+    const netRev = totalRev - totalExp;
+
+    if (document.getElementById("kpi-registrants")) d3.select("#kpi-registrants").text(numRegistrants);
+    if (document.getElementById("kpi-sponsors")) d3.select("#kpi-sponsors").text(numSponsors);
+    if (document.getElementById("kpi-net")) {
+        d3.select("#kpi-net")
+            .text(netRev < 0 ? `-$${Math.abs(netRev).toLocaleString()}` : `$${netRev.toLocaleString()}`)
+            .style("color", netRev < 0 ? "#ef4444" : "#10b981");
+    }
+
+
+    // ==========================================
+    // CHART 1: NET PERFORMANCE (BIG VERTICAL BARS)
+    // ==========================================
+    d3.select("#chart-net-performance").html(""); // Clear loading text
     if (sortedRev.length > 0 || sortedExp.length > 0) {
         const marginNet = { top: 30, right: 30, bottom: 30, left: 60 },
             widthNet = 800 - marginNet.left - marginNet.right,
             heightNet = 250 - marginNet.top - marginNet.bottom;
 
         const svgNet = d3.select("#chart-net-performance")
-            .append("svg").attr("viewBox", `0 0 ${widthNet + marginNet.left + marginNet.right} ${heightNet + marginNet.top + marginNet.bottom}`)
+            .append("svg")
+            .attr("viewBox", `0 0 ${widthNet + marginNet.left + marginNet.right} ${heightNet + marginNet.top + marginNet.bottom}`)
+            .attr("width", "100%") // Makes it responsive
+            .attr("height", "100%")
+            .attr("preserveAspectRatio", "xMidYMid meet")
             .append("g").attr("transform", `translate(${marginNet.left},${marginNet.top})`);
 
         const xNet = d3.scaleBand().domain(["Total Revenue", "Total Expenses"]).range([0, widthNet]).padding(0.4);
@@ -137,19 +156,24 @@ d3.json("data.json").then(data => {
         svgNet.select(".domain").remove();
 
         const netData = [
-            { label: "Total Revenue", actual: totalRev, budget: totalRevBudget, color: "#10b981", bg: "rgba(16, 185, 129, 0.2)" },
-            { label: "Total Expenses", actual: totalExp, budget: totalExpBudget, color: "#ef4444", bg: "rgba(239, 68, 68, 0.2)" }
+            { label: "Total Revenue", actual: totalRev, budget: totalRevBudget, type: "rev" },
+            { label: "Total Expenses", actual: totalExp, budget: totalExpBudget, type: "exp" }
         ];
 
+        // The Faded Background Budget Bars
         svgNet.selectAll(".bg-bar").data(netData).enter().append("rect")
             .attr("x", d => xNet(d.label) - 10).attr("y", d => yNet(d.budget))
             .attr("width", xNet.bandwidth() + 20).attr("height", d => heightNet - yNet(d.budget))
-            .attr("fill", d => d.bg).attr("rx", 4);
+            .attr("fill", d => d.type === "rev" ? "rgba(16, 185, 129, 0.15)" : "rgba(239, 68, 68, 0.15)").attr("rx", 4);
 
+        // The Solid Foreground Actual Bars (Color changes if it breaks budget!)
         svgNet.selectAll(".fg-bar").data(netData).enter().append("rect")
             .attr("x", d => xNet(d.label)).attr("y", d => yNet(d.actual))
             .attr("width", xNet.bandwidth()).attr("height", d => heightNet - yNet(d.actual))
-            .attr("fill", d => d.color).attr("rx", 4)
+            .attr("fill", d => {
+                if (d.type === "rev") return d.actual >= d.budget ? "#059669" : "#34d399"; // Dark green if met, light green if missed
+                else return d.actual > d.budget ? "#991b1b" : "#ef4444"; // Dark red if over budget, light red if safe
+            }).attr("rx", 4)
             .on("mouseover", function (event, d) {
                 d3.select(this).style("opacity", 0.8);
                 tooltip.transition().duration(200).style("opacity", 1);
@@ -157,7 +181,7 @@ d3.json("data.json").then(data => {
                 const diffText = diff > 0 ? `+$${diff.toLocaleString()}` : `-$${Math.abs(diff).toLocaleString()}`;
                 tooltip.html(`
                     <div style="font-weight:bold; font-size:14px; margin-bottom:4px;">${d.label}</div>
-                    <div>Actual: <b style="color:${d.color}">$${d.actual.toLocaleString()}</b></div>
+                    <div>Actual: <b>$${d.actual.toLocaleString()}</b></div>
                     <div>Budget: <b style="color:#cbd5e1">$${d.budget.toLocaleString()}</b></div>
                     <div style="font-size: 12px; margin-top:4px; color:#94a3b8;">Variance: ${diffText}</div>
                 `).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
@@ -166,12 +190,23 @@ d3.json("data.json").then(data => {
                 d3.select(this).style("opacity", 1);
                 tooltip.transition().duration(500).style("opacity", 0);
             });
+
+        // The Sharp White Dashed Target Line
+        svgNet.selectAll(".target-line").data(netData).enter().append("line")
+            .attr("x1", d => xNet(d.label) - 15)
+            .attr("x2", d => xNet(d.label) + xNet.bandwidth() + 15)
+            .attr("y1", d => yNet(d.budget))
+            .attr("y2", d => yNet(d.budget))
+            .attr("stroke", "#f8fafc")
+            .attr("stroke-width", 2)
+            .attr("stroke-dasharray", "4,2");
     }
 
+
     // ==========================================
-    // 5. CHART: ACCOUNT-LEVEL BUDGET VS ACTUALS
+    // CHART 1.5: ACCOUNT LEVEL ACTUALS (BULLET CHART)
     // ==========================================
-    d3.select("#chart-budget-actuals").html("");
+    d3.select("#chart-budget-actuals").html(""); // Clear loading text
     const combinedData = [...sortedRev.map(d => ({ ...d, type: 'Rev' })), ...sortedExp.map(d => ({ ...d, type: 'Exp' }))];
 
     if (combinedData.length > 0) {
@@ -180,7 +215,11 @@ d3.json("data.json").then(data => {
             heightAcc = (combinedData.length * 40) || 100;
 
         const svgAcc = d3.select("#chart-budget-actuals")
-            .append("svg").attr("viewBox", `0 0 ${widthAcc + marginAcc.left + marginAcc.right} ${heightAcc + marginAcc.top + marginAcc.bottom}`)
+            .append("svg")
+            .attr("viewBox", `0 0 ${widthAcc + marginAcc.left + marginAcc.right} ${heightAcc + marginAcc.top + marginAcc.bottom}`)
+            .attr("width", "100%") // Makes it responsive
+            .attr("height", "100%")
+            .attr("preserveAspectRatio", "xMidYMid meet")
             .append("g").attr("transform", `translate(${marginAcc.left},${marginAcc.top})`);
 
         const yAcc = d3.scaleBand().domain(combinedData.map(d => d.name)).range([0, heightAcc]).padding(0.4);
@@ -190,36 +229,56 @@ d3.json("data.json").then(data => {
         svgAcc.append("g").call(d3.axisLeft(yAcc).tickSize(0)).selectAll("text").style("font-size", "12px").style("fill", "#cbd5e1");
         svgAcc.select(".domain").remove();
 
+        // Background Budget Bars
         svgAcc.selectAll(".bg-acc").data(combinedData).enter().append("rect")
             .attr("y", d => yAcc(d.name) - 4).attr("x", 0).attr("height", yAcc.bandwidth() + 8).attr("width", d => xAcc(d.budget))
-            .attr("fill", d => d.type === 'Rev' ? "rgba(16, 185, 129, 0.2)" : "rgba(239, 68, 68, 0.2)").attr("rx", 2);
+            .attr("fill", d => d.type === 'Rev' ? "rgba(16, 185, 129, 0.15)" : "rgba(239, 68, 68, 0.15)").attr("rx", 2);
 
+        // Foreground Actual Bars (Color changes if it breaks budget!)
         svgAcc.selectAll(".fg-acc").data(combinedData).enter().append("rect")
             .attr("y", d => yAcc(d.name)).attr("x", 0).attr("height", yAcc.bandwidth()).attr("width", d => xAcc(d.total))
-            .attr("fill", d => d.type === 'Rev' ? "#10b981" : "#ef4444").attr("rx", 2)
+            .attr("fill", d => {
+                if (d.type === 'Rev') return d.total >= d.budget ? "#059669" : "#34d399";
+                else return d.total > d.budget ? "#991b1b" : "#ef4444";
+            }).attr("rx", 2)
             .on("mouseover", function (event, d) {
                 d3.select(this).style("opacity", 0.8);
                 tooltip.transition().duration(200).style("opacity", 1);
                 tooltip.html(`
                     <div style="font-weight:bold; font-size:14px; margin-bottom:4px;">${d.name}</div>
                     <div>Actual: <b>$${d.total.toLocaleString()}</b></div>
-                    <div>Budget: <b>$${d.budget.toLocaleString()}</b></div>
+                    <div>Budget: <b style="color:#cbd5e1">$${d.budget.toLocaleString()}</b></div>
                 `).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
             })
             .on("mouseout", function () {
                 d3.select(this).style("opacity", 1);
                 tooltip.transition().duration(500).style("opacity", 0);
             });
+
+        // The Sharp White Dashed Target Line
+        svgAcc.selectAll(".target-line-acc").data(combinedData).enter().append("line")
+            .attr("y1", d => yAcc(d.name) - 6)
+            .attr("y2", d => yAcc(d.name) + yAcc.bandwidth() + 6)
+            .attr("x1", d => xAcc(d.budget))
+            .attr("x2", d => xAcc(d.budget))
+            .attr("stroke", "#f8fafc")
+            .attr("stroke-width", 2)
+            .attr("stroke-dasharray", "3,2");
     }
 
+
     // ==========================================
-    // 6. CHARTS & LEDGERS: COMPOSITION BARS
+    // CHARTS 2 & 3: COMPOSITION BARS (HORIZONTAL STACKED BARS)
     // ==========================================
     function drawCompositionChart(containerId, sortedData, totalAmount, colorScale, isExp) {
         d3.select(containerId).html("");
         if (sortedData.length === 0) return;
         const compHeight = 60, widthComp = 900;
-        const svgComp = d3.select(containerId).append("svg").attr("viewBox", `0 0 ${widthComp} ${compHeight}`);
+        const svgComp = d3.select(containerId).append("svg")
+            .attr("viewBox", `0 0 ${widthComp} ${compHeight}`)
+            .attr("width", "100%") // Makes it responsive
+            .attr("height", "100%");
+
         const xComp = d3.scaleLinear().domain([0, totalAmount || 1]).range([0, widthComp]);
         let currentX = 0;
 
@@ -235,6 +294,7 @@ d3.json("data.json").then(data => {
                 .on("mouseout", hideTooltip)
                 .on("click", () => filterByAccount(isExp ? 'exp-table' : 'rev-table', bucket.name, isExp));
 
+            // Only draw label if the segment is wide enough to fit it
             if (segWidth > 80) {
                 g.append("text")
                     .attr("x", segWidth / 2).attr("y", compHeight / 2).attr("dy", ".35em")
@@ -264,6 +324,7 @@ d3.json("data.json").then(data => {
             </div>
         `;
 
+        // If Expense, show Top 5 transactions in the tooltip
         if (isExp) {
             bucket.txns.sort((a, b) => b.amount - a.amount);
             const topTxns = bucket.txns.slice(0, 5);
@@ -276,6 +337,7 @@ d3.json("data.json").then(data => {
 
             if (bucket.txns.length - 5 > 0) innerHtml += `<div style="color:#64748b; margin-top:8px; font-size:11px; text-align:center;">+ ${bucket.txns.length - 5} more transactions...</div>`;
         } else {
+            // If Revenue, just show transaction averages
             innerHtml += `
                 <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;">
                     <span style="color:#94a3b8;">Total Contributions:</span> 
@@ -295,6 +357,10 @@ d3.json("data.json").then(data => {
         tooltip.transition().duration(500).style("opacity", 0);
     }
 
+
+    // ==========================================
+    // DATA TABLES: POPULATE AND FILTER LOGIC
+    // ==========================================
     function populateTable(tbodyId, buckets, isExp) {
         const tbody = document.getElementById(tbodyId);
         if (!tbody) return;
@@ -374,8 +440,9 @@ d3.json("data.json").then(data => {
     console.error("CRITICAL ERROR: Failed to load or parse data.json", error);
 });
 
+
 // ==========================================
-// 7. EXTERNAL UI FUNCTIONS
+// EXTERNAL UI FUNCTIONS (Sorting & Show/Hide)
 // ==========================================
 let sortDirs = { 'rev-table': false, 'exp-table': false };
 window.sortTable = function (tableId, columnIndex) {

@@ -10,162 +10,131 @@
 </head>
 
 <body>
-    <nav class="sidebar">
 
-        <div class="brand-container">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path
-                    d="M12 22V15C12 15 20 15 20 9C20 6 18 4 15 4C12 4 12 8 12 8C12 8 12 4 9 4C6 4 4 6 4 9C4 15 12 15 12 15Z">
-                </path>
-            </svg>
-            <h2>CNCA</h2>
+    <div id="sidebar">
+        <button onclick="document.getElementById('sidebar').classList.toggle('collapsed')"
+            style="background: transparent; color: #94a3b8; border: none; cursor: pointer; text-align: right; width: 100%; margin-bottom: 20px; font-weight: bold;">◀
+            Collapse</button>
+
+        <h2 style="font-size: 1.2rem; color: #f8fafc; margin-top: 0;">CNCA Financials</h2>
+        <a href="#" class="nav-item">General Overview</a>
+        <a href="#" class="nav-item active">Annual Luncheon</a>
+        <a href="#" class="nav-item">Winter Gala</a>
+        <a href="#" class="nav-item">Golf Tournament</a>
+    </div>
+
+    <div id="main-content">
+
+        <div style="display: flex; align-items: center; margin-bottom: 24px;">
+            <button onclick="document.getElementById('sidebar').classList.toggle('collapsed')"
+                style="background: #1e293b; color: white; border: 1px solid #334155; padding: 8px 12px; border-radius: 6px; cursor: pointer; margin-right: 16px;">☰
+                Menu</button>
+            <h1 style="margin: 0; color: #f8fafc;">Annual Luncheon <span class="year-badge"
+                    id="dynamic-year-badge">2025</span></h1>
         </div>
 
-        <p class="nav-header">FINANCIALS</p>
-        <button class="nav-btn" onclick="switchPage('page-general', this)">General Overview</button>
-
-        <p class="nav-header" style="margin-top: 24px;">EVENT TRACKING</p>
-        <button class="nav-btn active" onclick="switchPage('page-luncheon', this)">Annual Luncheon</button>
-        <button class="nav-btn" onclick="switchPage('page-gala', this)">Winter Gala</button>
-        <button class="nav-btn" onclick="switchPage('page-golf', this)">Golf Tournament</button>
-    </nav>
-
-    <main class="content">
-
-        <div id="page-general" class="dashboard-page" style="display: none;">
-            <h1>General Overview</h1>
-            <p>High-level financial health for the Chicago Nature Conservationists Association.</p>
+        <div class="kpi-container">
+            <div class="kpi-card">
+                <h2>Total Registrants</h2>
+                <div class="kpi-value" id="kpi-registrants">--</div>
+            </div>
+            <div class="kpi-card">
+                <h2>Total Sponsors</h2>
+                <div class="kpi-value" id="kpi-sponsors">--</div>
+            </div>
+            <div class="kpi-card">
+                <h2>Net Revenue</h2>
+                <div class="kpi-value" id="kpi-net">--</div>
+            </div>
         </div>
 
-        <div id="page-luncheon" class="dashboard-page" style="display: block;">
-            <h1>Annual Luncheon Tracker</h1>
-            <p>Real-time revenue and expenses synced from QuickBooks.</p>
-
-            <div class="kpi-grid">
-                <div class="kpi-card">
-                    <h3>Total Registrants</h3>
-                    <p id="kpi-registrants" class="kpi-value">--</p>
-                </div>
-                <div class="kpi-card">
-                    <h3>Total Sponsors</h3>
-                    <p id="kpi-sponsors" class="kpi-value">--</p>
-                </div>
-                <div class="kpi-card">
-                    <h3>Net Revenue</h3>
-                    <p id="kpi-net" class="kpi-value">--</p>
-                </div>
-            </div>
-
-            <div class="chart-container" style="margin-bottom: 40px;">
-                <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 16px;">2025 Net Performance vs. Budget</h3>
-                <div id="chart-net-performance">Loading...</div>
-            </div>
-            
-            <div class="chart-container" style="margin-bottom: 40px; border-top: 2px solid #1e293b; padding-top: 24px;">
-                <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 16px;">Budget vs. Actuals by Account</h3>
-                <div id="chart-budget-actuals">Loading...</div>
-            </div>
-            
-            <div class="chart-container" style="margin-bottom: 40px; border-top: 2px solid #1e293b; padding-top: 24px;">
-                <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 4px;">Revenue Composition</h3>
-                <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">Click any category on the bar chart to instantly
-                    filter the ledger.</p>
-                <div id="chart-rev-composition" style="margin-bottom: 12px;"></div>
-            
-                <button onclick="toggleLedger('rev-ledger-container', this)"
-                    style="background: transparent; border: 1px solid #334155; color: #94a3b8; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; margin-bottom: 16px;">👁️
-                    Show Transaction Ledger</button>
-            
-                <div id="rev-ledger-container" style="display: none;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                        <h4 style="color: #f8fafc; margin: 0; font-size: 1.1rem;">Revenue Ledger</h4>
-                        <div style="display: flex; gap: 8px;">
-                            <input type="text" id="rev-search" onkeyup="searchTable('rev-table', this.value)"
-                                placeholder="Search contributors..."
-                                style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #f8fafc; width: 250px;">
-                            <button onclick="resetFilters('rev-table')"
-                                style="padding: 8px 16px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #f8fafc; cursor: pointer; font-weight: bold;">Reset</button>
-                        </div>
-                    </div>
-                    <div class="table-wrapper">
-                        <table class="data-table" id="rev-table">
-                            <thead>
-                                <tr>
-                                    <th onclick="sortTable('rev-table', 0)">Date ⇕</th>
-                                    <th onclick="sortTable('rev-table', 1)">Contributor ⇕</th>
-                                    <th onclick="sortTable('rev-table', 2)">Account ⇕</th>
-                                    <th onclick="sortTable('rev-table', 3)">Amount ⇕</th>
-                                </tr>
-                            </thead>
-                            <tbody id="rev-tbody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="chart-container" style="margin-bottom: 40px; border-top: 2px solid #1e293b; padding-top: 24px;">
-                <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 4px;">Expense Composition</h3>
-                <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">Click any category on the bar chart to instantly
-                    filter the ledger.</p>
-                <div id="chart-exp-composition" style="margin-bottom: 12px;"></div>
-            
-                <button onclick="toggleLedger('exp-ledger-container', this)"
-                    style="background: transparent; border: 1px solid #334155; color: #94a3b8; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; margin-bottom: 16px;">👁️
-                    Show Transaction Ledger</button>
-            
-                <div id="exp-ledger-container" style="display: none;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                        <h4 style="color: #f8fafc; margin: 0; font-size: 1.1rem;">Expense Ledger</h4>
-                        <div style="display: flex; gap: 8px;">
-                            <input type="text" id="exp-search" onkeyup="searchTable('exp-table', this.value)"
-                                placeholder="Search vendors..."
-                                style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #f8fafc; width: 250px;">
-                            <button onclick="resetFilters('exp-table')"
-                                style="padding: 8px 16px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #f8fafc; cursor: pointer; font-weight: bold;">Reset</button>
-                        </div>
-                    </div>
-                    <div class="table-wrapper">
-                        <table class="data-table" id="exp-table">
-                            <thead>
-                                <tr>
-                                    <th onclick="sortTable('exp-table', 0)">Date ⇕</th>
-                                    <th onclick="sortTable('exp-table', 1)">Vendor ⇕</th>
-                                    <th onclick="sortTable('exp-table', 2)">Account ⇕</th>
-                                    <th onclick="sortTable('exp-table', 3)">Amount ⇕</th>
-                                </tr>
-                            </thead>
-                            <tbody id="exp-tbody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-        <div id="page-gala" class="dashboard-page" style="display: none;">
-            <h1>Winter Gala</h1>
-            <p>Coming soon...</p>
-        </div>
-        <div id="page-golf" class="dashboard-page" style="display: none;">
-            <h1>Golf Tournament</h1>
-            <p>Coming soon...</p>
+        <div class="chart-container">
+            <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 16px; margin-top: 0;">Net Performance vs.
+                Budget</h3>
+            <div id="chart-net-performance">Loading...</div>
         </div>
 
-    </main>
+        <div class="chart-container">
+            <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 16px; margin-top: 0;">Budget vs. Actuals by
+                Account</h3>
+            <div id="chart-budget-actuals">Loading...</div>
+        </div>
 
-    <script>
-        function switchPage(pageId, btnElement) {
-            // Hide all pages
-            document.querySelectorAll('.dashboard-page').forEach(page => {
-                page.style.display = 'none';
-            });
-            // Show the selected page
-            document.getElementById(pageId).style.display = 'block';
+        <div class="chart-container">
+            <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 4px; margin-top: 0;">Revenue Composition</h3>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">Click any category on the bar chart to
+                instantly filter the ledger.</p>
+            <div id="chart-rev-composition" style="margin-bottom: 12px;"></div>
 
-            // Update button styles
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            btnElement.classList.add('active');
-        }
-    </script>
+            <button onclick="toggleLedger('rev-ledger-container', this)"
+                style="background: transparent; border: 1px solid #334155; color: #94a3b8; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; margin-bottom: 16px;">👁️
+                Show Transaction Ledger</button>
+
+            <div id="rev-ledger-container" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <h4 style="color: #f8fafc; margin: 0; font-size: 1.1rem;">Revenue Ledger</h4>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" id="rev-search" onkeyup="searchTable('rev-table', this.value)"
+                            placeholder="Search contributors..."
+                            style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #f8fafc; width: 250px;">
+                        <button onclick="resetFilters('rev-table')"
+                            style="padding: 8px 16px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #f8fafc; cursor: pointer; font-weight: bold;">Reset</button>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table class="data-table" id="rev-table">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable('rev-table', 0)">Date ⇕</th>
+                                <th onclick="sortTable('rev-table', 1)">Contributor ⇕</th>
+                                <th onclick="sortTable('rev-table', 2)">Account ⇕</th>
+                                <th onclick="sortTable('rev-table', 3)">Amount ⇕</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rev-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 4px; margin-top: 0;">Expense Composition</h3>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">Click any category on the bar chart to
+                instantly filter the ledger.</p>
+            <div id="chart-exp-composition" style="margin-bottom: 12px;"></div>
+
+            <button onclick="toggleLedger('exp-ledger-container', this)"
+                style="background: transparent; border: 1px solid #334155; color: #94a3b8; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; margin-bottom: 16px;">👁️
+                Show Transaction Ledger</button>
+
+            <div id="exp-ledger-container" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <h4 style="color: #f8fafc; margin: 0; font-size: 1.1rem;">Expense Ledger</h4>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" id="exp-search" onkeyup="searchTable('exp-table', this.value)"
+                            placeholder="Search vendors..."
+                            style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #f8fafc; width: 250px;">
+                        <button onclick="resetFilters('exp-table')"
+                            style="padding: 8px 16px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #f8fafc; cursor: pointer; font-weight: bold;">Reset</button>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table class="data-table" id="exp-table">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable('exp-table', 0)">Date ⇕</th>
+                                <th onclick="sortTable('exp-table', 1)">Vendor ⇕</th>
+                                <th onclick="sortTable('exp-table', 2)">Account ⇕</th>
+                                <th onclick="sortTable('exp-table', 3)">Amount ⇕</th>
+                            </tr>
+                        </thead>
+                        <tbody id="exp-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
     <script src="dashboard.js"></script>
 </body>

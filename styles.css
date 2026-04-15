@@ -1,255 +1,161 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-
-* {
-    box-sizing: border-box;
+/* ==========================================
+   GLOBAL STYLES & DARK MODE
+========================================== */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #0f172a;
+    /* Dark slate */
+    color: #f8fafc;
     margin: 0;
     padding: 0;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
     display: flex;
-    height: 100vh;
-    background-color: #0f172a;
-    /* Deep dark slate background */
-    color: #f8fafc;
-    /* Crisp white text */
-    overflow: hidden;
+    min-height: 100vh;
 }
 
-/* --- SIDEBAR STYLING --- */
-.sidebar {
-    width: 260px;
-    background-color: #020617;
-    /* Pitch black/navy for contrast */
-    border-right: 1px solid #1e293b;
-    display: flex;
-    flex-direction: column;
-    padding: 32px 16px;
-    z-index: 10;
-}
-
-/* Logo Area */
-.brand-container {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 40px;
-    padding-left: 8px;
-}
-
-.brand-container h2 {
-    font-size: 1.4rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    color: #f8fafc;
-}
-
-/* Nav Headers */
-.nav-header {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #475569;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-    padding-left: 12px;
-}
-
-/* Navigation Buttons */
-.nav-btn {
-    background: none;
-    border: none;
-    color: #94a3b8;
-    text-align: left;
-    padding: 12px 16px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    transition: all 0.2s ease;
-}
-
-.nav-btn:hover {
+/* ==========================================
+   SIDEBAR & COLLAPSE ANIMATION
+========================================== */
+#sidebar {
+    width: 250px;
     background-color: #1e293b;
-    color: white;
-}
-
-/* The Active Tab (Forest Green) */
-.nav-btn.active {
-    background-color: #059669;
-    /* Forest Green */
-    color: white;
-    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.25);
-}
-
-/* --- MAIN DASHBOARD AREA --- */
-.content {
-    flex-grow: 1;
-    padding: 40px 50px;
-    overflow-y: auto;
-}
-
-.dashboard-page h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-    letter-spacing: -0.5px;
-}
-
-.dashboard-page p {
-    color: #94a3b8;
-    margin-bottom: 32px;
-    font-size: 1rem;
-}
-
-/* --- CHART CONTAINER STYLING --- */
-.chart-container {
-    background: #1e293b;
+    border-right: 1px solid #334155;
     padding: 24px;
-    border-radius: 12px;
-    border: 1px solid #334155;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
-    width: 100%;
-    max-width: 900px;
+    box-sizing: border-box;
+    transition: width 0.3s ease, padding 0.3s ease;
+    overflow: hidden;
+    white-space: nowrap;
+    /* Prevents text wrapping during animation */
 }
 
-/* --- D3 CHART OVERRIDES FOR DARK MODE --- */
-svg text {
-    fill: #cbd5e1 !important;
-    font-family: 'Inter', sans-serif;
+#sidebar.collapsed {
+    width: 0 !important;
+    padding: 0 !important;
+    border-right: none;
 }
 
-svg .domain {
-    stroke: #475569 !important;
-}
-
-svg .tick line {
-    stroke: #475569 !important;
-}
-
-.grid line {
-    stroke: #334155 !important;
-}
-
-/* --- TOOLTIP STYLING --- */
-.tooltip {
-    position: absolute;
-    text-align: left;
-    padding: 14px;
-    font-size: 13px;
-    font-family: 'Inter', sans-serif;
-    background: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    pointer-events: none;
-    opacity: 0;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-    transition: opacity 0.2s ease;
-    z-index: 100;
-}
-
-.tooltip strong {
-    color: #f8fafc;
+.nav-item {
     display: block;
-    margin-bottom: 6px;
-    font-size: 14px;
+    color: #94a3b8;
+    text-decoration: none;
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    transition: 0.2s;
 }
 
-.tooltip span.inc {
-    color: #10b981;
+.nav-item:hover,
+.nav-item.active {
+    background-color: #334155;
+    color: #f8fafc;
+}
+
+/* ==========================================
+   MAIN CONTENT & HEADER BADGE
+========================================== */
+#main-content {
+    flex-grow: 1;
+    padding: 40px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.year-badge {
+    background-color: #3b82f6;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    vertical-align: middle;
+    margin-left: 12px;
     font-weight: 600;
 }
 
-.tooltip span.exp {
-    color: #ef4444;
-    font-weight: 600;
-}
-
-/* --- KPI SCORECARDS --- */
-.kpi-grid {
+/* ==========================================
+   KPI BOXES
+========================================== */
+.kpi-container {
     display: flex;
-    gap: 24px;
-    margin-bottom: 24px;
+    gap: 20px;
+    margin-bottom: 32px;
 }
 
 .kpi-card {
-    background: #1e293b;
-    padding: 20px;
-    border-radius: 12px;
+    background-color: #1e293b;
     border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 20px;
     flex: 1;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-.kpi-card h3 {
-    font-size: 0.85rem;
+.kpi-card h2 {
+    margin: 0 0 8px 0;
+    font-size: 0.9rem;
     color: #94a3b8;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
+    letter-spacing: 0.05em;
 }
 
-.kpi-value {
+.kpi-card .kpi-value {
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: bold;
     color: #f8fafc;
 }
 
-/* --- SPLIT LEDGERS STYLING --- */
-.tables-grid {
-    display: flex;
-    gap: 24px;
-    margin-bottom: 40px;
-    align-items: flex-start;
-}
-
-.table-card {
-    background: #1e293b;
-    border-radius: 12px;
+/* ==========================================
+   CHART CONTAINERS
+========================================== */
+.chart-container {
+    background-color: #1e293b;
     border: 1px solid #334155;
-    padding: 20px;
-    flex: 1;
-    min-width: 0;
-    /* Prevents flexbox blowout */
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-.table-card h3 {
-    font-size: 1.1rem;
+/* Ensures D3 SVGs shrink and grow with the container */
+.chart-container svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* ==========================================
+   TOOLTIPS
+========================================== */
+.tooltip {
+    position: absolute;
+    text-align: left;
+    padding: 12px;
+    font-size: 13px;
+    background: #0f172a;
     color: #f8fafc;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #334155;
-}
-
-/* This makes the table scrollable inside the card */
-.table-wrapper {
-    max-height: 400px;
-    overflow-y: auto;
+    border: 1px solid #334155;
     border-radius: 6px;
+    pointer-events: none;
+    opacity: 0;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    min-width: 200px;
 }
 
+/* ==========================================
+   TABLES
+========================================== */
 .data-table {
     width: 100%;
     border-collapse: collapse;
-    text-align: left;
+    margin-top: 16px;
+    font-size: 0.9rem;
 }
 
-/* Sticky Header so it stays visible while scrolling */
 .data-table th {
-    position: sticky;
-    top: 0;
-    background: #0f172a;
+    text-align: left;
     padding: 12px;
+    border-bottom: 2px solid #334155;
     color: #94a3b8;
-    font-size: 0.80rem;
-    text-transform: uppercase;
     cursor: pointer;
-    user-select: none;
-    z-index: 1;
-    transition: color 0.2s;
 }
 
 .data-table th:hover {
@@ -258,42 +164,22 @@ svg .tick line {
 
 .data-table td {
     padding: 12px;
-    font-size: 0.90rem;
-    color: #cbd5e1;
     border-bottom: 1px solid #334155;
 }
 
-/* Subtle striping so it's not just floating text */
-.data-table tbody tr:nth-child(even) {
-    background-color: rgba(15, 23, 42, 0.4);
-}
-
-.data-table tbody tr:hover td {
-    background-color: #0f172a;
-}
-
-/* Badge styling for Type */
 .badge {
     padding: 4px 8px;
     border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 700;
-}
-
-.badge.sponsor {
-    background: rgba(5, 150, 105, 0.2);
-    color: #10b981;
-    border: 1px solid #059669;
-}
-
-.badge.registrant {
-    background: rgba(59, 130, 246, 0.2);
-    color: #60a5fa;
-    border: 1px solid #3b82f6;
+    font-size: 0.8rem;
+    font-weight: 600;
 }
 
 .badge.expense {
-    background: rgba(239, 68, 68, 0.2);
-    color: #f87171;
-    border: 1px solid #ef4444;
+    background-color: #450a0a;
+    color: #fca5a5;
+}
+
+.badge.sponsor {
+    background-color: #064e3b;
+    color: #6ee7b7;
 }
