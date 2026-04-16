@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "lastUpdated": "2026-04-15T03:18:10.489Z",
+    "lastUpdated": "2026-04-16T03:26:31.014Z",
     "totalDepositsFound": 1973,
     "totalExpensesFound": 362,
     "totalBudgetsFound": 1
@@ -93638,480 +93638,288 @@
           "BudgetDate": "2025-01-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "133",
-            "name": "Events and Program Expenses"
+            "value": "1150040013",
+            "name": "Events and Program Expenses:Golf Tournament Expenses"
           }
         },
         {
           "BudgetDate": "2025-02-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "133",
-            "name": "Events and Program Expenses"
+            "value": "1150040013",
+            "name": "Events and Program Expenses:Golf Tournament Expenses"
           }
         },
         {
           "BudgetDate": "2025-03-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "133",
-            "name": "Events and Program Expenses"
+            "value": "1150040013",
+            "name": "Events and Program Expenses:Golf Tournament Expenses"
           }
         },
         {
           "BudgetDate": "2025-04-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "133",
-            "name": "Events and Program Expenses"
+            "value": "1150040013",
+            "name": "Events and Program Expenses:Golf Tournament Expenses"
           }
         },
         {
           "BudgetDate": "2025-05-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "133",
-            "name": "Events and Program Expenses"
+            "value": "1150040013",
+            "name": "Events and Program Expenses:Golf Tournament Expenses"
           }
         },
         {
           "BudgetDate": "2025-06-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "133",
-            "name": "Events and Program Expenses"
+            "value": "1150040013",
+            "name": "Events and Program Expenses:Golf Tournament Expenses"
           }
         },
         {
           "BudgetDate": "2025-07-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "133",
-            "name": "Events and Program Expenses"
+            "value": "1150040013",
+            "name": "Events and Program Expenses:Golf Tournament Expenses"
           }
         },
         {
           "BudgetDate": "2025-08-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "133",
-            "name": "Events and Program Expenses"
+            "value": "1150040013",
+            "name": "Events and Program Expenses:Golf Tournament Expenses"
           }
         },
         {
           "BudgetDate": "2025-09-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "133",
-            "name": "Events and Program Expenses"
+            "value": "1150040013",
+            "name": "Events and Program Expenses:Golf Tournament Expenses"
           }
         },
         {
           "BudgetDate": "2025-10-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "133",
-            "name": "Events and Program Expenses"
+            "value": "1150040013",
+            "name": "Events and Program Expenses:Golf Tournament Expenses"
           }
         },
         {
           "BudgetDate": "2025-11-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "133",
-            "name": "Events and Program Expenses"
+            "value": "1150040013",
+            "name": "Events and Program Expenses:Golf Tournament Expenses"
           }
         },
         {
           "BudgetDate": "2025-12-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "133",
-            "name": "Events and Program Expenses"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 416.67,
-          "AccountRef": {
-            "value": "1150040021",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 416.67,
-          "AccountRef": {
-            "value": "1150040021",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 416.67,
-          "AccountRef": {
-            "value": "1150040021",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 416.67,
-          "AccountRef": {
-            "value": "1150040021",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 416.67,
-          "AccountRef": {
-            "value": "1150040021",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 416.67,
-          "AccountRef": {
-            "value": "1150040021",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 416.67,
-          "AccountRef": {
-            "value": "1150040021",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 416.67,
-          "AccountRef": {
-            "value": "1150040021",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 416.67,
-          "AccountRef": {
-            "value": "1150040021",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 416.67,
-          "AccountRef": {
-            "value": "1150040021",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 416.67,
-          "AccountRef": {
-            "value": "1150040021",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 416.63,
-          "AccountRef": {
-            "value": "1150040021",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 58.33,
-          "AccountRef": {
-            "value": "1150040031",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 58.33,
-          "AccountRef": {
-            "value": "1150040031",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 58.33,
-          "AccountRef": {
-            "value": "1150040031",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 58.33,
-          "AccountRef": {
-            "value": "1150040031",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 58.33,
-          "AccountRef": {
-            "value": "1150040031",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 58.33,
-          "AccountRef": {
-            "value": "1150040031",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 58.33,
-          "AccountRef": {
-            "value": "1150040031",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 58.33,
-          "AccountRef": {
-            "value": "1150040031",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 58.33,
-          "AccountRef": {
-            "value": "1150040031",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 58.33,
-          "AccountRef": {
-            "value": "1150040031",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 58.33,
-          "AccountRef": {
-            "value": "1150040031",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 58.37,
-          "AccountRef": {
-            "value": "1150040031",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
+            "value": "1150040013",
+            "name": "Events and Program Expenses:Golf Tournament Expenses"
           }
         },
         {
           "BudgetDate": "2025-01-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040024",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+            "value": "24",
+            "name": "Z - Utilities"
           }
         },
         {
           "BudgetDate": "2025-02-01",
-          "Amount": 10000,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040024",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+            "value": "24",
+            "name": "Z - Utilities"
           }
         },
         {
           "BudgetDate": "2025-03-01",
-          "Amount": 10000,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040024",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+            "value": "24",
+            "name": "Z - Utilities"
           }
         },
         {
           "BudgetDate": "2025-04-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040024",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+            "value": "24",
+            "name": "Z - Utilities"
           }
         },
         {
           "BudgetDate": "2025-05-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040024",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+            "value": "24",
+            "name": "Z - Utilities"
           }
         },
         {
           "BudgetDate": "2025-06-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040024",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+            "value": "24",
+            "name": "Z - Utilities"
           }
         },
         {
           "BudgetDate": "2025-07-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040024",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+            "value": "24",
+            "name": "Z - Utilities"
           }
         },
         {
           "BudgetDate": "2025-08-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040024",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+            "value": "24",
+            "name": "Z - Utilities"
           }
         },
         {
           "BudgetDate": "2025-09-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040024",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+            "value": "24",
+            "name": "Z - Utilities"
           }
         },
         {
           "BudgetDate": "2025-10-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040024",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+            "value": "24",
+            "name": "Z - Utilities"
           }
         },
         {
           "BudgetDate": "2025-11-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040024",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+            "value": "24",
+            "name": "Z - Utilities"
           }
         },
         {
           "BudgetDate": "2025-12-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040024",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+            "value": "24",
+            "name": "Z - Utilities"
           }
         },
         {
           "BudgetDate": "2025-01-01",
-          "Amount": 6250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040036",
-            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+            "value": "54",
+            "name": "Z - Pest Control Services"
           }
         },
         {
           "BudgetDate": "2025-02-01",
-          "Amount": 6250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040036",
-            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+            "value": "54",
+            "name": "Z - Pest Control Services"
           }
         },
         {
           "BudgetDate": "2025-03-01",
-          "Amount": 6250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040036",
-            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+            "value": "54",
+            "name": "Z - Pest Control Services"
           }
         },
         {
           "BudgetDate": "2025-04-01",
-          "Amount": 6250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040036",
-            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+            "value": "54",
+            "name": "Z - Pest Control Services"
           }
         },
         {
           "BudgetDate": "2025-05-01",
-          "Amount": 6250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040036",
-            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+            "value": "54",
+            "name": "Z - Pest Control Services"
           }
         },
         {
           "BudgetDate": "2025-06-01",
-          "Amount": 6250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040036",
-            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+            "value": "54",
+            "name": "Z - Pest Control Services"
           }
         },
         {
           "BudgetDate": "2025-07-01",
-          "Amount": 6250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040036",
-            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+            "value": "54",
+            "name": "Z - Pest Control Services"
           }
         },
         {
           "BudgetDate": "2025-08-01",
-          "Amount": 6250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040036",
-            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+            "value": "54",
+            "name": "Z - Pest Control Services"
           }
         },
         {
           "BudgetDate": "2025-09-01",
-          "Amount": 6250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040036",
-            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+            "value": "54",
+            "name": "Z - Pest Control Services"
           }
         },
         {
           "BudgetDate": "2025-10-01",
-          "Amount": 6250,
+          "Amount": 70,
           "AccountRef": {
-            "value": "1150040036",
-            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+            "value": "54",
+            "name": "Z - Pest Control Services"
           }
         },
         {
           "BudgetDate": "2025-11-01",
-          "Amount": 6250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040036",
-            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+            "value": "54",
+            "name": "Z - Pest Control Services"
           }
         },
         {
           "BudgetDate": "2025-12-01",
-          "Amount": 6250,
+          "Amount": 70,
           "AccountRef": {
-            "value": "1150040036",
-            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+            "value": "54",
+            "name": "Z - Pest Control Services"
           }
         },
         {
@@ -94208,966 +94016,6 @@
           "AccountRef": {
             "value": "49",
             "name": "Z - Landscaping Services:Job Materials:Plants and Soil"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "63",
-            "name": "Z - Job Expenses:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "63",
-            "name": "Z - Job Expenses:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "63",
-            "name": "Z - Job Expenses:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "63",
-            "name": "Z - Job Expenses:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "63",
-            "name": "Z - Job Expenses:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "63",
-            "name": "Z - Job Expenses:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "63",
-            "name": "Z - Job Expenses:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "63",
-            "name": "Z - Job Expenses:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "63",
-            "name": "Z - Job Expenses:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "63",
-            "name": "Z - Job Expenses:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "63",
-            "name": "Z - Job Expenses:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "63",
-            "name": "Z - Job Expenses:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 1000,
-          "AccountRef": {
-            "value": "1150040023",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 1000,
-          "AccountRef": {
-            "value": "1150040023",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 1000,
-          "AccountRef": {
-            "value": "1150040023",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 1000,
-          "AccountRef": {
-            "value": "1150040023",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 1000,
-          "AccountRef": {
-            "value": "1150040023",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 1000,
-          "AccountRef": {
-            "value": "1150040023",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 1000,
-          "AccountRef": {
-            "value": "1150040023",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 1000,
-          "AccountRef": {
-            "value": "1150040023",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 1000,
-          "AccountRef": {
-            "value": "1150040023",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 1000,
-          "AccountRef": {
-            "value": "1150040023",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 1000,
-          "AccountRef": {
-            "value": "1150040023",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 1000,
-          "AccountRef": {
-            "value": "1150040023",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 333.33,
-          "AccountRef": {
-            "value": "1150040016",
-            "name": "Events and Programs:Golf Tournament Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 333.33,
-          "AccountRef": {
-            "value": "1150040016",
-            "name": "Events and Programs:Golf Tournament Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 333.33,
-          "AccountRef": {
-            "value": "1150040016",
-            "name": "Events and Programs:Golf Tournament Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 333.33,
-          "AccountRef": {
-            "value": "1150040016",
-            "name": "Events and Programs:Golf Tournament Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 333.33,
-          "AccountRef": {
-            "value": "1150040016",
-            "name": "Events and Programs:Golf Tournament Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 333.33,
-          "AccountRef": {
-            "value": "1150040016",
-            "name": "Events and Programs:Golf Tournament Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 333.33,
-          "AccountRef": {
-            "value": "1150040016",
-            "name": "Events and Programs:Golf Tournament Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 333.33,
-          "AccountRef": {
-            "value": "1150040016",
-            "name": "Events and Programs:Golf Tournament Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 333.33,
-          "AccountRef": {
-            "value": "1150040016",
-            "name": "Events and Programs:Golf Tournament Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 333.33,
-          "AccountRef": {
-            "value": "1150040016",
-            "name": "Events and Programs:Golf Tournament Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 333.33,
-          "AccountRef": {
-            "value": "1150040016",
-            "name": "Events and Programs:Golf Tournament Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 333.37,
-          "AccountRef": {
-            "value": "1150040016",
-            "name": "Events and Programs:Golf Tournament Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040029",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040029",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040029",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040029",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 144,
-          "AccountRef": {
-            "value": "1150040029",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040029",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 262,
-          "AccountRef": {
-            "value": "1150040029",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 744,
-          "AccountRef": {
-            "value": "1150040029",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040029",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040029",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040029",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040029",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 833.33,
-          "AccountRef": {
-            "value": "1150040028",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 833.33,
-          "AccountRef": {
-            "value": "1150040028",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 833.33,
-          "AccountRef": {
-            "value": "1150040028",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 833.33,
-          "AccountRef": {
-            "value": "1150040028",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 833.33,
-          "AccountRef": {
-            "value": "1150040028",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 833.33,
-          "AccountRef": {
-            "value": "1150040028",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 833.33,
-          "AccountRef": {
-            "value": "1150040028",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 833.33,
-          "AccountRef": {
-            "value": "1150040028",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 833.33,
-          "AccountRef": {
-            "value": "1150040028",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 833.33,
-          "AccountRef": {
-            "value": "1150040028",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 833.33,
-          "AccountRef": {
-            "value": "1150040028",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 833.37,
-          "AccountRef": {
-            "value": "1150040028",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040010",
-            "name": "Events and Programs:Winter Gala Revenue"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040010",
-            "name": "Events and Programs:Winter Gala Revenue"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040010",
-            "name": "Events and Programs:Winter Gala Revenue"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040010",
-            "name": "Events and Programs:Winter Gala Revenue"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040010",
-            "name": "Events and Programs:Winter Gala Revenue"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040010",
-            "name": "Events and Programs:Winter Gala Revenue"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040010",
-            "name": "Events and Programs:Winter Gala Revenue"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040010",
-            "name": "Events and Programs:Winter Gala Revenue"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040010",
-            "name": "Events and Programs:Winter Gala Revenue"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040010",
-            "name": "Events and Programs:Winter Gala Revenue"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040010",
-            "name": "Events and Programs:Winter Gala Revenue"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040010",
-            "name": "Events and Programs:Winter Gala Revenue"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 500,
-          "AccountRef": {
-            "value": "1150040027",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 500,
-          "AccountRef": {
-            "value": "1150040027",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 500,
-          "AccountRef": {
-            "value": "1150040027",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 500,
-          "AccountRef": {
-            "value": "1150040027",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 500,
-          "AccountRef": {
-            "value": "1150040027",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 500,
-          "AccountRef": {
-            "value": "1150040027",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 500,
-          "AccountRef": {
-            "value": "1150040027",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 500,
-          "AccountRef": {
-            "value": "1150040027",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 500,
-          "AccountRef": {
-            "value": "1150040027",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 500,
-          "AccountRef": {
-            "value": "1150040027",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 500,
-          "AccountRef": {
-            "value": "1150040027",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 500,
-          "AccountRef": {
-            "value": "1150040027",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "77",
-            "name": "Z - Utilities:Telephone"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "77",
-            "name": "Z - Utilities:Telephone"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "77",
-            "name": "Z - Utilities:Telephone"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "77",
-            "name": "Z - Utilities:Telephone"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "77",
-            "name": "Z - Utilities:Telephone"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "77",
-            "name": "Z - Utilities:Telephone"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "77",
-            "name": "Z - Utilities:Telephone"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "77",
-            "name": "Z - Utilities:Telephone"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "77",
-            "name": "Z - Utilities:Telephone"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "77",
-            "name": "Z - Utilities:Telephone"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "77",
-            "name": "Z - Utilities:Telephone"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 56.5,
-          "AccountRef": {
-            "value": "77",
-            "name": "Z - Utilities:Telephone"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040012",
-            "name": "Events and Program Expenses:Winter Gala Expenses"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040012",
-            "name": "Events and Program Expenses:Winter Gala Expenses"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040012",
-            "name": "Events and Program Expenses:Winter Gala Expenses"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040012",
-            "name": "Events and Program Expenses:Winter Gala Expenses"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040012",
-            "name": "Events and Program Expenses:Winter Gala Expenses"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040012",
-            "name": "Events and Program Expenses:Winter Gala Expenses"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040012",
-            "name": "Events and Program Expenses:Winter Gala Expenses"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040012",
-            "name": "Events and Program Expenses:Winter Gala Expenses"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040012",
-            "name": "Events and Program Expenses:Winter Gala Expenses"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040012",
-            "name": "Events and Program Expenses:Winter Gala Expenses"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040012",
-            "name": "Events and Program Expenses:Winter Gala Expenses"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "1150040012",
-            "name": "Events and Program Expenses:Winter Gala Expenses"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "66",
-            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "66",
-            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "66",
-            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "66",
-            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "66",
-            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "66",
-            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "66",
-            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "66",
-            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "66",
-            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "66",
-            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 158.08,
-          "AccountRef": {
-            "value": "66",
-            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 89.09,
-          "AccountRef": {
-            "value": "66",
-            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
           }
         },
         {
@@ -95270,384 +94118,96 @@
           "BudgetDate": "2025-01-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "53",
-            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
+            "value": "93",
+            "name": "Events and Programs"
           }
         },
         {
           "BudgetDate": "2025-02-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "53",
-            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
+            "value": "93",
+            "name": "Events and Programs"
           }
         },
         {
           "BudgetDate": "2025-03-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "53",
-            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
+            "value": "93",
+            "name": "Events and Programs"
           }
         },
         {
           "BudgetDate": "2025-04-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "53",
-            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
+            "value": "93",
+            "name": "Events and Programs"
           }
         },
         {
           "BudgetDate": "2025-05-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "53",
-            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
+            "value": "93",
+            "name": "Events and Programs"
           }
         },
         {
           "BudgetDate": "2025-06-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "53",
-            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
+            "value": "93",
+            "name": "Events and Programs"
           }
         },
         {
           "BudgetDate": "2025-07-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "53",
-            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
+            "value": "93",
+            "name": "Events and Programs"
           }
         },
         {
           "BudgetDate": "2025-08-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "53",
-            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
+            "value": "93",
+            "name": "Events and Programs"
           }
         },
         {
           "BudgetDate": "2025-09-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "53",
-            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
+            "value": "93",
+            "name": "Events and Programs"
           }
         },
         {
           "BudgetDate": "2025-10-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "53",
-            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
+            "value": "93",
+            "name": "Events and Programs"
           }
         },
         {
           "BudgetDate": "2025-11-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "53",
-            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 50,
-          "AccountRef": {
-            "value": "53",
-            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "51",
-            "name": "Z - Landscaping Services:Labor"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "51",
-            "name": "Z - Landscaping Services:Labor"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "51",
-            "name": "Z - Landscaping Services:Labor"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "51",
-            "name": "Z - Landscaping Services:Labor"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "51",
-            "name": "Z - Landscaping Services:Labor"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "51",
-            "name": "Z - Landscaping Services:Labor"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "51",
-            "name": "Z - Landscaping Services:Labor"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "51",
-            "name": "Z - Landscaping Services:Labor"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "51",
-            "name": "Z - Landscaping Services:Labor"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "51",
-            "name": "Z - Landscaping Services:Labor"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "51",
-            "name": "Z - Landscaping Services:Labor"
+            "value": "93",
+            "name": "Events and Programs"
           }
         },
         {
           "BudgetDate": "2025-12-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "51",
-            "name": "Z - Landscaping Services:Labor"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 5833.33,
-          "AccountRef": {
-            "value": "1150040017",
-            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 5833.33,
-          "AccountRef": {
-            "value": "1150040017",
-            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 5833.33,
-          "AccountRef": {
-            "value": "1150040017",
-            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 5833.33,
-          "AccountRef": {
-            "value": "1150040017",
-            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 5833.33,
-          "AccountRef": {
-            "value": "1150040017",
-            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 5833.33,
-          "AccountRef": {
-            "value": "1150040017",
-            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 5833.33,
-          "AccountRef": {
-            "value": "1150040017",
-            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 5833.33,
-          "AccountRef": {
-            "value": "1150040017",
-            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 5833.33,
-          "AccountRef": {
-            "value": "1150040017",
-            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 5833.33,
-          "AccountRef": {
-            "value": "1150040017",
-            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 5833.33,
-          "AccountRef": {
-            "value": "1150040017",
-            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 5833.37,
-          "AccountRef": {
-            "value": "1150040017",
-            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 583.33,
-          "AccountRef": {
-            "value": "1150040018",
-            "name": "Events and Programs:Winter Gala Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 583.33,
-          "AccountRef": {
-            "value": "1150040018",
-            "name": "Events and Programs:Winter Gala Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 583.33,
-          "AccountRef": {
-            "value": "1150040018",
-            "name": "Events and Programs:Winter Gala Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 583.33,
-          "AccountRef": {
-            "value": "1150040018",
-            "name": "Events and Programs:Winter Gala Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 583.33,
-          "AccountRef": {
-            "value": "1150040018",
-            "name": "Events and Programs:Winter Gala Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 583.33,
-          "AccountRef": {
-            "value": "1150040018",
-            "name": "Events and Programs:Winter Gala Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 583.33,
-          "AccountRef": {
-            "value": "1150040018",
-            "name": "Events and Programs:Winter Gala Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 583.33,
-          "AccountRef": {
-            "value": "1150040018",
-            "name": "Events and Programs:Winter Gala Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 583.33,
-          "AccountRef": {
-            "value": "1150040018",
-            "name": "Events and Programs:Winter Gala Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 583.33,
-          "AccountRef": {
-            "value": "1150040018",
-            "name": "Events and Programs:Winter Gala Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 583.33,
-          "AccountRef": {
-            "value": "1150040018",
-            "name": "Events and Programs:Winter Gala Revenue:Registration"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 583.37,
-          "AccountRef": {
-            "value": "1150040018",
-            "name": "Events and Programs:Winter Gala Revenue:Registration"
+            "value": "93",
+            "name": "Events and Programs"
           }
         },
         {
@@ -95748,578 +94308,482 @@
         },
         {
           "BudgetDate": "2025-01-01",
-          "Amount": 0,
+          "Amount": 5833.33,
           "AccountRef": {
-            "value": "45",
-            "name": "Z - Landscaping Services"
+            "value": "1150040017",
+            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
           }
         },
         {
           "BudgetDate": "2025-02-01",
-          "Amount": 0,
+          "Amount": 5833.33,
           "AccountRef": {
-            "value": "45",
-            "name": "Z - Landscaping Services"
+            "value": "1150040017",
+            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
           }
         },
         {
           "BudgetDate": "2025-03-01",
-          "Amount": 0,
+          "Amount": 5833.33,
           "AccountRef": {
-            "value": "45",
-            "name": "Z - Landscaping Services"
+            "value": "1150040017",
+            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
           }
         },
         {
           "BudgetDate": "2025-04-01",
-          "Amount": 0,
+          "Amount": 5833.33,
           "AccountRef": {
-            "value": "45",
-            "name": "Z - Landscaping Services"
+            "value": "1150040017",
+            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
           }
         },
         {
           "BudgetDate": "2025-05-01",
-          "Amount": 0,
+          "Amount": 5833.33,
           "AccountRef": {
-            "value": "45",
-            "name": "Z - Landscaping Services"
+            "value": "1150040017",
+            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
           }
         },
         {
           "BudgetDate": "2025-06-01",
-          "Amount": 0,
+          "Amount": 5833.33,
           "AccountRef": {
-            "value": "45",
-            "name": "Z - Landscaping Services"
+            "value": "1150040017",
+            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
           }
         },
         {
           "BudgetDate": "2025-07-01",
-          "Amount": 0,
+          "Amount": 5833.33,
           "AccountRef": {
-            "value": "45",
-            "name": "Z - Landscaping Services"
+            "value": "1150040017",
+            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
           }
         },
         {
           "BudgetDate": "2025-08-01",
-          "Amount": 0,
+          "Amount": 5833.33,
           "AccountRef": {
-            "value": "45",
-            "name": "Z - Landscaping Services"
+            "value": "1150040017",
+            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
           }
         },
         {
           "BudgetDate": "2025-09-01",
-          "Amount": 0,
+          "Amount": 5833.33,
           "AccountRef": {
-            "value": "45",
-            "name": "Z - Landscaping Services"
+            "value": "1150040017",
+            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
           }
         },
         {
           "BudgetDate": "2025-10-01",
-          "Amount": 190,
+          "Amount": 5833.33,
           "AccountRef": {
-            "value": "45",
-            "name": "Z - Landscaping Services"
+            "value": "1150040017",
+            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
           }
         },
         {
           "BudgetDate": "2025-11-01",
-          "Amount": 90,
+          "Amount": 5833.33,
           "AccountRef": {
-            "value": "45",
-            "name": "Z - Landscaping Services"
+            "value": "1150040017",
+            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
           }
         },
         {
           "BudgetDate": "2025-12-01",
-          "Amount": 400,
+          "Amount": 5833.37,
           "AccountRef": {
-            "value": "45",
-            "name": "Z - Landscaping Services"
+            "value": "1150040017",
+            "name": "Events and Programs:Golf Tournament Revenue:Gold Sponsorship"
           }
         },
         {
           "BudgetDate": "2025-01-01",
-          "Amount": 0,
+          "Amount": 500,
           "AccountRef": {
-            "value": "54",
-            "name": "Z - Pest Control Services"
+            "value": "1150040027",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
           }
         },
         {
           "BudgetDate": "2025-02-01",
-          "Amount": 0,
+          "Amount": 500,
           "AccountRef": {
-            "value": "54",
-            "name": "Z - Pest Control Services"
+            "value": "1150040027",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
           }
         },
         {
           "BudgetDate": "2025-03-01",
-          "Amount": 0,
+          "Amount": 500,
           "AccountRef": {
-            "value": "54",
-            "name": "Z - Pest Control Services"
+            "value": "1150040027",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
           }
         },
         {
           "BudgetDate": "2025-04-01",
-          "Amount": 0,
+          "Amount": 500,
           "AccountRef": {
-            "value": "54",
-            "name": "Z - Pest Control Services"
+            "value": "1150040027",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
           }
         },
         {
           "BudgetDate": "2025-05-01",
-          "Amount": 0,
+          "Amount": 500,
           "AccountRef": {
-            "value": "54",
-            "name": "Z - Pest Control Services"
+            "value": "1150040027",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
           }
         },
         {
           "BudgetDate": "2025-06-01",
-          "Amount": 0,
+          "Amount": 500,
           "AccountRef": {
-            "value": "54",
-            "name": "Z - Pest Control Services"
+            "value": "1150040027",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
           }
         },
         {
           "BudgetDate": "2025-07-01",
-          "Amount": 0,
+          "Amount": 500,
           "AccountRef": {
-            "value": "54",
-            "name": "Z - Pest Control Services"
+            "value": "1150040027",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
           }
         },
         {
           "BudgetDate": "2025-08-01",
-          "Amount": 0,
+          "Amount": 500,
           "AccountRef": {
-            "value": "54",
-            "name": "Z - Pest Control Services"
+            "value": "1150040027",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
           }
         },
         {
           "BudgetDate": "2025-09-01",
-          "Amount": 0,
+          "Amount": 500,
           "AccountRef": {
-            "value": "54",
-            "name": "Z - Pest Control Services"
+            "value": "1150040027",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
           }
         },
         {
           "BudgetDate": "2025-10-01",
-          "Amount": 70,
+          "Amount": 500,
           "AccountRef": {
-            "value": "54",
-            "name": "Z - Pest Control Services"
+            "value": "1150040027",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
           }
         },
         {
           "BudgetDate": "2025-11-01",
-          "Amount": 0,
+          "Amount": 500,
           "AccountRef": {
-            "value": "54",
-            "name": "Z - Pest Control Services"
+            "value": "1150040027",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
           }
         },
         {
           "BudgetDate": "2025-12-01",
-          "Amount": 70,
+          "Amount": 500,
           "AccountRef": {
-            "value": "54",
-            "name": "Z - Pest Control Services"
+            "value": "1150040027",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Food/Beverage"
           }
         },
         {
           "BudgetDate": "2025-01-01",
-          "Amount": 0,
+          "Amount": 250,
           "AccountRef": {
-            "value": "1150040011",
-            "name": "Events and Programs:Golf Tournament Revenue"
+            "value": "1150040033",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-02-01",
-          "Amount": 0,
+          "Amount": 250,
           "AccountRef": {
-            "value": "1150040011",
-            "name": "Events and Programs:Golf Tournament Revenue"
+            "value": "1150040033",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-03-01",
-          "Amount": 0,
+          "Amount": 250,
           "AccountRef": {
-            "value": "1150040011",
-            "name": "Events and Programs:Golf Tournament Revenue"
+            "value": "1150040033",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-04-01",
-          "Amount": 0,
+          "Amount": 250,
           "AccountRef": {
-            "value": "1150040011",
-            "name": "Events and Programs:Golf Tournament Revenue"
+            "value": "1150040033",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-05-01",
-          "Amount": 0,
+          "Amount": 250,
           "AccountRef": {
-            "value": "1150040011",
-            "name": "Events and Programs:Golf Tournament Revenue"
+            "value": "1150040033",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-06-01",
-          "Amount": 0,
+          "Amount": 250,
           "AccountRef": {
-            "value": "1150040011",
-            "name": "Events and Programs:Golf Tournament Revenue"
+            "value": "1150040033",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-07-01",
-          "Amount": 0,
+          "Amount": 250,
           "AccountRef": {
-            "value": "1150040011",
-            "name": "Events and Programs:Golf Tournament Revenue"
+            "value": "1150040033",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-08-01",
-          "Amount": 0,
+          "Amount": 250,
           "AccountRef": {
-            "value": "1150040011",
-            "name": "Events and Programs:Golf Tournament Revenue"
+            "value": "1150040033",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-09-01",
-          "Amount": 0,
+          "Amount": 250,
           "AccountRef": {
-            "value": "1150040011",
-            "name": "Events and Programs:Golf Tournament Revenue"
+            "value": "1150040033",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-10-01",
-          "Amount": 0,
+          "Amount": 250,
           "AccountRef": {
-            "value": "1150040011",
-            "name": "Events and Programs:Golf Tournament Revenue"
+            "value": "1150040033",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-11-01",
-          "Amount": 0,
+          "Amount": 250,
           "AccountRef": {
-            "value": "1150040011",
-            "name": "Events and Programs:Golf Tournament Revenue"
+            "value": "1150040033",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-12-01",
-          "Amount": 0,
+          "Amount": 250,
           "AccountRef": {
-            "value": "1150040011",
-            "name": "Events and Programs:Golf Tournament Revenue"
+            "value": "1150040033",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-01-01",
-          "Amount": 0,
+          "Amount": 58.33,
           "AccountRef": {
-            "value": "24",
-            "name": "Z - Utilities"
+            "value": "1150040031",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
           }
         },
         {
           "BudgetDate": "2025-02-01",
-          "Amount": 0,
+          "Amount": 58.33,
           "AccountRef": {
-            "value": "24",
-            "name": "Z - Utilities"
+            "value": "1150040031",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
           }
         },
         {
           "BudgetDate": "2025-03-01",
-          "Amount": 0,
+          "Amount": 58.33,
           "AccountRef": {
-            "value": "24",
-            "name": "Z - Utilities"
+            "value": "1150040031",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
           }
         },
         {
           "BudgetDate": "2025-04-01",
-          "Amount": 0,
+          "Amount": 58.33,
           "AccountRef": {
-            "value": "24",
-            "name": "Z - Utilities"
+            "value": "1150040031",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
           }
         },
         {
           "BudgetDate": "2025-05-01",
-          "Amount": 0,
+          "Amount": 58.33,
           "AccountRef": {
-            "value": "24",
-            "name": "Z - Utilities"
+            "value": "1150040031",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
           }
         },
         {
           "BudgetDate": "2025-06-01",
-          "Amount": 0,
+          "Amount": 58.33,
           "AccountRef": {
-            "value": "24",
-            "name": "Z - Utilities"
+            "value": "1150040031",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
           }
         },
         {
           "BudgetDate": "2025-07-01",
-          "Amount": 0,
+          "Amount": 58.33,
           "AccountRef": {
-            "value": "24",
-            "name": "Z - Utilities"
+            "value": "1150040031",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
           }
         },
         {
           "BudgetDate": "2025-08-01",
-          "Amount": 0,
+          "Amount": 58.33,
           "AccountRef": {
-            "value": "24",
-            "name": "Z - Utilities"
+            "value": "1150040031",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
           }
         },
         {
           "BudgetDate": "2025-09-01",
-          "Amount": 0,
+          "Amount": 58.33,
           "AccountRef": {
-            "value": "24",
-            "name": "Z - Utilities"
+            "value": "1150040031",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
           }
         },
         {
           "BudgetDate": "2025-10-01",
-          "Amount": 0,
+          "Amount": 58.33,
           "AccountRef": {
-            "value": "24",
-            "name": "Z - Utilities"
+            "value": "1150040031",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
           }
         },
         {
           "BudgetDate": "2025-11-01",
-          "Amount": 0,
+          "Amount": 58.33,
           "AccountRef": {
-            "value": "24",
-            "name": "Z - Utilities"
+            "value": "1150040031",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
           }
         },
         {
           "BudgetDate": "2025-12-01",
-          "Amount": 0,
+          "Amount": 58.37,
           "AccountRef": {
-            "value": "24",
-            "name": "Z - Utilities"
+            "value": "1150040031",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Signage"
           }
         },
         {
           "BudgetDate": "2025-01-01",
-          "Amount": 0,
+          "Amount": 125,
           "AccountRef": {
-            "value": "134",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses"
+            "value": "1150040034",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-02-01",
-          "Amount": 0,
+          "Amount": 125,
           "AccountRef": {
-            "value": "134",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses"
+            "value": "1150040034",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-03-01",
-          "Amount": 0,
+          "Amount": 125,
           "AccountRef": {
-            "value": "134",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses"
+            "value": "1150040034",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-04-01",
-          "Amount": 0,
+          "Amount": 125,
           "AccountRef": {
-            "value": "134",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses"
+            "value": "1150040034",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-05-01",
-          "Amount": 0,
+          "Amount": 125,
           "AccountRef": {
-            "value": "134",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses"
+            "value": "1150040034",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-06-01",
-          "Amount": 0,
+          "Amount": 125,
           "AccountRef": {
-            "value": "134",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses"
+            "value": "1150040034",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-07-01",
-          "Amount": 0,
+          "Amount": 125,
           "AccountRef": {
-            "value": "134",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses"
+            "value": "1150040034",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-08-01",
-          "Amount": 0,
+          "Amount": 125,
           "AccountRef": {
-            "value": "134",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses"
+            "value": "1150040034",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-09-01",
-          "Amount": 0,
+          "Amount": 125,
           "AccountRef": {
-            "value": "134",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses"
+            "value": "1150040034",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-10-01",
-          "Amount": 0,
+          "Amount": 125,
           "AccountRef": {
-            "value": "134",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses"
+            "value": "1150040034",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-11-01",
-          "Amount": 0,
+          "Amount": 125,
           "AccountRef": {
-            "value": "134",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses"
+            "value": "1150040034",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
           }
         },
         {
           "BudgetDate": "2025-12-01",
-          "Amount": 0,
+          "Amount": 125,
           "AccountRef": {
-            "value": "134",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 916.67,
-          "AccountRef": {
-            "value": "1150040026",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 916.67,
-          "AccountRef": {
-            "value": "1150040026",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 916.67,
-          "AccountRef": {
-            "value": "1150040026",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 916.67,
-          "AccountRef": {
-            "value": "1150040026",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 916.67,
-          "AccountRef": {
-            "value": "1150040026",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 916.67,
-          "AccountRef": {
-            "value": "1150040026",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 916.67,
-          "AccountRef": {
-            "value": "1150040026",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 916.67,
-          "AccountRef": {
-            "value": "1150040026",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 916.67,
-          "AccountRef": {
-            "value": "1150040026",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 916.67,
-          "AccountRef": {
-            "value": "1150040026",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 916.67,
-          "AccountRef": {
-            "value": "1150040026",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 916.63,
-          "AccountRef": {
-            "value": "1150040026",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
+            "value": "1150040034",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
           }
         },
         {
@@ -96420,98 +94884,290 @@
         },
         {
           "BudgetDate": "2025-01-01",
-          "Amount": 250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040033",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
+            "value": "51",
+            "name": "Z - Landscaping Services:Labor"
           }
         },
         {
           "BudgetDate": "2025-02-01",
-          "Amount": 250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040033",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
+            "value": "51",
+            "name": "Z - Landscaping Services:Labor"
           }
         },
         {
           "BudgetDate": "2025-03-01",
-          "Amount": 250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040033",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
+            "value": "51",
+            "name": "Z - Landscaping Services:Labor"
           }
         },
         {
           "BudgetDate": "2025-04-01",
-          "Amount": 250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040033",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
+            "value": "51",
+            "name": "Z - Landscaping Services:Labor"
           }
         },
         {
           "BudgetDate": "2025-05-01",
-          "Amount": 250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040033",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
+            "value": "51",
+            "name": "Z - Landscaping Services:Labor"
           }
         },
         {
           "BudgetDate": "2025-06-01",
-          "Amount": 250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040033",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
+            "value": "51",
+            "name": "Z - Landscaping Services:Labor"
           }
         },
         {
           "BudgetDate": "2025-07-01",
-          "Amount": 250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040033",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
+            "value": "51",
+            "name": "Z - Landscaping Services:Labor"
           }
         },
         {
           "BudgetDate": "2025-08-01",
-          "Amount": 250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040033",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
+            "value": "51",
+            "name": "Z - Landscaping Services:Labor"
           }
         },
         {
           "BudgetDate": "2025-09-01",
-          "Amount": 250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040033",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
+            "value": "51",
+            "name": "Z - Landscaping Services:Labor"
           }
         },
         {
           "BudgetDate": "2025-10-01",
-          "Amount": 250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040033",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
+            "value": "51",
+            "name": "Z - Landscaping Services:Labor"
           }
         },
         {
           "BudgetDate": "2025-11-01",
-          "Amount": 250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040033",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
+            "value": "51",
+            "name": "Z - Landscaping Services:Labor"
           }
         },
         {
           "BudgetDate": "2025-12-01",
-          "Amount": 250,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040033",
-            "name": "Events and Program Expenses:Golf Tournament Expenses:Prizes/Gifts"
+            "value": "51",
+            "name": "Z - Landscaping Services:Labor"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "46",
+            "name": "Z - Landscaping Services:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "46",
+            "name": "Z - Landscaping Services:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "46",
+            "name": "Z - Landscaping Services:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "46",
+            "name": "Z - Landscaping Services:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "46",
+            "name": "Z - Landscaping Services:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "46",
+            "name": "Z - Landscaping Services:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "46",
+            "name": "Z - Landscaping Services:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "46",
+            "name": "Z - Landscaping Services:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "46",
+            "name": "Z - Landscaping Services:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "46",
+            "name": "Z - Landscaping Services:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "46",
+            "name": "Z - Landscaping Services:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "46",
+            "name": "Z - Landscaping Services:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 416.67,
+          "AccountRef": {
+            "value": "1150040021",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 416.67,
+          "AccountRef": {
+            "value": "1150040021",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 416.67,
+          "AccountRef": {
+            "value": "1150040021",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 416.67,
+          "AccountRef": {
+            "value": "1150040021",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 416.67,
+          "AccountRef": {
+            "value": "1150040021",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 416.67,
+          "AccountRef": {
+            "value": "1150040021",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 416.67,
+          "AccountRef": {
+            "value": "1150040021",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 416.67,
+          "AccountRef": {
+            "value": "1150040021",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 416.67,
+          "AccountRef": {
+            "value": "1150040021",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 416.67,
+          "AccountRef": {
+            "value": "1150040021",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 416.67,
+          "AccountRef": {
+            "value": "1150040021",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 416.63,
+          "AccountRef": {
+            "value": "1150040021",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:A/V"
           }
         },
         {
@@ -96614,198 +95270,6 @@
           "BudgetDate": "2025-01-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "46",
-            "name": "Z - Landscaping Services:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "46",
-            "name": "Z - Landscaping Services:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "46",
-            "name": "Z - Landscaping Services:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "46",
-            "name": "Z - Landscaping Services:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "46",
-            "name": "Z - Landscaping Services:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "46",
-            "name": "Z - Landscaping Services:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "46",
-            "name": "Z - Landscaping Services:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "46",
-            "name": "Z - Landscaping Services:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "46",
-            "name": "Z - Landscaping Services:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "46",
-            "name": "Z - Landscaping Services:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "46",
-            "name": "Z - Landscaping Services:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 0,
-          "AccountRef": {
-            "value": "46",
-            "name": "Z - Landscaping Services:Job Materials"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 9166.67,
-          "AccountRef": {
-            "value": "1150040019",
-            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 9166.67,
-          "AccountRef": {
-            "value": "1150040019",
-            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 9166.67,
-          "AccountRef": {
-            "value": "1150040019",
-            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 9166.67,
-          "AccountRef": {
-            "value": "1150040019",
-            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 9166.67,
-          "AccountRef": {
-            "value": "1150040019",
-            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 9166.67,
-          "AccountRef": {
-            "value": "1150040019",
-            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 9166.67,
-          "AccountRef": {
-            "value": "1150040019",
-            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 9166.67,
-          "AccountRef": {
-            "value": "1150040019",
-            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 9166.67,
-          "AccountRef": {
-            "value": "1150040019",
-            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 9166.67,
-          "AccountRef": {
-            "value": "1150040019",
-            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 9166.67,
-          "AccountRef": {
-            "value": "1150040019",
-            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 9166.63,
-          "AccountRef": {
-            "value": "1150040019",
-            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 0,
-          "AccountRef": {
             "value": "1150040035",
             "name": "Events and Programs:Annual Luncheon Revenue:Silver Sponsorship"
           }
@@ -96900,194 +95364,386 @@
         },
         {
           "BudgetDate": "2025-01-01",
-          "Amount": 0,
+          "Amount": 583.33,
           "AccountRef": {
-            "value": "58",
-            "name": "Z - Job Expenses"
+            "value": "1150040018",
+            "name": "Events and Programs:Winter Gala Revenue:Registration"
           }
         },
         {
           "BudgetDate": "2025-02-01",
-          "Amount": 0,
+          "Amount": 583.33,
           "AccountRef": {
-            "value": "58",
-            "name": "Z - Job Expenses"
+            "value": "1150040018",
+            "name": "Events and Programs:Winter Gala Revenue:Registration"
           }
         },
         {
           "BudgetDate": "2025-03-01",
-          "Amount": 0,
+          "Amount": 583.33,
           "AccountRef": {
-            "value": "58",
-            "name": "Z - Job Expenses"
+            "value": "1150040018",
+            "name": "Events and Programs:Winter Gala Revenue:Registration"
           }
         },
         {
           "BudgetDate": "2025-04-01",
-          "Amount": 0,
+          "Amount": 583.33,
           "AccountRef": {
-            "value": "58",
-            "name": "Z - Job Expenses"
+            "value": "1150040018",
+            "name": "Events and Programs:Winter Gala Revenue:Registration"
           }
         },
         {
           "BudgetDate": "2025-05-01",
-          "Amount": 0,
+          "Amount": 583.33,
           "AccountRef": {
-            "value": "58",
-            "name": "Z - Job Expenses"
+            "value": "1150040018",
+            "name": "Events and Programs:Winter Gala Revenue:Registration"
           }
         },
         {
           "BudgetDate": "2025-06-01",
-          "Amount": 0,
+          "Amount": 583.33,
           "AccountRef": {
-            "value": "58",
-            "name": "Z - Job Expenses"
+            "value": "1150040018",
+            "name": "Events and Programs:Winter Gala Revenue:Registration"
           }
         },
         {
           "BudgetDate": "2025-07-01",
-          "Amount": 0,
+          "Amount": 583.33,
           "AccountRef": {
-            "value": "58",
-            "name": "Z - Job Expenses"
+            "value": "1150040018",
+            "name": "Events and Programs:Winter Gala Revenue:Registration"
           }
         },
         {
           "BudgetDate": "2025-08-01",
-          "Amount": 0,
+          "Amount": 583.33,
           "AccountRef": {
-            "value": "58",
-            "name": "Z - Job Expenses"
+            "value": "1150040018",
+            "name": "Events and Programs:Winter Gala Revenue:Registration"
           }
         },
         {
           "BudgetDate": "2025-09-01",
-          "Amount": 0,
+          "Amount": 583.33,
           "AccountRef": {
-            "value": "58",
-            "name": "Z - Job Expenses"
+            "value": "1150040018",
+            "name": "Events and Programs:Winter Gala Revenue:Registration"
           }
         },
         {
           "BudgetDate": "2025-10-01",
-          "Amount": 0,
+          "Amount": 583.33,
           "AccountRef": {
-            "value": "58",
-            "name": "Z - Job Expenses"
+            "value": "1150040018",
+            "name": "Events and Programs:Winter Gala Revenue:Registration"
           }
         },
         {
           "BudgetDate": "2025-11-01",
-          "Amount": 0,
+          "Amount": 583.33,
           "AccountRef": {
-            "value": "58",
-            "name": "Z - Job Expenses"
+            "value": "1150040018",
+            "name": "Events and Programs:Winter Gala Revenue:Registration"
           }
         },
         {
           "BudgetDate": "2025-12-01",
-          "Amount": 108.09,
+          "Amount": 583.37,
           "AccountRef": {
-            "value": "58",
-            "name": "Z - Job Expenses"
+            "value": "1150040018",
+            "name": "Events and Programs:Winter Gala Revenue:Registration"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 333.33,
+          "AccountRef": {
+            "value": "1150040016",
+            "name": "Events and Programs:Golf Tournament Revenue:Registration"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 333.33,
+          "AccountRef": {
+            "value": "1150040016",
+            "name": "Events and Programs:Golf Tournament Revenue:Registration"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 333.33,
+          "AccountRef": {
+            "value": "1150040016",
+            "name": "Events and Programs:Golf Tournament Revenue:Registration"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 333.33,
+          "AccountRef": {
+            "value": "1150040016",
+            "name": "Events and Programs:Golf Tournament Revenue:Registration"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 333.33,
+          "AccountRef": {
+            "value": "1150040016",
+            "name": "Events and Programs:Golf Tournament Revenue:Registration"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 333.33,
+          "AccountRef": {
+            "value": "1150040016",
+            "name": "Events and Programs:Golf Tournament Revenue:Registration"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 333.33,
+          "AccountRef": {
+            "value": "1150040016",
+            "name": "Events and Programs:Golf Tournament Revenue:Registration"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 333.33,
+          "AccountRef": {
+            "value": "1150040016",
+            "name": "Events and Programs:Golf Tournament Revenue:Registration"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 333.33,
+          "AccountRef": {
+            "value": "1150040016",
+            "name": "Events and Programs:Golf Tournament Revenue:Registration"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 333.33,
+          "AccountRef": {
+            "value": "1150040016",
+            "name": "Events and Programs:Golf Tournament Revenue:Registration"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 333.33,
+          "AccountRef": {
+            "value": "1150040016",
+            "name": "Events and Programs:Golf Tournament Revenue:Registration"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 333.37,
+          "AccountRef": {
+            "value": "1150040016",
+            "name": "Events and Programs:Golf Tournament Revenue:Registration"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 6250,
+          "AccountRef": {
+            "value": "1150040036",
+            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 6250,
+          "AccountRef": {
+            "value": "1150040036",
+            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 6250,
+          "AccountRef": {
+            "value": "1150040036",
+            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 6250,
+          "AccountRef": {
+            "value": "1150040036",
+            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 6250,
+          "AccountRef": {
+            "value": "1150040036",
+            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 6250,
+          "AccountRef": {
+            "value": "1150040036",
+            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 6250,
+          "AccountRef": {
+            "value": "1150040036",
+            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 6250,
+          "AccountRef": {
+            "value": "1150040036",
+            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 6250,
+          "AccountRef": {
+            "value": "1150040036",
+            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 6250,
+          "AccountRef": {
+            "value": "1150040036",
+            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 6250,
+          "AccountRef": {
+            "value": "1150040036",
+            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 6250,
+          "AccountRef": {
+            "value": "1150040036",
+            "name": "Events and Programs:Golf Tournament Revenue:Silver Sponsorship"
           }
         },
         {
           "BudgetDate": "2025-01-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "48",
-            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+            "value": "1150040010",
+            "name": "Events and Programs:Winter Gala Revenue"
           }
         },
         {
           "BudgetDate": "2025-02-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "48",
-            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+            "value": "1150040010",
+            "name": "Events and Programs:Winter Gala Revenue"
           }
         },
         {
           "BudgetDate": "2025-03-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "48",
-            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+            "value": "1150040010",
+            "name": "Events and Programs:Winter Gala Revenue"
           }
         },
         {
           "BudgetDate": "2025-04-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "48",
-            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+            "value": "1150040010",
+            "name": "Events and Programs:Winter Gala Revenue"
           }
         },
         {
           "BudgetDate": "2025-05-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "48",
-            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+            "value": "1150040010",
+            "name": "Events and Programs:Winter Gala Revenue"
           }
         },
         {
           "BudgetDate": "2025-06-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "48",
-            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+            "value": "1150040010",
+            "name": "Events and Programs:Winter Gala Revenue"
           }
         },
         {
           "BudgetDate": "2025-07-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "48",
-            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+            "value": "1150040010",
+            "name": "Events and Programs:Winter Gala Revenue"
           }
         },
         {
           "BudgetDate": "2025-08-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "48",
-            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+            "value": "1150040010",
+            "name": "Events and Programs:Winter Gala Revenue"
           }
         },
         {
           "BudgetDate": "2025-09-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "48",
-            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+            "value": "1150040010",
+            "name": "Events and Programs:Winter Gala Revenue"
           }
         },
         {
           "BudgetDate": "2025-10-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "48",
-            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+            "value": "1150040010",
+            "name": "Events and Programs:Winter Gala Revenue"
           }
         },
         {
           "BudgetDate": "2025-11-01",
-          "Amount": 323,
+          "Amount": 0,
           "AccountRef": {
-            "value": "48",
-            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+            "value": "1150040010",
+            "name": "Events and Programs:Winter Gala Revenue"
           }
         },
         {
           "BudgetDate": "2025-12-01",
-          "Amount": 422,
+          "Amount": 0,
           "AccountRef": {
-            "value": "48",
-            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+            "value": "1150040010",
+            "name": "Events and Programs:Winter Gala Revenue"
           }
         },
         {
@@ -97184,6 +95840,102 @@
           "AccountRef": {
             "value": "1150040025",
             "name": "Events and Program Expenses:Winter Gala Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040029",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040029",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040029",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040029",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 144,
+          "AccountRef": {
+            "value": "1150040029",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040029",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 262,
+          "AccountRef": {
+            "value": "1150040029",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 744,
+          "AccountRef": {
+            "value": "1150040029",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040029",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040029",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040029",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040029",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Signage"
           }
         },
         {
@@ -97286,96 +96038,576 @@
           "BudgetDate": "2025-01-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040013",
-            "name": "Events and Program Expenses:Golf Tournament Expenses"
+            "value": "1150040011",
+            "name": "Events and Programs:Golf Tournament Revenue"
           }
         },
         {
           "BudgetDate": "2025-02-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040013",
-            "name": "Events and Program Expenses:Golf Tournament Expenses"
+            "value": "1150040011",
+            "name": "Events and Programs:Golf Tournament Revenue"
           }
         },
         {
           "BudgetDate": "2025-03-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040013",
-            "name": "Events and Program Expenses:Golf Tournament Expenses"
+            "value": "1150040011",
+            "name": "Events and Programs:Golf Tournament Revenue"
           }
         },
         {
           "BudgetDate": "2025-04-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040013",
-            "name": "Events and Program Expenses:Golf Tournament Expenses"
+            "value": "1150040011",
+            "name": "Events and Programs:Golf Tournament Revenue"
           }
         },
         {
           "BudgetDate": "2025-05-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040013",
-            "name": "Events and Program Expenses:Golf Tournament Expenses"
+            "value": "1150040011",
+            "name": "Events and Programs:Golf Tournament Revenue"
           }
         },
         {
           "BudgetDate": "2025-06-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040013",
-            "name": "Events and Program Expenses:Golf Tournament Expenses"
+            "value": "1150040011",
+            "name": "Events and Programs:Golf Tournament Revenue"
           }
         },
         {
           "BudgetDate": "2025-07-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040013",
-            "name": "Events and Program Expenses:Golf Tournament Expenses"
+            "value": "1150040011",
+            "name": "Events and Programs:Golf Tournament Revenue"
           }
         },
         {
           "BudgetDate": "2025-08-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040013",
-            "name": "Events and Program Expenses:Golf Tournament Expenses"
+            "value": "1150040011",
+            "name": "Events and Programs:Golf Tournament Revenue"
           }
         },
         {
           "BudgetDate": "2025-09-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040013",
-            "name": "Events and Program Expenses:Golf Tournament Expenses"
+            "value": "1150040011",
+            "name": "Events and Programs:Golf Tournament Revenue"
           }
         },
         {
           "BudgetDate": "2025-10-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040013",
-            "name": "Events and Program Expenses:Golf Tournament Expenses"
+            "value": "1150040011",
+            "name": "Events and Programs:Golf Tournament Revenue"
           }
         },
         {
           "BudgetDate": "2025-11-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040013",
-            "name": "Events and Program Expenses:Golf Tournament Expenses"
+            "value": "1150040011",
+            "name": "Events and Programs:Golf Tournament Revenue"
           }
         },
         {
           "BudgetDate": "2025-12-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040013",
-            "name": "Events and Program Expenses:Golf Tournament Expenses"
+            "value": "1150040011",
+            "name": "Events and Programs:Golf Tournament Revenue"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 1000,
+          "AccountRef": {
+            "value": "1150040023",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 1000,
+          "AccountRef": {
+            "value": "1150040023",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 1000,
+          "AccountRef": {
+            "value": "1150040023",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 1000,
+          "AccountRef": {
+            "value": "1150040023",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 1000,
+          "AccountRef": {
+            "value": "1150040023",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 1000,
+          "AccountRef": {
+            "value": "1150040023",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 1000,
+          "AccountRef": {
+            "value": "1150040023",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 1000,
+          "AccountRef": {
+            "value": "1150040023",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 1000,
+          "AccountRef": {
+            "value": "1150040023",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 1000,
+          "AccountRef": {
+            "value": "1150040023",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 1000,
+          "AccountRef": {
+            "value": "1150040023",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 1000,
+          "AccountRef": {
+            "value": "1150040023",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040032",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040032",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040032",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 118,
+          "AccountRef": {
+            "value": "1150040032",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 558,
+          "AccountRef": {
+            "value": "1150040032",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 548,
+          "AccountRef": {
+            "value": "1150040032",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 374,
+          "AccountRef": {
+            "value": "1150040032",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 274,
+          "AccountRef": {
+            "value": "1150040032",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040032",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 478,
+          "AccountRef": {
+            "value": "1150040032",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040032",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040032",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "77",
+            "name": "Z - Utilities:Telephone"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "77",
+            "name": "Z - Utilities:Telephone"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "77",
+            "name": "Z - Utilities:Telephone"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "77",
+            "name": "Z - Utilities:Telephone"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "77",
+            "name": "Z - Utilities:Telephone"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "77",
+            "name": "Z - Utilities:Telephone"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "77",
+            "name": "Z - Utilities:Telephone"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "77",
+            "name": "Z - Utilities:Telephone"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "77",
+            "name": "Z - Utilities:Telephone"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "77",
+            "name": "Z - Utilities:Telephone"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "77",
+            "name": "Z - Utilities:Telephone"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 56.5,
+          "AccountRef": {
+            "value": "77",
+            "name": "Z - Utilities:Telephone"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "133",
+            "name": "Events and Program Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "133",
+            "name": "Events and Program Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "133",
+            "name": "Events and Program Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "133",
+            "name": "Events and Program Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "133",
+            "name": "Events and Program Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "133",
+            "name": "Events and Program Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "133",
+            "name": "Events and Program Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "133",
+            "name": "Events and Program Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "133",
+            "name": "Events and Program Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "133",
+            "name": "Events and Program Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "133",
+            "name": "Events and Program Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "133",
+            "name": "Events and Program Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040012",
+            "name": "Events and Program Expenses:Winter Gala Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040012",
+            "name": "Events and Program Expenses:Winter Gala Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040012",
+            "name": "Events and Program Expenses:Winter Gala Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040012",
+            "name": "Events and Program Expenses:Winter Gala Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040012",
+            "name": "Events and Program Expenses:Winter Gala Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040012",
+            "name": "Events and Program Expenses:Winter Gala Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040012",
+            "name": "Events and Program Expenses:Winter Gala Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040012",
+            "name": "Events and Program Expenses:Winter Gala Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040012",
+            "name": "Events and Program Expenses:Winter Gala Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040012",
+            "name": "Events and Program Expenses:Winter Gala Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040012",
+            "name": "Events and Program Expenses:Winter Gala Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040012",
+            "name": "Events and Program Expenses:Winter Gala Expenses"
           }
         },
         {
@@ -97472,6 +96704,870 @@
           "AccountRef": {
             "value": "1150040015",
             "name": "Events and Programs:Annual Luncheon Revenue:Gold Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "66",
+            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "66",
+            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "66",
+            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "66",
+            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "66",
+            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "66",
+            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "66",
+            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "66",
+            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "66",
+            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "66",
+            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 158.08,
+          "AccountRef": {
+            "value": "66",
+            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 89.09,
+          "AccountRef": {
+            "value": "66",
+            "name": "Z - Job Expenses:Job Materials:Plants and Soil"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "58",
+            "name": "Z - Job Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "58",
+            "name": "Z - Job Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "58",
+            "name": "Z - Job Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "58",
+            "name": "Z - Job Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "58",
+            "name": "Z - Job Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "58",
+            "name": "Z - Job Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "58",
+            "name": "Z - Job Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "58",
+            "name": "Z - Job Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "58",
+            "name": "Z - Job Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "58",
+            "name": "Z - Job Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "58",
+            "name": "Z - Job Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 108.09,
+          "AccountRef": {
+            "value": "58",
+            "name": "Z - Job Expenses"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "45",
+            "name": "Z - Landscaping Services"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "45",
+            "name": "Z - Landscaping Services"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "45",
+            "name": "Z - Landscaping Services"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "45",
+            "name": "Z - Landscaping Services"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "45",
+            "name": "Z - Landscaping Services"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "45",
+            "name": "Z - Landscaping Services"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "45",
+            "name": "Z - Landscaping Services"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "45",
+            "name": "Z - Landscaping Services"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "45",
+            "name": "Z - Landscaping Services"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 190,
+          "AccountRef": {
+            "value": "45",
+            "name": "Z - Landscaping Services"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 90,
+          "AccountRef": {
+            "value": "45",
+            "name": "Z - Landscaping Services"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 400,
+          "AccountRef": {
+            "value": "45",
+            "name": "Z - Landscaping Services"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "48",
+            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "48",
+            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "48",
+            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "48",
+            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "48",
+            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "48",
+            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "48",
+            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "48",
+            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "48",
+            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "48",
+            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 323,
+          "AccountRef": {
+            "value": "48",
+            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 422,
+          "AccountRef": {
+            "value": "48",
+            "name": "Z - Landscaping Services:Job Materials:Fountains and Garden Lighting"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 9166.67,
+          "AccountRef": {
+            "value": "1150040019",
+            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 9166.67,
+          "AccountRef": {
+            "value": "1150040019",
+            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 9166.67,
+          "AccountRef": {
+            "value": "1150040019",
+            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 9166.67,
+          "AccountRef": {
+            "value": "1150040019",
+            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 9166.67,
+          "AccountRef": {
+            "value": "1150040019",
+            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 9166.67,
+          "AccountRef": {
+            "value": "1150040019",
+            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 9166.67,
+          "AccountRef": {
+            "value": "1150040019",
+            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 9166.67,
+          "AccountRef": {
+            "value": "1150040019",
+            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 9166.67,
+          "AccountRef": {
+            "value": "1150040019",
+            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 9166.67,
+          "AccountRef": {
+            "value": "1150040019",
+            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 9166.67,
+          "AccountRef": {
+            "value": "1150040019",
+            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 9166.63,
+          "AccountRef": {
+            "value": "1150040019",
+            "name": "Events and Programs:Winter Gala Revenue:Gold Sponsorship"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040024",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 10000,
+          "AccountRef": {
+            "value": "1150040024",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 10000,
+          "AccountRef": {
+            "value": "1150040024",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040024",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040024",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040024",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040024",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040024",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040024",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040024",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040024",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "1150040024",
+            "name": "Events and Program Expenses:Golf Tournament Expenses:Venue"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 916.67,
+          "AccountRef": {
+            "value": "1150040026",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 916.67,
+          "AccountRef": {
+            "value": "1150040026",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 916.67,
+          "AccountRef": {
+            "value": "1150040026",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 916.67,
+          "AccountRef": {
+            "value": "1150040026",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 916.67,
+          "AccountRef": {
+            "value": "1150040026",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 916.67,
+          "AccountRef": {
+            "value": "1150040026",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 916.67,
+          "AccountRef": {
+            "value": "1150040026",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 916.67,
+          "AccountRef": {
+            "value": "1150040026",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 916.67,
+          "AccountRef": {
+            "value": "1150040026",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 916.67,
+          "AccountRef": {
+            "value": "1150040026",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 916.67,
+          "AccountRef": {
+            "value": "1150040026",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 916.63,
+          "AccountRef": {
+            "value": "1150040026",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "63",
+            "name": "Z - Job Expenses:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "63",
+            "name": "Z - Job Expenses:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "63",
+            "name": "Z - Job Expenses:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "63",
+            "name": "Z - Job Expenses:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "63",
+            "name": "Z - Job Expenses:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "63",
+            "name": "Z - Job Expenses:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "63",
+            "name": "Z - Job Expenses:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "63",
+            "name": "Z - Job Expenses:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "63",
+            "name": "Z - Job Expenses:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "63",
+            "name": "Z - Job Expenses:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "63",
+            "name": "Z - Job Expenses:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 0,
+          "AccountRef": {
+            "value": "63",
+            "name": "Z - Job Expenses:Job Materials"
+          }
+        },
+        {
+          "BudgetDate": "2025-01-01",
+          "Amount": 833.33,
+          "AccountRef": {
+            "value": "1150040028",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-02-01",
+          "Amount": 833.33,
+          "AccountRef": {
+            "value": "1150040028",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-03-01",
+          "Amount": 833.33,
+          "AccountRef": {
+            "value": "1150040028",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-04-01",
+          "Amount": 833.33,
+          "AccountRef": {
+            "value": "1150040028",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-05-01",
+          "Amount": 833.33,
+          "AccountRef": {
+            "value": "1150040028",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-06-01",
+          "Amount": 833.33,
+          "AccountRef": {
+            "value": "1150040028",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-07-01",
+          "Amount": 833.33,
+          "AccountRef": {
+            "value": "1150040028",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-08-01",
+          "Amount": 833.33,
+          "AccountRef": {
+            "value": "1150040028",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-09-01",
+          "Amount": 833.33,
+          "AccountRef": {
+            "value": "1150040028",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-10-01",
+          "Amount": 833.33,
+          "AccountRef": {
+            "value": "1150040028",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-11-01",
+          "Amount": 833.33,
+          "AccountRef": {
+            "value": "1150040028",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
+          }
+        },
+        {
+          "BudgetDate": "2025-12-01",
+          "Amount": 833.37,
+          "AccountRef": {
+            "value": "1150040028",
+            "name": "Events and Program Expenses:Winter Gala Expenses:Food/Beverage"
           }
         },
         {
@@ -97574,288 +97670,192 @@
           "BudgetDate": "2025-01-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "93",
-            "name": "Events and Programs"
+            "value": "53",
+            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
           }
         },
         {
           "BudgetDate": "2025-02-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "93",
-            "name": "Events and Programs"
+            "value": "53",
+            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
           }
         },
         {
           "BudgetDate": "2025-03-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "93",
-            "name": "Events and Programs"
+            "value": "53",
+            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
           }
         },
         {
           "BudgetDate": "2025-04-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "93",
-            "name": "Events and Programs"
+            "value": "53",
+            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
           }
         },
         {
           "BudgetDate": "2025-05-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "93",
-            "name": "Events and Programs"
+            "value": "53",
+            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
           }
         },
         {
           "BudgetDate": "2025-06-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "93",
-            "name": "Events and Programs"
+            "value": "53",
+            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
           }
         },
         {
           "BudgetDate": "2025-07-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "93",
-            "name": "Events and Programs"
+            "value": "53",
+            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
           }
         },
         {
           "BudgetDate": "2025-08-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "93",
-            "name": "Events and Programs"
+            "value": "53",
+            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
           }
         },
         {
           "BudgetDate": "2025-09-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "93",
-            "name": "Events and Programs"
+            "value": "53",
+            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
           }
         },
         {
           "BudgetDate": "2025-10-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "93",
-            "name": "Events and Programs"
+            "value": "53",
+            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
           }
         },
         {
           "BudgetDate": "2025-11-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "93",
-            "name": "Events and Programs"
+            "value": "53",
+            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
           }
         },
         {
           "BudgetDate": "2025-12-01",
-          "Amount": 0,
+          "Amount": 50,
           "AccountRef": {
-            "value": "93",
-            "name": "Events and Programs"
+            "value": "53",
+            "name": "Z - Landscaping Services:Labor:Maintenance and Repair"
           }
         },
         {
           "BudgetDate": "2025-01-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040032",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+            "value": "134",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses"
           }
         },
         {
           "BudgetDate": "2025-02-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040032",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+            "value": "134",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses"
           }
         },
         {
           "BudgetDate": "2025-03-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040032",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+            "value": "134",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses"
           }
         },
         {
           "BudgetDate": "2025-04-01",
-          "Amount": 118,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040032",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+            "value": "134",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses"
           }
         },
         {
           "BudgetDate": "2025-05-01",
-          "Amount": 558,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040032",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+            "value": "134",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses"
           }
         },
         {
           "BudgetDate": "2025-06-01",
-          "Amount": 548,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040032",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+            "value": "134",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses"
           }
         },
         {
           "BudgetDate": "2025-07-01",
-          "Amount": 374,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040032",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+            "value": "134",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses"
           }
         },
         {
           "BudgetDate": "2025-08-01",
-          "Amount": 274,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040032",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+            "value": "134",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses"
           }
         },
         {
           "BudgetDate": "2025-09-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040032",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+            "value": "134",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses"
           }
         },
         {
           "BudgetDate": "2025-10-01",
-          "Amount": 478,
+          "Amount": 0,
           "AccountRef": {
-            "value": "1150040032",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+            "value": "134",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses"
           }
         },
         {
           "BudgetDate": "2025-11-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040032",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
+            "value": "134",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses"
           }
         },
         {
           "BudgetDate": "2025-12-01",
           "Amount": 0,
           "AccountRef": {
-            "value": "1150040032",
-            "name": "Events and Program Expenses:Annual Luncheon Expenses:Prizes/Gifts"
-          }
-        },
-        {
-          "BudgetDate": "2025-01-01",
-          "Amount": 125,
-          "AccountRef": {
-            "value": "1150040034",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
-          }
-        },
-        {
-          "BudgetDate": "2025-02-01",
-          "Amount": 125,
-          "AccountRef": {
-            "value": "1150040034",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
-          }
-        },
-        {
-          "BudgetDate": "2025-03-01",
-          "Amount": 125,
-          "AccountRef": {
-            "value": "1150040034",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
-          }
-        },
-        {
-          "BudgetDate": "2025-04-01",
-          "Amount": 125,
-          "AccountRef": {
-            "value": "1150040034",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
-          }
-        },
-        {
-          "BudgetDate": "2025-05-01",
-          "Amount": 125,
-          "AccountRef": {
-            "value": "1150040034",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
-          }
-        },
-        {
-          "BudgetDate": "2025-06-01",
-          "Amount": 125,
-          "AccountRef": {
-            "value": "1150040034",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
-          }
-        },
-        {
-          "BudgetDate": "2025-07-01",
-          "Amount": 125,
-          "AccountRef": {
-            "value": "1150040034",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
-          }
-        },
-        {
-          "BudgetDate": "2025-08-01",
-          "Amount": 125,
-          "AccountRef": {
-            "value": "1150040034",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
-          }
-        },
-        {
-          "BudgetDate": "2025-09-01",
-          "Amount": 125,
-          "AccountRef": {
-            "value": "1150040034",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
-          }
-        },
-        {
-          "BudgetDate": "2025-10-01",
-          "Amount": 125,
-          "AccountRef": {
-            "value": "1150040034",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
-          }
-        },
-        {
-          "BudgetDate": "2025-11-01",
-          "Amount": 125,
-          "AccountRef": {
-            "value": "1150040034",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
-          }
-        },
-        {
-          "BudgetDate": "2025-12-01",
-          "Amount": 125,
-          "AccountRef": {
-            "value": "1150040034",
-            "name": "Events and Program Expenses:Winter Gala Expenses:Prizes/Gifts"
+            "value": "134",
+            "name": "Events and Program Expenses:Annual Luncheon Expenses"
           }
         }
       ],
