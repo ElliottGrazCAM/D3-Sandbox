@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - FinSimple</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
+    <style>
+        body {
+            background-color: #0f172a;
+            display: flex;
+        }
+
+        #main-content {
+            flex-grow: 1;
+            padding: 40px;
+            color: #f8fafc;
+        }
+
+        .settings-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .status-connected {
+            background: #065f46;
+            color: #34d399;
+        }
+
+        .status-disconnected {
+            background: #451a1a;
+            color: #f87171;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="sidebar" class="min-h-screen w-64 bg-slate-900 border-r border-slate-800 p-6">
+        <h2 style="font-size: 1.2rem; color: #f8fafc; margin-top: 0; margin-bottom: 24px;">Sample NFP Financials</h2>
+        <nav class="flex flex-col gap-2">
+            <a href="index.html" class="nav-item p-2 hover:bg-slate-800 rounded">General Overview</a>
+            <a href="events.html?event=Luncheon" class="nav-item p-2 hover:bg-slate-800 rounded">Annual Luncheon</a>
+            <div class="border-t border-slate-800 my-4"></div>
+            <a href="settings.html" class="nav-item active bg-blue-600 text-white p-2 rounded">Settings &
+                Integration</a>
+        </nav>
+    </div>
+
+    <div id="main-content">
+        <h1 class="text-3xl font-bold mb-8">Settings</h1>
+
+        <div class="settings-card">
+            <h3 class="text-slate-400 uppercase text-xs font-bold tracking-widest mb-4">Association Profile</h3>
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-xl font-bold" id="org-name">Loading Association...</div>
+                    <div class="text-slate-500 text-sm" id="user-email">user@example.com</div>
+                </div>
+                <button onclick="_supabase.auth.signOut().then(() => window.location.href='../index.html')"
+                    class="text-slate-400 hover:text-white text-sm underline">Log Out</button>
+            </div>
+        </div>
+
+        <div class="settings-card">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h3 class="text-slate-400 uppercase text-xs font-bold tracking-widest mb-1">QuickBooks Online
+                        Connection</h3>
+                    <p class="text-slate-500 text-sm">Connect your association's QuickBooks file to sync live data.</p>
+                </div>
+                <div id="connection-status-badge" class="status-badge status-disconnected">NOT CONNECTED</div>
+            </div>
+
+            <div id="qbo-actions" class="py-4">
+                <div id="connect-state">
+                    <button onclick="startQBOAuth()"
+                        class="bg-[#2ca01c] hover:bg-[#248a17] text-white px-6 py-3 rounded font-bold flex items-center gap-3 transition">
+                        <img src="https://js.appcenter.intuit.com/Content/Images/AppCenter/Buttons/SignIn_btn_32.png"
+                            alt="QBO" class="h-6">
+                        Connect to QuickBooks
+                    </button>
+                    <p class="text-xs text-slate-500 mt-4">Note: You will be redirected to Intuit to securely authorize
+                        FinSimple.</p>
+                </div>
+
+                <div id="connected-state" class="hidden">
+                    <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 flex justify-between items-center">
+                        <div>
+                            <div class="text-sm font-bold text-green-500">Successfully Linked</div>
+                            <div class="text-xs text-slate-400" id="connected-company-id">Company ID: **********</div>
+                        </div>
+                        <button onclick="disconnectQBO()"
+                            class="text-red-500 hover:bg-red-500/10 px-4 py-2 rounded border border-red-500/50 text-xs font-bold transition">
+                            Disconnect
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-card border-red-900/30">
+            <h3 class="text-red-500 uppercase text-xs font-bold tracking-widest mb-4">Danger Zone</h3>
+            <p class="text-slate-500 text-sm mb-4">Deleting your account will permanently remove all account mappings
+                and QuickBooks tokens.</p>
+            <button
+                class="bg-red-600/10 text-red-500 border border-red-500/20 px-4 py-2 rounded text-xs font-bold hover:bg-red-600 hover:text-white transition">Delete
+                All Data</button>
+        </div>
+    </div>
+
+    <script>
+        async function loadSettings() {
+            const { data: { user } } = await _supabase.auth.getUser();
+            if (user) {
+                document.getElementById('user-email').innerText = user.email;
+
+                // Fetch Org Name from Supabase Profiles -> Organizations
+                const { data: profile } = await _supabase
+                    .from('profiles')
+                    .select('organization_id, organizations(name)')
+                    .eq('id', user.id)
+                    .single();
+
+                if (profile && profile.organizations) {
+                    document.getElementById('org-name').innerText = profile.organizations.name;
+                }
+
+                // CHECK QBO CONNECTION STATUS
+                const { data: connection } = await _supabase
+                    .from('qbo_connections')
+                    .select('realm_id')
+                    .eq('organization_id', profile.organization_id)
+                    .single();
+
+                if (connection) {
+                    showConnected(connection.realm_id);
+                }
+            }
+        }
+
+        function showConnected(realmId) {
+            document.getElementById('connect-state').classList.add('hidden');
+            document.getElementById('connected-state').classList.remove('hidden');
+            document.getElementById('connection-status-badge').innerText = "CONNECTED";
+            document.getElementById('connection-status-badge').className = "status-badge status-connected";
+            document.getElementById('connected-company-id').innerText = "Company ID: " + realmId;
+        }
+
+        function startQBOAuth() {
+            alert("Redirecting to QuickBooks OAuth flow...");
+            // This is where your /api/auth/qbo serverless function will live!
+        }
+
+        function disconnectQBO() {
+            if (confirm("Are you sure you want to disconnect QuickBooks? Your dashboard will revert to demo data.")) {
+                // Here we will call Supabase to delete the tokens
+                alert("Disconnected.");
+                window.location.reload();
+            }
+        }
+
+        loadSettings();
+    </script>
+</body>
+
+</html>
