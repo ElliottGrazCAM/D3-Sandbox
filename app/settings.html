@@ -85,13 +85,20 @@
             </div>
             <div id="qbo-actions" class="mt-6">
                 <div id="connect-state" class="flex flex-col items-start gap-4">
-            
+                
                     <button onclick="startQBOAuth()"
-                        class="transition-opacity hover:opacity-90 active:scale-95 transform duration-150">
-                        <img src="https://static.developer.intuit.com/Contents/Images/Buttons/Checkout_Sign_In/Connect_to_QuickBooks_Green_2x.png"
-                            alt="Connect to QuickBooks" style="height: 44px; display: block;">
+                        class="group relative flex items-center justify-center gap-3 bg-[#2ca01c] hover:bg-[#248a17] text-white px-5 py-2.5 rounded shadow-md transition-all active:scale-95">
+                        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M16 30C23.732 30 30 23.732 30 16C30 8.26801 23.732 2 16 2C8.26801 2 2 8.26801 2 16C2 23.732 8.26801 30 16 30Z"
+                                fill="white" />
+                            <path
+                                d="M18.8 21.2C18.1 21.7 17.1 22 16 22C12.7 22 10 19.3 10 16C10 12.7 12.7 10 16 10C19.3 10 22 12.7 22 16C22 17.5 21.4 18.8 20.5 19.8L23 22.3L21.3 24L18.8 21.2ZM16 19C17.7 19 19 17.7 19 16C19 14.3 17.7 13 16 13C14.3 13 13 14.3 13 16C13 17.7 14.3 19 16 19Z"
+                                fill="#2ca01c" />
+                        </svg>
+                        <span class="font-sans font-bold text-lg tracking-tight">Connect to QuickBooks</span>
                     </button>
-            
+                
                     <p class="text-xs text-slate-500 leading-relaxed max-w-md">
                         You will be redirected to Intuit's secure servers to authorize FinSimple.
                         We never see your QuickBooks password.
