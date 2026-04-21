@@ -19,6 +19,7 @@
     </div>
 
     <div id="main-content">
+
         <div style="display: flex; align-items: center; margin-bottom: 24px;">
             <button onclick="document.getElementById('sidebar').classList.toggle('collapsed')"
                 style="background: #1e293b; color: white; border: 1px solid #334155; padding: 8px 12px; border-radius: 6px; cursor: pointer; margin-right: 16px;">☰
@@ -31,13 +32,6 @@
                     <option value="2023">2023</option>
                 </select>
             </h1>
-            <div class="explainer-toggle">
-                <button class="explainer-btn" onclick="toggleExplainer()">How is this data calculated?</button>
-            </div>
-            <div id="data-explainer" class="data-explainer">
-                <h4>Data Parameters & Filters</h4>
-                <div id="explainer-text"></div>
-            </div>
         </div>
 
         <div class="kpi-container">
@@ -77,6 +71,17 @@
                 <div id="chart-ov-admin">Loading...</div>
             </div>
         </div>
+
+        <div class="footer-wrapper">
+            <div class="explainer-toggle">
+                <button class="explainer-btn" onclick="toggleExplainer()">How is this data calculated?</button>
+            </div>
+            <div id="data-explainer" class="data-explainer">
+                <h4>Data Parameters & Filters</h4>
+                <div id="explainer-text"></div>
+            </div>
+        </div>
+
     </div>
 
     <script src="overview.js"></script>

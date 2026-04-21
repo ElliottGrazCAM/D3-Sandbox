@@ -57,6 +57,9 @@ body {
     padding: 40px;
     box-sizing: border-box;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    /* This allows us to push the footer down */
 }
 
 .year-badge {
@@ -238,11 +241,17 @@ body {
 }
 
 /* ==========================================
-   DATA EXPLAINER BOX
+   DATA EXPLAINER FOOTER
 ========================================== */
+.footer-wrapper {
+    margin-top: auto;
+    /* Pushes this container to the absolute bottom of the screen */
+    padding-top: 40px;
+    width: 100%;
+}
+
 .explainer-toggle {
     text-align: center;
-    margin-top: 40px;
     padding-top: 20px;
     border-top: 1px solid #334155;
 }
@@ -270,7 +279,8 @@ body {
     color: #94a3b8;
     font-size: 0.9rem;
     display: none;
-    /* Hidden by default */
+    text-align: left;
+    /* Keeps the list readable while the button is centered */
 }
 
 .data-explainer h4 {
