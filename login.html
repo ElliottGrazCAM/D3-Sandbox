@@ -15,8 +15,18 @@
 
         .gradient-text {
             background: linear-gradient(90deg, #3b82f6, #10b981);
-            -webkit-background-clip: text;
+    
+            /* 1. The standard property (makes the editor happy) */
+            background-clip: text; 
+    
+            /* 2. The vendor prefix (makes the browser actually do it) */
+            -webkit-background-clip: text; 
+            
+            /* 3. The fill-color (also needs the prefix for now) */
             -webkit-text-fill-color: transparent;
+            
+            /* 4. A fallback for very old browsers */
+            color: transparent; 
         }
     </style>
 </head>
