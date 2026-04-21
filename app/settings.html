@@ -83,25 +83,35 @@
                 </div>
                 <div id="connection-status-badge" class="status-badge status-disconnected">NOT CONNECTED</div>
             </div>
-
-            <div id="qbo-actions" class="py-4">
-                <div id="connect-state">
+            <div id="qbo-actions" class="mt-6">
+                <div id="connect-state" class="flex flex-col items-start gap-4">
+            
                     <button onclick="startQBOAuth()"
-                        class="bg-[#2ca01c] hover:bg-[#248a17] text-white px-6 py-3 rounded font-bold flex items-center gap-3 transition">
-                        <img src="https://js.appcenter.intuit.com/Content/Images/AppCenter/Buttons/SignIn_btn_32.png"
-                            alt="QBO" class="h-6">
-                        Connect to QuickBooks
-                    </button>
-                    <p class="text-xs text-slate-500 mt-4">Note: You will be redirected to Intuit to securely authorize
-                        FinSimple.</p>
-                </div>
-
-                <div id="connect-state">
-                    <button onclick="startQBOAuth()" class="hover:opacity-90 transition transform active:scale-95">
+                        class="transition-opacity hover:opacity-90 active:scale-95 transform duration-150">
                         <img src="https://static.developer.intuit.com/Contents/Images/Buttons/Checkout_Sign_In/Connect_to_QuickBooks_Green_2x.png"
-                            alt="Connect to QuickBooks" style="height: 44px;">
+                            alt="Connect to QuickBooks" style="height: 44px; display: block;">
                     </button>
-                    <p class="text-xs text-slate-500 mt-4">Note: You will be redirected to Intuit to securely authorize FinSimple.</p>
+            
+                    <p class="text-xs text-slate-500 leading-relaxed max-w-md">
+                        You will be redirected to Intuit's secure servers to authorize FinSimple.
+                        We never see your QuickBooks password.
+                    </p>
+                </div>
+            
+                <div id="connected-state" class="hidden">
+                    <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 flex justify-between items-center shadow-inner">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                <div class="text-sm font-bold text-white">QuickBooks Online Active</div>
+                            </div>
+                            <div class="text-xs text-slate-500" id="connected-company-id">Company ID: **********</div>
+                        </div>
+                        <button onclick="disconnectQBO()"
+                            class="text-red-400 hover:text-white hover:bg-red-500/20 px-4 py-2 rounded-lg border border-red-500/30 text-xs font-bold transition-all">
+                            Disconnect
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
