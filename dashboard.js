@@ -34,23 +34,35 @@ function renderEvent(eventType) {
     const yearBadge = document.getElementById("dynamic-year-badge");
     if (yearBadge) yearBadge.innerText = TARGET_YEAR;
 
-    // 1. DYNAMICALLY SET QBO ACCOUNT FILTERS BASED ON EVENT CLICKED
+    // 1. DYNAMICALLY SET ACCOUNT FILTERS & DATE WINDOWS
     let title = "";
     let REV_PARENT = "";
     let EXP_PARENT = "";
+    let startDate, endDate;
 
     if (eventType === "Luncheon") {
         title = "Annual Luncheon";
         REV_PARENT = "Events and Programs:Annual Luncheon Revenue";
         EXP_PARENT = "Events and Program Expenses:Annual Luncheon Expenses";
-    } else if (eventType === "Gala") {
+        // Luncheon Window: Feb 1st of Target Year to Dec 31st of Target Year
+        startDate = new Date(TARGET_YEAR, 1, 1);   // Month 1 = Feb
+        endDate = new Date(TARGET_YEAR, 11, 31);   // Month 11 = Dec
+    }
+    else if (eventType === "Gala") {
         title = "Winter Gala";
         REV_PARENT = "Events and Programs:Winter Gala Revenue";
         EXP_PARENT = "Events and Program Expenses:Winter Gala Expenses";
-    } else if (eventType === "Golf") {
+        // Gala Window: Sept 1st of Target Year to Feb 28th of the FOLLOWING year
+        startDate = new Date(TARGET_YEAR, 8, 1);     // Month 8 = Sept
+        endDate = new Date(TARGET_YEAR + 1, 1, 28);  // Target Year + 1, Month 1 = Feb
+    }
+    else if (eventType === "Golf") {
         title = "Golf Tournament";
         REV_PARENT = "Events and Programs:Golf Tournament Revenue";
         EXP_PARENT = "Events and Program Expenses:Golf Tournament Expenses";
+        // Golf Window: Dec 1st of PRIOR Year to Aug 31st of Target Year
+        startDate = new Date(TARGET_YEAR - 1, 11, 1); // Target Year - 1, Month 11 = Dec
+        endDate = new Date(TARGET_YEAR, 7, 31);       // Month 7 = Aug
     }
 
     // Update the visual H1 title
@@ -72,11 +84,11 @@ function renderEvent(eventType) {
     function processTransactions(records, isExpense, bucketsObj, parentFilter) {
         if (!records) return;
         records.forEach(record => {
-            const date = new Date(record.TxnDate);
-            const year = date.getFullYear();
+            // Convert the QuickBooks string date into a real JavaScript Date object
+            const txnDate = new Date(record.TxnDate);
 
-            // Filter strictly by the Target Year (Month filter removed so it catches all events)
-            if (year === TARGET_YEAR) {
+            // Filter: Does this transaction fall inside our custom Event window?
+            if (txnDate >= startDate && txnDate <= endDate) {
                 if (!record.Line) return;
 
                 record.Line.forEach(line => {
