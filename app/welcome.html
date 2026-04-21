@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome | FinSimple Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card-glass {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-6">
+
+    <div class="max-w-3xl w-full text-center">
+        <div class="text-3xl font-bold gradient-text mb-8">FINSIMPLE</div>
+
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-6">
+            Ready to see your <br>financial future?
+        </h1>
+
+        <p class="text-slate-400 text-lg mb-10 max-w-xl mx-auto">
+            You are about to enter the **Interactive Demo**. We've pre-loaded a sample NFP dataset to show you how
+            FinSimple turns QuickBooks complexity into boardroom clarity.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-12 text-left">
+            <div class="card-glass p-6 rounded-xl">
+                <div class="text-2xl mb-3">📊</div>
+                <h3 class="font-bold mb-1">D3 Visuals</h3>
+                <p class="text-xs text-slate-400">High-fidelity charts designed for executive decision-making.</p>
+            </div>
+            <div class="card-glass p-6 rounded-xl">
+                <div class="text-2xl mb-3">⛳</div>
+                <h3 class="font-bold mb-1">Event Logic</h3>
+                <p class="text-xs text-slate-400">Drill down into Galas and Golf Tournaments with one click.</p>
+            </div>
+            <div class="card-glass p-6 rounded-xl">
+                <div class="text-2xl mb-3">🔄</div>
+                <h3 class="font-bold mb-1">Live Sync</h3>
+                <p class="text-xs text-slate-400">Imagine this data updating automatically from your QuickBooks.</p>
+            </div>
+        </div>
+
+        <div class="space-y-4">
+            <a href="index.html"
+                class="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold px-10 py-4 rounded-full text-lg shadow-lg shadow-blue-500/20 transition transform hover:scale-105">
+                Enter Live Demo
+            </a>
+            <p class="text-xs text-slate-500">
+                Logged in as <span id="user-email" class="text-slate-400">...</span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Small script to show the user their email on the splash screen
+        async function displayUser() {
+            const { data: { user } } = await _supabase.auth.getUser();
+            if (user) {
+                document.getElementById('user-email').innerText = user.email;
+            }
+        }
+        displayUser();
+    </script>
+</body>
+
+</html>
