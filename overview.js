@@ -87,7 +87,6 @@ function renderOverview() {
         });
     }
 
-    // Fixed references from "data" to "globalData"
     processMacroData(globalData.Deposits, false);
     processMacroData(globalData.Expenses, true);
 
@@ -99,11 +98,20 @@ function renderOverview() {
         .text(netIncome < 0 ? `-$${Math.abs(netIncome).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}` : `$${netIncome.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`)
         .style("color", netIncome < 0 ? "#ef4444" : "#10b981");
 
+    // ==========================================
     // CHART A: EVENT PERFORMANCE
+    // ==========================================
     d3.select("#chart-ov-events").html("");
     const eventData = Object.keys(events).map(k => ({ name: k, rev: events[k].rev, exp: events[k].exp }));
     const marginEv = { top: 20, right: 20, bottom: 30, left: 60 }, widthEv = 900 - marginEv.left - marginEv.right, heightEv = 300 - marginEv.top - marginEv.bottom;
-    const svgEv = d3.select("#chart-ov-events").append("svg").attr("viewBox", `0 0 ${widthEv + marginEv.left + marginEv.right} ${heightEv + marginEv.top + marginEv.bottom}`).attr("width", "100%").attr("height", "100%").append("g").attr("transform", `translate(${marginEv.left},${marginEv.top})`);
+
+    const svgEv = d3.select("#chart-ov-events").append("svg")
+        .attr("viewBox", `0 0 ${widthEv + marginEv.left + marginEv.right} ${heightEv + marginEv.top + marginEv.bottom}`)
+        .attr("width", "100%")
+        .style("height", "auto") // FIXED OVERFLOW BUG
+        .attr("preserveAspectRatio", "xMidYMid meet")
+        .append("g").attr("transform", `translate(${marginEv.left},${marginEv.top})`);
+
     const x0Ev = d3.scaleBand().domain(eventData.map(d => d.name)).range([0, widthEv]).padding(0.2);
     const x1Ev = d3.scaleBand().domain(["rev", "exp"]).range([0, x0Ev.bandwidth()]).padding(0.05);
     const maxEv = d3.max(eventData, d => Math.max(d.rev, d.exp)) * 1.1 || 1;
@@ -122,12 +130,21 @@ function renderOverview() {
                 .style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
         }).on("mouseout", () => tooltip.transition().duration(500).style("opacity", 0));
 
+    // ==========================================
     // CHART B: MEMBERSHIP BREAKDOWN
+    // ==========================================
     d3.select("#chart-ov-members").html("");
     const memData = Object.values(memberships).sort((a, b) => b.revenue - a.revenue);
     if (memData.length > 0) {
         const marginMem = { top: 20, right: 50, bottom: 20, left: 100 }, widthMem = 400 - marginMem.left - marginMem.right, heightMem = 250 - marginMem.top - marginMem.bottom;
-        const svgMem = d3.select("#chart-ov-members").append("svg").attr("viewBox", `0 0 ${widthMem + marginMem.left + marginMem.right} ${heightMem + marginMem.top + marginMem.bottom}`).attr("width", "100%").attr("height", "100%").append("g").attr("transform", `translate(${marginMem.left},${marginMem.top})`);
+
+        const svgMem = d3.select("#chart-ov-members").append("svg")
+            .attr("viewBox", `0 0 ${widthMem + marginMem.left + marginMem.right} ${heightMem + marginMem.top + marginMem.bottom}`)
+            .attr("width", "100%")
+            .style("height", "auto") // FIXED OVERFLOW BUG
+            .attr("preserveAspectRatio", "xMidYMid meet")
+            .append("g").attr("transform", `translate(${marginMem.left},${marginMem.top})`);
+
         const yMem = d3.scaleBand().domain(memData.map(d => d.type)).range([0, heightMem]).padding(0.3);
         const maxMem = d3.max(memData, d => d.revenue) * 1.1 || 1;
         const xMem = d3.scaleLinear().domain([0, maxMem]).range([0, widthMem]);
@@ -143,12 +160,21 @@ function renderOverview() {
         svgMem.selectAll(".val-label").data(memData).enter().append("text").attr("y", d => yMem(d.type) + (yMem.bandwidth() / 2) + 4).attr("x", d => xMem(d.revenue) + 5).text(d => `$${d.revenue.toLocaleString()}`).style("fill", "#94a3b8").style("font-size", "11px");
     }
 
+    // ==========================================
     // CHART C: ADMIN & SOFTWARE EXPENSES
+    // ==========================================
     d3.select("#chart-ov-admin").html("");
     const adData = Object.keys(admins).map(k => ({ name: k, total: admins[k] })).sort((a, b) => b.total - a.total);
     if (adData.length > 0) {
         const marginAd = { top: 20, right: 50, bottom: 20, left: 120 }, widthAd = 400 - marginAd.left - marginAd.right, heightAd = 250 - marginAd.top - marginAd.bottom;
-        const svgAd = d3.select("#chart-ov-admin").append("svg").attr("viewBox", `0 0 ${widthAd + marginAd.left + marginAd.right} ${heightAd + marginAd.top + marginAd.bottom}`).attr("width", "100%").attr("height", "100%").append("g").attr("transform", `translate(${marginAd.left},${marginAd.top})`);
+
+        const svgAd = d3.select("#chart-ov-admin").append("svg")
+            .attr("viewBox", `0 0 ${widthAd + marginAd.left + marginAd.right} ${heightAd + marginAd.top + marginAd.bottom}`)
+            .attr("width", "100%")
+            .style("height", "auto") // FIXED OVERFLOW BUG
+            .attr("preserveAspectRatio", "xMidYMid meet")
+            .append("g").attr("transform", `translate(${marginAd.left},${marginAd.top})`);
+
         const yAd = d3.scaleBand().domain(adData.map(d => d.name)).range([0, heightAd]).padding(0.3);
         const maxAd = d3.max(adData, d => d.total) * 1.1 || 1;
         const xAd = d3.scaleLinear().domain([0, maxAd]).range([0, widthAd]);
@@ -163,5 +189,4 @@ function renderOverview() {
             }).on("mouseout", () => tooltip.transition().duration(500).style("opacity", 0));
         svgAd.selectAll(".val-label").data(adData).enter().append("text").attr("y", d => yAd(d.name) + (yAd.bandwidth() / 2) + 4).attr("x", d => xAd(d.total) + 5).text(d => `$${d.total.toLocaleString()}`).style("fill", "#94a3b8").style("font-size", "11px");
     }
-
-} // FIXED: Removed the floating }).catch() block that was breaking the rendering function!
+}
