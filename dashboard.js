@@ -496,7 +496,7 @@ d3.json("data.json").then(data => {
 
         const margin = { top: 40, right: 30, bottom: 60, left: 60 },
             width = 800 - margin.left - margin.right,
-            height = 350 - margin.top - margin.bottom;
+            height = 400 - margin.top - margin.bottom;
 
         const svg = d3.select(containerId)
             .append("svg")
@@ -602,7 +602,7 @@ d3.json("data.json").then(data => {
 
     drawYoYChart("#chart-yoy-rev", yoyRevData);
     drawYoYChart("#chart-yoy-exp", yoyExpData);
-    
+
 }).catch(error => {
     console.error("CRITICAL ERROR: Failed to load or parse data.json", error);
 });
