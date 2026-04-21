@@ -1,9 +1,32 @@
+let globalData = null;
 const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
+// Load the data ONCE when the page opens
 d3.json("data.json").then(data => {
-    const CURRENT_YEAR = new Date().getFullYear();
-    const TARGET_YEAR = CURRENT_YEAR - 1;
-    document.getElementById("dynamic-year-badge").innerText = TARGET_YEAR;
+    globalData = data;
+
+    // Set default dropdown value to Prior Year automatically on load
+    const defaultYear = new Date().getFullYear() - 1;
+    document.getElementById("year-select").value = defaultYear;
+
+    renderOverview();
+}).catch(error => {
+    console.error("CRITICAL ERROR: Failed to load or parse data.json", error);
+});
+
+// Dropdown Change Handler
+window.changeYear = function () {
+    renderOverview(); // Redraw overview charts with the new year!
+};
+
+// ==========================================
+// MASTER RENDER FUNCTION (OVERVIEW)
+// ==========================================
+function renderOverview() {
+    if (!globalData) return;
+
+    // READ THE DYNAMIC YEAR DIRECTLY FROM THE DROPDOWN!
+    const TARGET_YEAR = parseInt(document.getElementById("year-select").value);
 
     let totalAnnualRev = 0;
     let totalAnnualExp = 0;
@@ -64,8 +87,9 @@ d3.json("data.json").then(data => {
         });
     }
 
-    processMacroData(data.Deposits, false);
-    processMacroData(data.Expenses, true);
+    // Fixed references from "data" to "globalData"
+    processMacroData(globalData.Deposits, false);
+    processMacroData(globalData.Expenses, true);
 
     const netIncome = totalAnnualRev - totalAnnualExp;
     d3.select("#ov-total-rev").text(`$${totalAnnualRev.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`);
@@ -140,6 +164,4 @@ d3.json("data.json").then(data => {
         svgAd.selectAll(".val-label").data(adData).enter().append("text").attr("y", d => yAd(d.name) + (yAd.bandwidth() / 2) + 4).attr("x", d => xAd(d.total) + 5).text(d => `$${d.total.toLocaleString()}`).style("fill", "#94a3b8").style("font-size", "11px");
     }
 
-}).catch(error => {
-    console.error("CRITICAL ERROR: Failed to load or parse data.json", error);
-});
+} // FIXED: Removed the floating }).catch() block that was breaking the rendering function!

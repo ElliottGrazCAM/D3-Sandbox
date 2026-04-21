@@ -1,29 +1,38 @@
 let globalData = null;
+let currentEventType = 'Luncheon'; // Tracks which event is currently open
 const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
 // Load the data ONCE when the page opens
 d3.json("data.json").then(data => {
     globalData = data;
 
-    // Read the URL to see which event we clicked from the Overview page
-    const urlParams = new URLSearchParams(window.location.search);
-    const initialEvent = urlParams.get('event') || 'Luncheon';
+    // Set default dropdown value to Prior Year automatically on load
+    const defaultYear = new Date().getFullYear() - 1;
+    document.getElementById("year-select").value = defaultYear;
 
-    // Set the correct sidebar item to active visually
+    const urlParams = new URLSearchParams(window.location.search);
+    currentEventType = urlParams.get('event') || 'Luncheon';
+
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    const activeNav = document.getElementById(`nav-${initialEvent.toLowerCase()}`);
+    const activeNav = document.getElementById(`nav-${currentEventType.toLowerCase()}`);
     if (activeNav) activeNav.classList.add('active');
 
-    renderEvent(initialEvent);
+    renderEvent(currentEventType);
 }).catch(error => {
     console.error("CRITICAL ERROR: Failed to load or parse data.json", error);
 });
 
 // Sidebar Click Handler
 window.switchEvent = function (eventType, element) {
+    currentEventType = eventType; // Update the global tracker
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
     element.classList.add('active');
     renderEvent(eventType);
+};
+
+// Dropdown Change Handler
+window.changeYear = function () {
+    renderEvent(currentEventType); // Redraw charts with the new year!
 };
 
 // ==========================================
@@ -32,11 +41,8 @@ window.switchEvent = function (eventType, element) {
 function renderEvent(eventType) {
     if (!globalData) return;
 
-    const CURRENT_YEAR = new Date().getFullYear();
-    const TARGET_YEAR = CURRENT_YEAR - 1;
-
-    const yearBadge = document.getElementById("dynamic-year-badge");
-    if (yearBadge) yearBadge.innerText = TARGET_YEAR;
+    // READ THE DYNAMIC YEAR DIRECTLY FROM THE DROPDOWN!
+    const TARGET_YEAR = parseInt(document.getElementById("year-select").value);
 
     let title = "";
     let REV_PARENT = "";
@@ -72,45 +78,6 @@ function renderEvent(eventType) {
 
     function initBucket(obj, name, id) {
         if (!obj[name]) obj[name] = { name: name, id: id, total: 0, budget: 0, txns: [] };
-    }
-
-    function processTransactions(records, isExpense, bucketsObj, parentFilter) {
-        if (!records) return;
-        records.forEach(record => {
-            const txnDate = new Date(record.TxnDate);
-
-            if (txnDate >= startDate && txnDate <= endDate) {
-                if (!record.Line) return;
-
-                record.Line.forEach(line => {
-                    const amt = line.Amount;
-                    if (!amt || amt === 0) return;
-
-                    let acctName = "";
-                    let acctId = "";
-
-                    if (isExpense && line.DetailType === "AccountBasedExpenseLineDetail" && line.AccountBasedExpenseLineDetail.AccountRef) {
-                        acctName = line.AccountBasedExpenseLineDetail.AccountRef.name || "";
-                        acctId = line.AccountBasedExpenseLineDetail.AccountRef.value || "";
-                    } else if (!isExpense && line.DetailType === "DepositLineDetail" && line.DepositLineDetail.AccountRef) {
-                        acctName = line.DepositLineDetail.AccountRef.name || "";
-                        acctId = line.DepositLineDetail.AccountRef.value || "";
-                    }
-
-                    if (acctName.startsWith(parentFilter)) {
-                        const shortName = acctName.split(':').pop();
-                        initBucket(bucketsObj, shortName, acctId);
-                        bucketsObj[shortName].total += amt;
-
-                        let desc = line.Description || (record.EntityRef ? record.EntityRef.name : "Online Transaction");
-                        bucketsObj[shortName].txns.push({ date: record.TxnDate, desc: desc, amount: amt });
-
-                        if (isExpense) totalExp += amt;
-                        else totalRev += amt;
-                    }
-                });
-            }
-        });
     }
 
     processTransactions(globalData.Deposits, false, revBuckets, REV_PARENT);

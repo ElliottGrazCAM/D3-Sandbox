@@ -24,8 +24,14 @@
             <button onclick="document.getElementById('sidebar').classList.toggle('collapsed')"
                 style="background: #1e293b; color: white; border: 1px solid #334155; padding: 8px 12px; border-radius: 6px; cursor: pointer; margin-right: 16px;">☰
                 Menu</button>
-            <h1 style="margin: 0; color: #f8fafc;"><span id="event-title-display">Annual Luncheon</span> <span
-                    class="year-badge" id="dynamic-year-badge">2025</span></h1>
+            <h1 style="margin: 0; color: #f8fafc;"><span id="event-title-display">...</span>
+                <select class="year-dropdown" id="year-select" onchange="changeYear()">
+                    <option value="2026">2026</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                </select>
+            </h1>
         </div>
 
         <div class="kpi-container">
