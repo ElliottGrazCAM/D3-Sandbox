@@ -179,7 +179,7 @@ function renderEvent(eventType) {
 
         svgNet.selectAll(".bg-bar").data(netData).enter().append("rect").attr("x", d => xNet(d.label) - 10).attr("y", d => yNet(d.budget)).attr("width", xNet.bandwidth() + 20).attr("height", d => heightNet - yNet(d.budget)).attr("fill", d => d.type === "rev" ? "rgba(16, 185, 129, 0.15)" : "rgba(239, 68, 68, 0.15)").attr("rx", 4);
         svgNet.selectAll(".fg-bar").data(netData).enter().append("rect").attr("x", d => xNet(d.label)).attr("y", d => yNet(d.actual)).attr("width", xNet.bandwidth()).attr("height", d => heightNet - yNet(d.actual))
-            .attr("fill", d => { if (d.type === "rev") return d.actual > d.budget ? "#065f46" : "#10b981"; else return d.actual > d.budget ? "#991b1b" : "#ef4444"; }).attr("rx", 4)
+            .attr("fill", d => { if (d.type === "rev") return d.actual > d.budget ? "#10b981" : "#065f46" ; else return d.actual > d.budget ? "#991b1b" : "#ef4444"; }).attr("rx", 4)
             .on("mouseover", function (event, d) {
                 d3.select(this).style("opacity", 0.8); tooltip.transition().duration(200).style("opacity", 1);
                 const diff = d.actual - d.budget; const diffText = diff > 0 ? `+$${diff.toLocaleString()}` : `-$${Math.abs(diff).toLocaleString()}`;
@@ -202,7 +202,7 @@ function renderEvent(eventType) {
         svgAcc.select(".domain").remove();
         svgAcc.selectAll(".bg-acc").data(combinedData).enter().append("rect").attr("y", d => yAcc(d.name) - 4).attr("x", 0).attr("height", yAcc.bandwidth() + 8).attr("width", d => xAcc(d.budget)).attr("fill", d => d.type === 'Rev' ? "rgba(16, 185, 129, 0.15)" : "rgba(239, 68, 68, 0.15)").attr("rx", 2);
         svgAcc.selectAll(".fg-acc").data(combinedData).enter().append("rect").attr("y", d => yAcc(d.name)).attr("x", 0).attr("height", yAcc.bandwidth()).attr("width", d => xAcc(d.total))
-            .attr("fill", d => { if (d.type === 'Rev') return d.total > d.budget ? "#065f46" : "#10b981"; else return d.total > d.budget ? "#991b1b" : "#ef4444"; }).attr("rx", 2)
+            .attr("fill", d => { if (d.type === 'Rev') return d.total > d.budget ? "#10b981" : "#065f46"; else return d.total > d.budget ? "#991b1b" : "#ef4444"; }).attr("rx", 2)
             .on("mouseover", function (event, d) {
                 d3.select(this).style("opacity", 0.8); tooltip.transition().duration(200).style("opacity", 1);
                 tooltip.html(`<div style="font-weight:bold; font-size:14px; margin-bottom:4px;">${d.name}</div><div>Actual: <b>$${d.total.toLocaleString()}</b></div><div>Budget: <b style="color:#cbd5e1">$${d.budget.toLocaleString()}</b></div>`).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
@@ -301,7 +301,7 @@ function renderEvent(eventType) {
     function drawYoYChart(containerId, chartData) {
         d3.select(containerId).html("");
         if (chartData.length === 0) return;
-        const margin = { top: 40, right: 30, bottom: 120, left: 60 }, width = 800 - margin.left - margin.right, height = 350 - margin.top - margin.bottom;
+        const margin = { top: 40, right: 30, bottom: 100, left: 60 }, width = 800 - margin.left - margin.right, height = 350 - margin.top - margin.bottom;
         const svg = d3.select(containerId).append("svg").attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`).attr("width", "100%").attr("height", "100%").attr("preserveAspectRatio", "xMidYMid meet").append("g").attr("transform", `translate(${margin.left},${margin.top})`);
         const x0 = d3.scaleBand().domain(chartData.map(d => d.account)).range([0, width]).padding(0.2);
         const x1 = d3.scaleBand().domain(yoyYears).range([0, x0.bandwidth()]).padding(0.05);
