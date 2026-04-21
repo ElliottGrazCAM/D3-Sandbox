@@ -1,22 +1,62 @@
-d3.json("data.json").then(data => {
+// Global variables to hold data and tooltip so they aren't recreated on every click
+let globalData = null;
+const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
-    // ==========================================
-    // SETUP, DATES, & FILTERS
-    // ==========================================
-    const LUNCHEON_REV_PARENT = "Events and Programs:Annual Luncheon Revenue";
-    const LUNCHEON_EXP_PARENT = "Events and Program Expenses:Annual Luncheon Expenses";
+// Load the data ONCE when the page opens
+d3.json("data.json").then(data => {
+    globalData = data;
+    // Default to Luncheon on first load
+    renderEvent("Luncheon");
+}).catch(error => {
+    console.error("CRITICAL ERROR: Failed to load or parse data.json", error);
+});
+
+// Sidebar Click Handler
+window.switchEvent = function (eventType, element) {
+    // Remove 'active' highlight from all sidebar links, then add to the clicked one
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    element.classList.add('active');
+
+    // Redraw the dashboard
+    renderEvent(eventType);
+};
+
+// ==========================================
+// MASTER RENDER FUNCTION
+// ==========================================
+function renderEvent(eventType) {
+    if (!globalData) return;
 
     const CURRENT_YEAR = new Date().getFullYear();
     const TARGET_YEAR = CURRENT_YEAR - 1; // Evaluates to 2025
 
-    // Updates the Blue Badge at the top of the HTML page
+    // Updates the Blue Badge at the top
     const yearBadge = document.getElementById("dynamic-year-badge");
     if (yearBadge) yearBadge.innerText = TARGET_YEAR;
 
-    const EVENT_MONTH = 10; // October
-    const START_MONTH = EVENT_MONTH - 8;
-    const END_MONTH = EVENT_MONTH + 2;
+    // 1. DYNAMICALLY SET QBO ACCOUNT FILTERS BASED ON EVENT CLICKED
+    let title = "";
+    let REV_PARENT = "";
+    let EXP_PARENT = "";
 
+    if (eventType === "Luncheon") {
+        title = "Annual Luncheon";
+        REV_PARENT = "Events and Programs:Annual Luncheon Revenue";
+        EXP_PARENT = "Events and Program Expenses:Annual Luncheon Expenses";
+    } else if (eventType === "Gala") {
+        title = "Winter Gala";
+        REV_PARENT = "Events and Programs:Winter Gala Revenue";
+        EXP_PARENT = "Events and Program Expenses:Winter Gala Expenses";
+    } else if (eventType === "Golf") {
+        title = "Golf Tournament";
+        REV_PARENT = "Events and Programs:Golf Tournament Revenue";
+        EXP_PARENT = "Events and Program Expenses:Golf Tournament Expenses";
+    }
+
+    // Update the visual H1 title
+    document.getElementById("event-title-display").innerText = title;
+
+    // Reset all buckets and totals for the new event
     const revBuckets = {};
     const expBuckets = {};
     let totalRev = 0; let totalExp = 0;
@@ -34,9 +74,9 @@ d3.json("data.json").then(data => {
         records.forEach(record => {
             const date = new Date(record.TxnDate);
             const year = date.getFullYear();
-            const month = date.getMonth() + 1;
 
-            if (year === TARGET_YEAR && month >= START_MONTH && month <= END_MONTH) {
+            // Filter strictly by the Target Year (Month filter removed so it catches all events)
+            if (year === TARGET_YEAR) {
                 if (!record.Line) return;
 
                 record.Line.forEach(line => {
@@ -70,14 +110,14 @@ d3.json("data.json").then(data => {
         });
     }
 
-    processTransactions(data.Deposits, false, revBuckets, LUNCHEON_REV_PARENT);
-    processTransactions(data.Expenses, true, expBuckets, LUNCHEON_EXP_PARENT);
+    processTransactions(globalData.Deposits, false, revBuckets, REV_PARENT);
+    processTransactions(globalData.Expenses, true, expBuckets, EXP_PARENT);
 
     // ==========================================
     // DATA CRUNCHING: BUDGET DETAIL PARSER
     // ==========================================
-    if (data.Budgets && data.Budgets.length > 0) {
-        const targetBudget = data.Budgets.find(b =>
+    if (globalData.Budgets && globalData.Budgets.length > 0) {
+        const targetBudget = globalData.Budgets.find(b =>
             (b.Name && b.Name.includes(TARGET_YEAR.toString())) ||
             (b.StartDate && b.StartDate.startsWith(TARGET_YEAR.toString()))
         );
@@ -91,12 +131,12 @@ d3.json("data.json").then(data => {
             const amt = parseFloat(item.Amount || 0);
 
             if (bDate && bDate.getFullYear() === TARGET_YEAR && amt !== 0) {
-                if (accName.startsWith(LUNCHEON_REV_PARENT)) {
+                if (accName.startsWith(REV_PARENT)) {
                     const shortName = accName.split(':').pop();
                     initBucket(revBuckets, shortName, accId);
                     revBuckets[shortName].budget += amt;
                     totalRevBudget += amt;
-                } else if (accName.startsWith(LUNCHEON_EXP_PARENT)) {
+                } else if (accName.startsWith(EXP_PARENT)) {
                     const shortName = accName.split(':').pop();
                     initBucket(expBuckets, shortName, accId);
                     expBuckets[shortName].budget += amt;
@@ -108,8 +148,6 @@ d3.json("data.json").then(data => {
 
     const sortedRev = Object.values(revBuckets).sort((a, b) => b.total - a.total);
     const sortedExp = Object.values(expBuckets).sort((a, b) => b.total - a.total);
-    const tooltip = d3.select("body").append("div").attr("class", "tooltip");
-
 
     // ==========================================
     // POPULATING THE TOP 3 KPI BOXES
@@ -127,11 +165,10 @@ d3.json("data.json").then(data => {
             .style("color", netRev < 0 ? "#ef4444" : "#10b981");
     }
 
-
     // ==========================================
     // CHART 1: NET PERFORMANCE (BIG VERTICAL BARS)
     // ==========================================
-    d3.select("#chart-net-performance").html(""); // Clear loading text
+    d3.select("#chart-net-performance").html("");
     if (sortedRev.length > 0 || sortedExp.length > 0) {
         const marginNet = { top: 30, right: 30, bottom: 30, left: 60 },
             widthNet = 800 - marginNet.left - marginNet.right,
@@ -140,7 +177,7 @@ d3.json("data.json").then(data => {
         const svgNet = d3.select("#chart-net-performance")
             .append("svg")
             .attr("viewBox", `0 0 ${widthNet + marginNet.left + marginNet.right} ${heightNet + marginNet.top + marginNet.bottom}`)
-            .attr("width", "100%") // Makes it responsive
+            .attr("width", "100%")
             .attr("height", "100%")
             .attr("preserveAspectRatio", "xMidYMid meet")
             .append("g").attr("transform", `translate(${marginNet.left},${marginNet.top})`);
@@ -160,19 +197,17 @@ d3.json("data.json").then(data => {
             { label: "Total Expenses", actual: totalExp, budget: totalExpBudget, type: "exp" }
         ];
 
-        // The Faded Background Budget Bars
         svgNet.selectAll(".bg-bar").data(netData).enter().append("rect")
             .attr("x", d => xNet(d.label) - 10).attr("y", d => yNet(d.budget))
             .attr("width", xNet.bandwidth() + 20).attr("height", d => heightNet - yNet(d.budget))
             .attr("fill", d => d.type === "rev" ? "rgba(16, 185, 129, 0.15)" : "rgba(239, 68, 68, 0.15)").attr("rx", 4);
 
-        // The Solid Foreground Actual Bars (Color changes if it breaks budget!)
         svgNet.selectAll(".fg-bar").data(netData).enter().append("rect")
             .attr("x", d => xNet(d.label)).attr("y", d => yNet(d.actual))
             .attr("width", xNet.bandwidth()).attr("height", d => heightNet - yNet(d.actual))
             .attr("fill", d => {
-                if (d.type === "rev") return d.actual > d.budget ? "#003325" : "#10b981"; // Deep forest green if over budget, bright green if under
-                else return d.actual > d.budget ? "#991b1b" : "#ef4444"; // Dark crimson if over budget, standard red if safe
+                if (d.type === "rev") return d.actual > d.budget ? "#065f46" : "#10b981";
+                else return d.actual > d.budget ? "#991b1b" : "#ef4444";
             }).attr("rx", 4)
             .on("mouseover", function (event, d) {
                 d3.select(this).style("opacity", 0.8);
@@ -191,22 +226,18 @@ d3.json("data.json").then(data => {
                 tooltip.transition().duration(500).style("opacity", 0);
             });
 
-        // The Sharp White Dashed Target Line
         svgNet.selectAll(".target-line").data(netData).enter().append("line")
             .attr("x1", d => xNet(d.label) - 15)
             .attr("x2", d => xNet(d.label) + xNet.bandwidth() + 15)
             .attr("y1", d => yNet(d.budget))
             .attr("y2", d => yNet(d.budget))
-            .attr("stroke", "#f8fafc")
-            .attr("stroke-width", 2)
-            .attr("stroke-dasharray", "4,2");
+            .attr("stroke", "#f8fafc").attr("stroke-width", 2).attr("stroke-dasharray", "4,2");
     }
-
 
     // ==========================================
     // CHART 1.5: ACCOUNT LEVEL ACTUALS (BULLET CHART)
     // ==========================================
-    d3.select("#chart-budget-actuals").html(""); // Clear loading text
+    d3.select("#chart-budget-actuals").html("");
     const combinedData = [...sortedRev.map(d => ({ ...d, type: 'Rev' })), ...sortedExp.map(d => ({ ...d, type: 'Exp' }))];
 
     if (combinedData.length > 0) {
@@ -217,7 +248,7 @@ d3.json("data.json").then(data => {
         const svgAcc = d3.select("#chart-budget-actuals")
             .append("svg")
             .attr("viewBox", `0 0 ${widthAcc + marginAcc.left + marginAcc.right} ${heightAcc + marginAcc.top + marginAcc.bottom}`)
-            .attr("width", "100%") // Makes it responsive
+            .attr("width", "100%")
             .attr("height", "100%")
             .attr("preserveAspectRatio", "xMidYMid meet")
             .append("g").attr("transform", `translate(${marginAcc.left},${marginAcc.top})`);
@@ -229,16 +260,14 @@ d3.json("data.json").then(data => {
         svgAcc.append("g").call(d3.axisLeft(yAcc).tickSize(0)).selectAll("text").style("font-size", "12px").style("fill", "#cbd5e1");
         svgAcc.select(".domain").remove();
 
-        // Background Budget Bars
         svgAcc.selectAll(".bg-acc").data(combinedData).enter().append("rect")
             .attr("y", d => yAcc(d.name) - 4).attr("x", 0).attr("height", yAcc.bandwidth() + 8).attr("width", d => xAcc(d.budget))
             .attr("fill", d => d.type === 'Rev' ? "rgba(16, 185, 129, 0.15)" : "rgba(239, 68, 68, 0.15)").attr("rx", 2);
 
-        // Foreground Actual Bars (Color changes if it breaks budget!)
         svgAcc.selectAll(".fg-acc").data(combinedData).enter().append("rect")
             .attr("y", d => yAcc(d.name)).attr("x", 0).attr("height", yAcc.bandwidth()).attr("width", d => xAcc(d.total))
             .attr("fill", d => {
-                if (d.type === 'Rev') return d.total > d.budget ? "#003325" : "#10b981";
+                if (d.type === 'Rev') return d.total > d.budget ? "#065f46" : "#10b981";
                 else return d.total > d.budget ? "#991b1b" : "#ef4444";
             }).attr("rx", 2)
             .on("mouseover", function (event, d) {
@@ -255,20 +284,15 @@ d3.json("data.json").then(data => {
                 tooltip.transition().duration(500).style("opacity", 0);
             });
 
-        // The Sharp White Dashed Target Line
         svgAcc.selectAll(".target-line-acc").data(combinedData).enter().append("line")
             .attr("y1", d => yAcc(d.name) - 6)
             .attr("y2", d => yAcc(d.name) + yAcc.bandwidth() + 6)
-            .attr("x1", d => xAcc(d.budget))
-            .attr("x2", d => xAcc(d.budget))
-            .attr("stroke", "#f8fafc")
-            .attr("stroke-width", 2)
-            .attr("stroke-dasharray", "3,2");
+            .attr("x1", d => xAcc(d.budget)).attr("x2", d => xAcc(d.budget))
+            .attr("stroke", "#f8fafc").attr("stroke-width", 2).attr("stroke-dasharray", "3,2");
     }
 
-
     // ==========================================
-    // CHARTS 2 & 3: COMPOSITION BARS (HORIZONTAL STACKED BARS)
+    // CHARTS 2 & 3: COMPOSITION BARS
     // ==========================================
     function drawCompositionChart(containerId, sortedData, totalAmount, colorScale, isExp) {
         d3.select(containerId).html("");
@@ -276,8 +300,7 @@ d3.json("data.json").then(data => {
         const compHeight = 60, widthComp = 900;
         const svgComp = d3.select(containerId).append("svg")
             .attr("viewBox", `0 0 ${widthComp} ${compHeight}`)
-            .attr("width", "100%") // Makes it responsive
-            .attr("height", "100%");
+            .attr("width", "100%").attr("height", "100%");
 
         const xComp = d3.scaleLinear().domain([0, totalAmount || 1]).range([0, widthComp]);
         let currentX = 0;
@@ -294,7 +317,6 @@ d3.json("data.json").then(data => {
                 .on("mouseout", hideTooltip)
                 .on("click", () => filterByAccount(isExp ? 'exp-table' : 'rev-table', bucket.name, isExp));
 
-            // Only draw label if the segment is wide enough to fit it
             if (segWidth > 80) {
                 g.append("text")
                     .attr("x", segWidth / 2).attr("y", compHeight / 2).attr("dy", ".35em")
@@ -324,7 +346,6 @@ d3.json("data.json").then(data => {
             </div>
         `;
 
-        // If Expense, show Top 5 transactions in the tooltip
         if (isExp) {
             bucket.txns.sort((a, b) => b.amount - a.amount);
             const topTxns = bucket.txns.slice(0, 5);
@@ -337,7 +358,6 @@ d3.json("data.json").then(data => {
 
             if (bucket.txns.length - 5 > 0) innerHtml += `<div style="color:#64748b; margin-top:8px; font-size:11px; text-align:center;">+ ${bucket.txns.length - 5} more transactions...</div>`;
         } else {
-            // If Revenue, just show transaction averages
             innerHtml += `
                 <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;">
                     <span style="color:#94a3b8;">Total Contributions:</span> 
@@ -357,9 +377,8 @@ d3.json("data.json").then(data => {
         tooltip.transition().duration(500).style("opacity", 0);
     }
 
-
     // ==========================================
-    // DATA TABLES: POPULATE AND FILTER LOGIC
+    // DATA TABLES: POPULATE
     // ==========================================
     function populateTable(tbodyId, buckets, isExp) {
         const tbody = document.getElementById(tbodyId);
@@ -386,64 +405,16 @@ d3.json("data.json").then(data => {
     populateTable("rev-tbody", revBuckets, false);
     populateTable("exp-tbody", expBuckets, true);
 
-    let activeRevFilter = null;
-    let activeExpFilter = null;
+    // Reset Table Filters when redrawing events
+    window.resetFilters('rev-table');
+    window.resetFilters('exp-table');
 
-    window.filterByAccount = function (tableId, accountName, isExp) {
-        if (isExp) {
-            activeExpFilter = (activeExpFilter === accountName) ? null : accountName;
-            accountName = activeExpFilter;
-            document.getElementById('exp-search').value = "";
-        } else {
-            activeRevFilter = (activeRevFilter === accountName) ? null : accountName;
-            accountName = activeRevFilter;
-            document.getElementById('rev-search').value = "";
-        }
 
-        const tbody = document.getElementById(tableId).querySelector("tbody");
-        if (tbody) {
-            const rows = tbody.getElementsByTagName("tr");
-            for (let row of rows) {
-                row.style.display = (!accountName || row.getAttribute("data-account") === accountName) ? "" : "none";
-            }
-        }
-    };
-
-    window.searchTable = function (tableId, query) {
-        query = query.toLowerCase();
-        if (tableId === 'rev-table') activeRevFilter = null;
-        if (tableId === 'exp-table') activeExpFilter = null;
-
-        const tbody = document.getElementById(tableId).querySelector("tbody");
-        if (tbody) {
-            const rows = tbody.getElementsByTagName("tr");
-            for (let row of rows) row.style.display = row.innerText.toLowerCase().includes(query) ? "" : "none";
-        }
-    };
-
-    window.resetFilters = function (tableId) {
-        if (tableId === 'rev-table') {
-            activeRevFilter = null;
-            document.getElementById('rev-search').value = "";
-        } else {
-            activeExpFilter = null;
-            document.getElementById('exp-search').value = "";
-        }
-        const tbody = document.getElementById(tableId).querySelector("tbody");
-        if (tbody) {
-            const rows = tbody.getElementsByTagName("tr");
-            for (let row of rows) row.style.display = "";
-        }
-    };
     // ==========================================
     // 8. YEAR-OVER-YEAR (YOY) COMPARISON CHARTS
     // ==========================================
-    const yoyYears = [TARGET_YEAR - 2, TARGET_YEAR - 1, TARGET_YEAR]; // [2023, 2024, 2025]
-
-    // Theme-friendly colors: Slate (2023), Bright Blue (2024), Amber/Gold (2025)
-    const colorScaleYoY = d3.scaleOrdinal()
-        .domain(yoyYears)
-        .range(["#475569", "#3b82f6", "#f59e0b"]);
+    const yoyYears = [TARGET_YEAR - 2, TARGET_YEAR - 1, TARGET_YEAR];
+    const colorScaleYoY = d3.scaleOrdinal().domain(yoyYears).range(["#475569", "#3b82f6", "#f59e0b"]);
 
     function processYoYData(records, parentFilter, isExpense) {
         const yoyBuckets = {};
@@ -453,10 +424,8 @@ d3.json("data.json").then(data => {
                 const date = new Date(record.TxnDate);
                 const year = date.getFullYear();
 
-                // Only grab data from our 3-year window
                 if (yoyYears.includes(year)) {
                     if (!record.Line) return;
-
                     record.Line.forEach(line => {
                         const amt = line.Amount;
                         if (!amt || amt === 0) return;
@@ -470,8 +439,6 @@ d3.json("data.json").then(data => {
 
                         if (acctName.startsWith(parentFilter)) {
                             const shortName = acctName.split(':').pop();
-
-                            // Initialize account if it doesn't exist
                             if (!yoyBuckets[shortName]) {
                                 yoyBuckets[shortName] = { account: shortName };
                                 yoyYears.forEach(y => yoyBuckets[shortName][y] = 0);
@@ -482,13 +449,11 @@ d3.json("data.json").then(data => {
                 }
             });
         }
-
-        // Convert to array and sort Alphabetically
         return Object.values(yoyBuckets).sort((a, b) => a.account.localeCompare(b.account));
     }
 
-    const yoyRevData = processYoYData(data.Deposits, LUNCHEON_REV_PARENT, false);
-    const yoyExpData = processYoYData(data.Expenses, LUNCHEON_EXP_PARENT, true);
+    const yoyRevData = processYoYData(globalData.Deposits, REV_PARENT, false);
+    const yoyExpData = processYoYData(globalData.Expenses, EXP_PARENT, true);
 
     function drawYoYChart(containerId, chartData) {
         d3.select(containerId).html("");
@@ -501,73 +466,41 @@ d3.json("data.json").then(data => {
         const svg = d3.select(containerId)
             .append("svg")
             .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
-            .attr("width", "100%")
-            .attr("height", "100%")
+            .attr("width", "100%").attr("height", "100%")
             .attr("preserveAspectRatio", "xMidYMid meet")
             .append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
-        // X Axis: The Accounts (Alphabetical)
         const x0 = d3.scaleBand().domain(chartData.map(d => d.account)).range([0, width]).padding(0.2);
-
-        // Sub-X Axis: The Years within each Account
         const x1 = d3.scaleBand().domain(yoyYears).range([0, x0.bandwidth()]).padding(0.05);
-
-        // Y Axis: Max amount across all years/accounts
         const maxVal = d3.max(chartData, d => d3.max(yoyYears, y => d[y])) * 1.1 || 1;
         const y = d3.scaleLinear().domain([0, maxVal]).range([height, 0]);
 
-        // Draw Axes
-        svg.append("g")
-            .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x0))
-            .selectAll("text")
-            .style("text-anchor", "end")
-            .attr("dx", "-.8em")
-            .attr("dy", ".15em")
-            .attr("transform", "rotate(-45)")
-            .style("font-size", "12px")
-            .style("fill", "#cbd5e1");
+        svg.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(x0))
+            .selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-45)").style("font-size", "12px").style("fill", "#cbd5e1");
 
-        svg.append("g")
-            .attr("class", "grid")
-            .call(d3.axisLeft(y).ticks(5).tickFormat(d => "$" + d.toLocaleString()).tickSize(-width))
-            .style("stroke-dasharray", "3,3")
-            .style("opacity", 0.1);
-
+        svg.append("g").attr("class", "grid").call(d3.axisLeft(y).ticks(5).tickFormat(d => "$" + d.toLocaleString()).tickSize(-width)).style("stroke-dasharray", "3,3").style("opacity", 0.1);
         svg.select(".domain").remove();
 
-        // Draw Bars
-        const accountGroup = svg.selectAll(".acc-group")
-            .data(chartData).enter().append("g")
-            .attr("transform", d => `translate(${x0(d.account)},0)`);
+        const accountGroup = svg.selectAll(".acc-group").data(chartData).enter().append("g").attr("transform", d => `translate(${x0(d.account)},0)`);
 
-        accountGroup.selectAll("rect")
-            .data(d => yoyYears.map(year => ({ year: year, value: d[year], fullData: d })))
-            .enter().append("rect")
-            .attr("x", d => x1(d.year))
-            .attr("y", d => y(d.value))
-            .attr("width", x1.bandwidth())
-            .attr("height", d => height - y(d.value))
-            .attr("fill", d => colorScaleYoY(d.year))
-            .attr("rx", 2)
+        accountGroup.selectAll("rect").data(d => yoyYears.map(year => ({ year: year, value: d[year], fullData: d })))
+            .enter().append("rect").attr("x", d => x1(d.year)).attr("y", d => y(d.value)).attr("width", x1.bandwidth()).attr("height", d => height - y(d.value))
+            .attr("fill", d => colorScaleYoY(d.year)).attr("rx", 2)
             .on("mouseover", function (event, d) {
                 d3.select(this).style("opacity", 0.8);
                 tooltip.transition().duration(200).style("opacity", 1);
 
                 let percentHtml = "";
-
-                // Calculate YoY Changes
-                if (d.year === TARGET_YEAR - 1) { // e.g., 2024
+                if (d.year === TARGET_YEAR - 1) {
                     const prevVal = d.fullData[TARGET_YEAR - 2];
                     if (prevVal > 0) {
                         const pct = (((d.value - prevVal) / prevVal) * 100).toFixed(1);
                         const color = pct >= 0 ? "#10b981" : "#ef4444";
                         percentHtml += `<div style="font-size:12px; margin-top:4px;">Vs Previous Year: <span style="color:${color}; font-weight:bold;">${pct > 0 ? '+' : ''}${pct}%</span></div>`;
                     }
-                } else if (d.year === TARGET_YEAR) { // e.g., 2025
-                    const prev1 = d.fullData[TARGET_YEAR - 1]; // vs 2024
-                    const prev2 = d.fullData[TARGET_YEAR - 2]; // vs 2023
-
+                } else if (d.year === TARGET_YEAR) {
+                    const prev1 = d.fullData[TARGET_YEAR - 1];
+                    const prev2 = d.fullData[TARGET_YEAR - 2];
                     if (prev1 > 0) {
                         const pct1 = (((d.value - prev1) / prev1) * 100).toFixed(1);
                         const c1 = pct1 >= 0 ? "#10b981" : "#ef4444";
@@ -591,7 +524,6 @@ d3.json("data.json").then(data => {
                 tooltip.transition().duration(500).style("opacity", 0);
             });
 
-        // Add Custom Legend
         const legend = svg.append("g").attr("transform", `translate(${width - 250}, -25)`);
         yoyYears.forEach((year, i) => {
             const legendRow = legend.append("g").attr("transform", `translate(${i * 80}, 0)`);
@@ -603,14 +535,63 @@ d3.json("data.json").then(data => {
     drawYoYChart("#chart-yoy-rev", yoyRevData);
     drawYoYChart("#chart-yoy-exp", yoyExpData);
 
-}).catch(error => {
-    console.error("CRITICAL ERROR: Failed to load or parse data.json", error);
-});
-
+} // END OF renderEvent()
 
 // ==========================================
-// EXTERNAL UI FUNCTIONS (Sorting & Show/Hide)
+// EXTERNAL UI FUNCTIONS (Table Interactions)
 // ==========================================
+let activeRevFilter = null;
+let activeExpFilter = null;
+
+window.filterByAccount = function (tableId, accountName, isExp) {
+    if (isExp) {
+        activeExpFilter = (activeExpFilter === accountName) ? null : accountName;
+        accountName = activeExpFilter;
+        document.getElementById('exp-search').value = "";
+    } else {
+        activeRevFilter = (activeRevFilter === accountName) ? null : accountName;
+        accountName = activeRevFilter;
+        document.getElementById('rev-search').value = "";
+    }
+
+    const tbody = document.getElementById(tableId).querySelector("tbody");
+    if (tbody) {
+        const rows = tbody.getElementsByTagName("tr");
+        for (let row of rows) {
+            row.style.display = (!accountName || row.getAttribute("data-account") === accountName) ? "" : "none";
+        }
+    }
+};
+
+window.searchTable = function (tableId, query) {
+    query = query.toLowerCase();
+    if (tableId === 'rev-table') activeRevFilter = null;
+    if (tableId === 'exp-table') activeExpFilter = null;
+
+    const tbody = document.getElementById(tableId).querySelector("tbody");
+    if (tbody) {
+        const rows = tbody.getElementsByTagName("tr");
+        for (let row of rows) row.style.display = row.innerText.toLowerCase().includes(query) ? "" : "none";
+    }
+};
+
+window.resetFilters = function (tableId) {
+    if (tableId === 'rev-table') {
+        activeRevFilter = null;
+        const searchInput = document.getElementById('rev-search');
+        if (searchInput) searchInput.value = "";
+    } else {
+        activeExpFilter = null;
+        const searchInput = document.getElementById('exp-search');
+        if (searchInput) searchInput.value = "";
+    }
+    const tbody = document.getElementById(tableId);
+    if (tbody) {
+        const rows = tbody.querySelectorAll("tbody tr");
+        for (let row of rows) row.style.display = "";
+    }
+};
+
 let sortDirs = { 'rev-table': false, 'exp-table': false };
 window.sortTable = function (tableId, columnIndex) {
     const table = document.getElementById(tableId);

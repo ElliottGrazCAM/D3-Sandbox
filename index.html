@@ -14,19 +14,19 @@
     <div id="sidebar">
         <h2 style="font-size: 1.2rem; color: #f8fafc; margin-top: 0;">CNCA Financials</h2>
         <a href="#" class="nav-item">General Overview</a>
-        <a href="#" class="nav-item active">Annual Luncheon</a>
-        <a href="#" class="nav-item">Winter Gala</a>
-        <a href="#" class="nav-item">Golf Tournament</a>
+        <a href="#" class="nav-item active" id="nav-luncheon" onclick="switchEvent('Luncheon', this)">Annual Luncheon</a>
+        <a href="#" class="nav-item" id="nav-gala" onclick="switchEvent('Gala', this)">Winter Gala</a>
+        <a href="#" class="nav-item" id="nav-golf" onclick="switchEvent('Golf', this)">Golf Tournament</a>
     </div>
-
+    
     <div id="main-content">
-
+    
         <div style="display: flex; align-items: center; margin-bottom: 24px;">
             <button onclick="document.getElementById('sidebar').classList.toggle('collapsed')"
                 style="background: #1e293b; color: white; border: 1px solid #334155; padding: 8px 12px; border-radius: 6px; cursor: pointer; margin-right: 16px;">☰
                 Menu</button>
-            <h1 style="margin: 0; color: #f8fafc;">Annual Luncheon <span class="year-badge"
-                    id="dynamic-year-badge">2025</span></h1>
+            <h1 style="margin: 0; color: #f8fafc;"><span id="event-title-display">Annual Luncheon</span> <span
+                    class="year-badge" id="dynamic-year-badge">2025</span></h1>
         </div>
 
         <div class="kpi-container">
