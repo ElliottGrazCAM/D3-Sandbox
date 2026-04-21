@@ -218,7 +218,7 @@ function renderEvent(eventType) {
             .attr("x", d => xNet(d.label)).attr("y", d => yNet(d.actual))
             .attr("width", xNet.bandwidth()).attr("height", d => heightNet - yNet(d.actual))
             .attr("fill", d => {
-                if (d.type === "rev") return d.actual > d.budget ? "#065f46" : "#10b981";
+                if (d.type === "rev") return d.actual > d.budget ? "#00ffb7" : "#008d5e";
                 else return d.actual > d.budget ? "#991b1b" : "#ef4444";
             }).attr("rx", 4)
             .on("mouseover", function (event, d) {
@@ -279,7 +279,7 @@ function renderEvent(eventType) {
         svgAcc.selectAll(".fg-acc").data(combinedData).enter().append("rect")
             .attr("y", d => yAcc(d.name)).attr("x", 0).attr("height", yAcc.bandwidth()).attr("width", d => xAcc(d.total))
             .attr("fill", d => {
-                if (d.type === 'Rev') return d.total > d.budget ? "#065f46" : "#10b981";
+                if (d.type === 'Rev') return d.total > d.budget ? "#00ffb7" : "#008d5e";
                 else return d.total > d.budget ? "#991b1b" : "#ef4444";
             }).attr("rx", 2)
             .on("mouseover", function (event, d) {
