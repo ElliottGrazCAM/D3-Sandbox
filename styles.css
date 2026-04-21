@@ -141,16 +141,43 @@ body {
 }
 
 /* ==========================================
-   TABLES
+   TABLES & SCROLLABLE WRAPPER
 ========================================== */
+.table-wrapper {
+    max-height: 350px;
+    overflow-y: auto;
+    border-radius: 6px;
+    border: 1px solid #334155;
+    background-color: #0f172a;
+}
+
+/* Webkit scrollbar styling for a cleaner look */
+.table-wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background-color: #334155;
+    border-radius: 4px;
+}
+
 .data-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 16px;
     font-size: 0.9rem;
+    margin: 0;
 }
 
+/* Make headers stick to the top when scrolling */
 .data-table th {
+    position: sticky;
+    top: 0;
+    background-color: #1e293b;
+    z-index: 1;
     text-align: left;
     padding: 12px;
     border-bottom: 2px solid #334155;
