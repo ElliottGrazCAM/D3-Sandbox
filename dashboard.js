@@ -494,7 +494,7 @@ d3.json("data.json").then(data => {
         d3.select(containerId).html("");
         if (chartData.length === 0) return;
 
-        const margin = { top: 40, right: 30, bottom: 100, left: 60 },
+        const margin = { top: 40, right: 30, bottom: 120, left: 60 },
             width = 800 - margin.left - margin.right,
             height = 350 - margin.top - margin.bottom;
 
