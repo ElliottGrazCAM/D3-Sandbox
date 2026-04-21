@@ -435,7 +435,174 @@ d3.json("data.json").then(data => {
             for (let row of rows) row.style.display = "";
         }
     };
+    // ==========================================
+    // 8. YEAR-OVER-YEAR (YOY) COMPARISON CHARTS
+    // ==========================================
+    const yoyYears = [TARGET_YEAR - 2, TARGET_YEAR - 1, TARGET_YEAR]; // [2023, 2024, 2025]
 
+    // Theme-friendly colors: Slate (2023), Bright Blue (2024), Amber/Gold (2025)
+    const colorScaleYoY = d3.scaleOrdinal()
+        .domain(yoyYears)
+        .range(["#475569", "#3b82f6", "#f59e0b"]);
+
+    function processYoYData(records, parentFilter, isExpense) {
+        const yoyBuckets = {};
+
+        if (records) {
+            records.forEach(record => {
+                const date = new Date(record.TxnDate);
+                const year = date.getFullYear();
+
+                // Only grab data from our 3-year window
+                if (yoyYears.includes(year)) {
+                    if (!record.Line) return;
+
+                    record.Line.forEach(line => {
+                        const amt = line.Amount;
+                        if (!amt || amt === 0) return;
+
+                        let acctName = "";
+                        if (isExpense && line.DetailType === "AccountBasedExpenseLineDetail" && line.AccountBasedExpenseLineDetail.AccountRef) {
+                            acctName = line.AccountBasedExpenseLineDetail.AccountRef.name || "";
+                        } else if (!isExpense && line.DetailType === "DepositLineDetail" && line.DepositLineDetail.AccountRef) {
+                            acctName = line.DepositLineDetail.AccountRef.name || "";
+                        }
+
+                        if (acctName.startsWith(parentFilter)) {
+                            const shortName = acctName.split(':').pop();
+
+                            // Initialize account if it doesn't exist
+                            if (!yoyBuckets[shortName]) {
+                                yoyBuckets[shortName] = { account: shortName };
+                                yoyYears.forEach(y => yoyBuckets[shortName][y] = 0);
+                            }
+                            yoyBuckets[shortName][year] += amt;
+                        }
+                    });
+                }
+            });
+        }
+
+        // Convert to array and sort Alphabetically
+        return Object.values(yoyBuckets).sort((a, b) => a.account.localeCompare(b.account));
+    }
+
+    const yoyRevData = processYoYData(data.Deposits, LUNCHEON_REV_PARENT, false);
+    const yoyExpData = processYoYData(data.Expenses, LUNCHEON_EXP_PARENT, true);
+
+    function drawYoYChart(containerId, chartData) {
+        d3.select(containerId).html("");
+        if (chartData.length === 0) return;
+
+        const margin = { top: 40, right: 30, bottom: 60, left: 60 },
+            width = 800 - margin.left - margin.right,
+            height = 350 - margin.top - margin.bottom;
+
+        const svg = d3.select(containerId)
+            .append("svg")
+            .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
+            .attr("width", "100%")
+            .attr("height", "100%")
+            .attr("preserveAspectRatio", "xMidYMid meet")
+            .append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // X Axis: The Accounts (Alphabetical)
+        const x0 = d3.scaleBand().domain(chartData.map(d => d.account)).range([0, width]).padding(0.2);
+
+        // Sub-X Axis: The Years within each Account
+        const x1 = d3.scaleBand().domain(yoyYears).range([0, x0.bandwidth()]).padding(0.05);
+
+        // Y Axis: Max amount across all years/accounts
+        const maxVal = d3.max(chartData, d => d3.max(yoyYears, y => d[y])) * 1.1 || 1;
+        const y = d3.scaleLinear().domain([0, maxVal]).range([height, 0]);
+
+        // Draw Axes
+        svg.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x0))
+            .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-45)")
+            .style("font-size", "12px")
+            .style("fill", "#cbd5e1");
+
+        svg.append("g")
+            .attr("class", "grid")
+            .call(d3.axisLeft(y).ticks(5).tickFormat(d => "$" + d.toLocaleString()).tickSize(-width))
+            .style("stroke-dasharray", "3,3")
+            .style("opacity", 0.1);
+
+        svg.select(".domain").remove();
+
+        // Draw Bars
+        const accountGroup = svg.selectAll(".acc-group")
+            .data(chartData).enter().append("g")
+            .attr("transform", d => `translate(${x0(d.account)},0)`);
+
+        accountGroup.selectAll("rect")
+            .data(d => yoyYears.map(year => ({ year: year, value: d[year], fullData: d })))
+            .enter().append("rect")
+            .attr("x", d => x1(d.year))
+            .attr("y", d => y(d.value))
+            .attr("width", x1.bandwidth())
+            .attr("height", d => height - y(d.value))
+            .attr("fill", d => colorScaleYoY(d.year))
+            .attr("rx", 2)
+            .on("mouseover", function (event, d) {
+                d3.select(this).style("opacity", 0.8);
+                tooltip.transition().duration(200).style("opacity", 1);
+
+                let percentHtml = "";
+
+                // Calculate YoY Changes
+                if (d.year === TARGET_YEAR - 1) { // e.g., 2024
+                    const prevVal = d.fullData[TARGET_YEAR - 2];
+                    if (prevVal > 0) {
+                        const pct = (((d.value - prevVal) / prevVal) * 100).toFixed(1);
+                        const color = pct >= 0 ? "#10b981" : "#ef4444";
+                        percentHtml += `<div style="font-size:12px; margin-top:4px;">Vs Previous Year: <span style="color:${color}; font-weight:bold;">${pct > 0 ? '+' : ''}${pct}%</span></div>`;
+                    }
+                } else if (d.year === TARGET_YEAR) { // e.g., 2025
+                    const prev1 = d.fullData[TARGET_YEAR - 1]; // vs 2024
+                    const prev2 = d.fullData[TARGET_YEAR - 2]; // vs 2023
+
+                    if (prev1 > 0) {
+                        const pct1 = (((d.value - prev1) / prev1) * 100).toFixed(1);
+                        const c1 = pct1 >= 0 ? "#10b981" : "#ef4444";
+                        percentHtml += `<div style="font-size:12px; margin-top:4px;">Vs Previous Year: <span style="color:${c1}; font-weight:bold;">${pct1 > 0 ? '+' : ''}${pct1}%</span></div>`;
+                    }
+                    if (prev2 > 0) {
+                        const pct2 = (((d.value - prev2) / prev2) * 100).toFixed(1);
+                        const c2 = pct2 >= 0 ? "#10b981" : "#ef4444";
+                        percentHtml += `<div style="font-size:12px;">Vs Year Prior (2 Yr): <span style="color:${c2}; font-weight:bold;">${pct2 > 0 ? '+' : ''}${pct2}%</span></div>`;
+                    }
+                }
+
+                tooltip.html(`
+                    <div style="font-weight:bold; font-size:14px; margin-bottom:4px; color:${colorScaleYoY(d.year)}">${d.fullData.account} (${d.year})</div>
+                    <div style="font-size: 16px;">Total: <b>$${d.value.toLocaleString()}</b></div>
+                    ${percentHtml}
+                `).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function () {
+                d3.select(this).style("opacity", 1);
+                tooltip.transition().duration(500).style("opacity", 0);
+            });
+
+        // Add Custom Legend
+        const legend = svg.append("g").attr("transform", `translate(${width - 250}, -25)`);
+        yoyYears.forEach((year, i) => {
+            const legendRow = legend.append("g").attr("transform", `translate(${i * 80}, 0)`);
+            legendRow.append("rect").attr("width", 12).attr("height", 12).attr("fill", colorScaleYoY(year)).attr("rx", 2);
+            legendRow.append("text").attr("x", 18).attr("y", 10).text(year).style("font-size", "12px").style("fill", "#cbd5e1");
+        });
+    }
+
+    drawYoYChart("#chart-yoy-rev", yoyRevData);
+    drawYoYChart("#chart-yoy-exp", yoyExpData);
+    
 }).catch(error => {
     console.error("CRITICAL ERROR: Failed to load or parse data.json", error);
 });
