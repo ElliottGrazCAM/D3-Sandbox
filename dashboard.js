@@ -80,6 +80,46 @@ function renderEvent(eventType) {
         if (!obj[name]) obj[name] = { name: name, id: id, total: 0, budget: 0, txns: [] };
     }
 
+    // === MISSING FUNCTION RESTORED HERE ===
+    function processTransactions(records, isExpense, bucketsObj, parentFilter) {
+        if (!records) return;
+        records.forEach(record => {
+            const txnDate = new Date(record.TxnDate);
+
+            if (txnDate >= startDate && txnDate <= endDate) {
+                if (!record.Line) return;
+
+                record.Line.forEach(line => {
+                    const amt = line.Amount;
+                    if (!amt || amt === 0) return;
+
+                    let acctName = "";
+                    let acctId = "";
+
+                    if (isExpense && line.DetailType === "AccountBasedExpenseLineDetail" && line.AccountBasedExpenseLineDetail.AccountRef) {
+                        acctName = line.AccountBasedExpenseLineDetail.AccountRef.name || "";
+                        acctId = line.AccountBasedExpenseLineDetail.AccountRef.value || "";
+                    } else if (!isExpense && line.DetailType === "DepositLineDetail" && line.DepositLineDetail.AccountRef) {
+                        acctName = line.DepositLineDetail.AccountRef.name || "";
+                        acctId = line.DepositLineDetail.AccountRef.value || "";
+                    }
+
+                    if (acctName.startsWith(parentFilter)) {
+                        const shortName = acctName.split(':').pop();
+                        initBucket(bucketsObj, shortName, acctId);
+                        bucketsObj[shortName].total += amt;
+
+                        let desc = line.Description || (record.EntityRef ? record.EntityRef.name : "Online Transaction");
+                        bucketsObj[shortName].txns.push({ date: record.TxnDate, desc: desc, amount: amt });
+
+                        if (isExpense) totalExp += amt;
+                        else totalRev += amt;
+                    }
+                });
+            }
+        });
+    }
+
     processTransactions(globalData.Deposits, false, revBuckets, REV_PARENT);
     processTransactions(globalData.Expenses, true, expBuckets, EXP_PARENT);
 
@@ -146,7 +186,7 @@ function renderEvent(eventType) {
 
         svgNet.selectAll(".bg-bar").data(netData).enter().append("rect").attr("x", d => xNet(d.label) - 10).attr("y", d => yNet(d.budget)).attr("width", xNet.bandwidth() + 20).attr("height", d => heightNet - yNet(d.budget)).attr("fill", d => d.type === "rev" ? "rgba(16, 185, 129, 0.15)" : "rgba(239, 68, 68, 0.15)").attr("rx", 4);
         svgNet.selectAll(".fg-bar").data(netData).enter().append("rect").attr("x", d => xNet(d.label)).attr("y", d => yNet(d.actual)).attr("width", xNet.bandwidth()).attr("height", d => heightNet - yNet(d.actual))
-            .attr("fill", d => { if (d.type === "rev") return d.actual > d.budget ? "#10b981" : "#065f46" ; else return d.actual > d.budget ? "#991b1b" : "#ef4444"; }).attr("rx", 4)
+            .attr("fill", d => { if (d.type === "rev") return d.actual > d.budget ? "#10b981" : "#065f46"; else return d.actual > d.budget ? "#991b1b" : "#ef4444"; }).attr("rx", 4)
             .on("mouseover", function (event, d) {
                 d3.select(this).style("opacity", 0.8); tooltip.transition().duration(200).style("opacity", 1);
                 const diff = d.actual - d.budget; const diffText = diff > 0 ? `+$${diff.toLocaleString()}` : `-$${Math.abs(diff).toLocaleString()}`;
