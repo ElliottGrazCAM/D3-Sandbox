@@ -50,15 +50,13 @@
 
 <body>
 
-    <div id="sidebar" class="min-h-screen w-64 bg-slate-900 border-r border-slate-800 p-6">
-        <h2 style="font-size: 1.2rem; color: #f8fafc; margin-top: 0; margin-bottom: 24px;">Sample NFP Financials</h2>
-        <nav class="flex flex-col gap-2">
-            <a href="index.html" class="nav-item p-2 hover:bg-slate-800 rounded">General Overview</a>
-            <a href="events.html?event=Luncheon" class="nav-item p-2 hover:bg-slate-800 rounded">Annual Luncheon</a>
-            <div class="border-t border-slate-800 my-4"></div>
-            <a href="settings.html" class="nav-item active bg-blue-600 text-white p-2 rounded">Settings &
-                Integration</a>
-        </nav>
+    <div id="sidebar">
+        <h2 style="font-size: 1.2rem; color: #f8fafc; margin-top: 0;">Sample NFP Financials</h2>
+        <a href="index.html" class="nav-item active">General Overview</a>
+        <a href="events.html?event=Luncheon" class="nav-item">Annual Luncheon</a>
+        <a href="events.html?event=Gala" class="nav-item">Winter Gala</a>
+        <a href="events.html?event=Golf" class="nav-item">Golf Tournament</a>
+        <a href="settings.html" class="nav-item">Settings & Integration</a>
     </div>
 
     <div id="main-content">
@@ -68,11 +66,11 @@
             <h3 class="text-slate-400 uppercase text-xs font-bold tracking-widest mb-4">Association Profile</h3>
             <div class="flex items-center justify-between">
                 <div>
-                    <div class="text-xl font-bold" id="org-name">Loading Association...</div>
-                    <div class="text-slate-500 text-sm" id="user-email">user@example.com</div>
+                    <div class="text-xl font-bold text-white" id="org-name">Sample NFP</div>
+                    <div class="text-slate-500 text-sm" id="user-email">...</div>
                 </div>
                 <button onclick="_supabase.auth.signOut().then(() => window.location.href='../index.html')"
-                    class="text-slate-400 hover:text-white text-sm underline">Log Out</button>
+                    class="text-slate-400 hover:text-white text-sm underline transition">Log Out</button>
             </div>
         </div>
 
@@ -98,17 +96,12 @@
                         FinSimple.</p>
                 </div>
 
-                <div id="connected-state" class="hidden">
-                    <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 flex justify-between items-center">
-                        <div>
-                            <div class="text-sm font-bold text-green-500">Successfully Linked</div>
-                            <div class="text-xs text-slate-400" id="connected-company-id">Company ID: **********</div>
-                        </div>
-                        <button onclick="disconnectQBO()"
-                            class="text-red-500 hover:bg-red-500/10 px-4 py-2 rounded border border-red-500/50 text-xs font-bold transition">
-                            Disconnect
-                        </button>
-                    </div>
+                <div id="connect-state">
+                    <button onclick="startQBOAuth()" class="hover:opacity-90 transition transform active:scale-95">
+                        <img src="https://static.developer.intuit.com/Contents/Images/Buttons/Checkout_Sign_In/Connect_to_QuickBooks_Green_2x.png"
+                            alt="Connect to QuickBooks" style="height: 44px;">
+                    </button>
+                    <p class="text-xs text-slate-500 mt-4">Note: You will be redirected to Intuit to securely authorize FinSimple.</p>
                 </div>
             </div>
         </div>
