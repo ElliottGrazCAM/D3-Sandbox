@@ -1,6 +1,6 @@
 // 1. Initialize the Supabase client
 // Replace these with your ACTUAL keys from the Supabase Settings > API tab
-const SUPABASE_URL = 'https://yxmfcvuotkgmnyuewfyg.supabase.co/rest/v1/';
+const SUPABASE_URL = 'https://yxmfcvuotkgmnyuewfyg.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWZjdnVvdGtnbW55dWV3ZnlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3OTk5MjIsImV4cCI6MjA5MjM3NTkyMn0.RAXRy1QJI7Z2L6_lKFRJukJ5QZhCJY98ThH9OfjjuEQ';
 
 // Use a unique name for the client to avoid conflicts with the library
