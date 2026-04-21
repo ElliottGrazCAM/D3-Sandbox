@@ -28,6 +28,19 @@ function renderOverview() {
     // READ THE DYNAMIC YEAR DIRECTLY FROM THE DROPDOWN!
     const TARGET_YEAR = parseInt(document.getElementById("year-select").value);
 
+    // DYNAMIC EXPLAINER TEXT FOR OVERVIEW
+    const explainerHtml = `
+        <ul>
+            <li><strong>Target Year:</strong> ${TARGET_YEAR}</li>
+            <li><strong>Date Window:</strong> Strict calendar year (January 1, ${TARGET_YEAR} to December 31, ${TARGET_YEAR}).</li>
+            <li><strong>Event Totals:</strong> Aggregates any account name containing "Annual Luncheon", "Winter Gala", or "Golf Tournament".</li>
+            <li><strong>Memberships:</strong> Aggregates accounts starting exactly with <code>"Membership Dues:"</code>.</li>
+            <li><strong>Admin Overhead:</strong> Aggregates accounts starting exactly with <code>"Administrative Expenses"</code> or <code>"Software/Communications"</code>.</li>
+        </ul>
+    `;
+    const explainerText = document.getElementById("explainer-text");
+    if (explainerText) explainerText.innerHTML = explainerHtml;
+
     let totalAnnualRev = 0;
     let totalAnnualExp = 0;
     let totalMembersCount = 0;
@@ -190,3 +203,7 @@ function renderOverview() {
         svgAd.selectAll(".val-label").data(adData).enter().append("text").attr("y", d => yAd(d.name) + (yAd.bandwidth() / 2) + 4).attr("x", d => xAd(d.total) + 5).text(d => `$${d.total.toLocaleString()}`).style("fill", "#94a3b8").style("font-size", "11px");
     }
 }
+window.toggleExplainer = function () {
+    const el = document.getElementById("data-explainer");
+    el.style.display = el.style.display === "none" || el.style.display === "" ? "block" : "none";
+};

@@ -71,6 +71,19 @@ function renderEvent(eventType) {
 
     document.getElementById("event-title-display").innerText = title;
 
+    // DYNAMIC EXPLAINER TEXT FOR EVENTS
+    const explainerHtml = `
+        <ul>
+            <li><strong>Target Year:</strong> ${TARGET_YEAR}</li>
+            <li><strong>Date Window:</strong> Pulls transactions specifically dated between <b>${startDate.toLocaleDateString()}</b> and <b>${endDate.toLocaleDateString()}</b> to capture early/late checks.</li>
+            <li><strong>Revenue Filter:</strong> Requires QuickBooks accounts to begin exactly with <code>"${REV_PARENT}"</code>.</li>
+            <li><strong>Expense Filter:</strong> Requires QuickBooks accounts to begin exactly with <code>"${EXP_PARENT}"</code>.</li>
+            <li><strong>Budgets:</strong> Pulls the ${TARGET_YEAR} Master Budget directly assigned to these specific accounts.</li>
+        </ul>
+    `;
+    const explainerText = document.getElementById("explainer-text");
+    if (explainerText) explainerText.innerHTML = explainerHtml;
+
     const revBuckets = {};
     const expBuckets = {};
     let totalRev = 0; let totalExp = 0;
@@ -376,4 +389,8 @@ window.sortTable = function (tableId, columnIndex) {
 window.toggleLedger = function (containerId, btnElement) {
     const container = document.getElementById(containerId); if (!container) return;
     if (container.style.display === "none") { container.style.display = "block"; btnElement.innerText = "👁️‍🗨️ Hide Transaction Ledger"; } else { container.style.display = "none"; btnElement.innerText = "👁️ Show Transaction Ledger"; }
+};
+window.toggleExplainer = function () {
+    const el = document.getElementById("data-explainer");
+    el.style.display = el.style.display === "none" || el.style.display === "" ? "block" : "none";
 };
