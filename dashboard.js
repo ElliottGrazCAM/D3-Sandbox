@@ -171,8 +171,8 @@ d3.json("data.json").then(data => {
             .attr("x", d => xNet(d.label)).attr("y", d => yNet(d.actual))
             .attr("width", xNet.bandwidth()).attr("height", d => heightNet - yNet(d.actual))
             .attr("fill", d => {
-                if (d.type === "rev") return d.actual >= d.budget ? "#059669" : "#34d399"; // Dark green if met, light green if missed
-                else return d.actual > d.budget ? "#991b1b" : "#ef4444"; // Dark red if over budget, light red if safe
+                if (d.type === "rev") return d.actual > d.budget ? "#065f46" : "#10b981"; // Deep forest green if over budget, bright green if under
+                else return d.actual > d.budget ? "#991b1b" : "#ef4444"; // Dark crimson if over budget, standard red if safe
             }).attr("rx", 4)
             .on("mouseover", function (event, d) {
                 d3.select(this).style("opacity", 0.8);
@@ -238,7 +238,7 @@ d3.json("data.json").then(data => {
         svgAcc.selectAll(".fg-acc").data(combinedData).enter().append("rect")
             .attr("y", d => yAcc(d.name)).attr("x", 0).attr("height", yAcc.bandwidth()).attr("width", d => xAcc(d.total))
             .attr("fill", d => {
-                if (d.type === 'Rev') return d.total >= d.budget ? "#059669" : "#34d399";
+                if (d.type === 'Rev') return d.total > d.budget ? "#065f46" : "#10b981";
                 else return d.total > d.budget ? "#991b1b" : "#ef4444";
             }).attr("rx", 2)
             .on("mouseover", function (event, d) {
