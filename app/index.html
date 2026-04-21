@@ -22,6 +22,17 @@
     </div>
 
     <div id="main-content">
+        <div
+            style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 12px 20px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="color: #94a3b8; font-size: 0.9rem;">
+                <strong style="color: #3b82f6; margin-right: 8px;">DEMO MODE</strong>
+                You are viewing sample data. Connect QuickBooks to view live financials.
+            </div>
+            <button onclick="window.location.href='settings.html'"
+                style="background: #3b82f6; color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; cursor: pointer;">
+                Connect Now
+            </button>
+        </div>
 
         <div style="display: flex; align-items: center; margin-bottom: 24px;">
             <button onclick="document.getElementById('sidebar').classList.toggle('collapsed')"
@@ -89,14 +100,4 @@
 
     <script src="overview.js"></script>
 </body>
-
-<div id="demo-banner"
-    class="bg-blue-600/90 text-white text-center py-2 px-4 text-sm font-medium backdrop-blur-md sticky top-0 z-50 flex justify-between items-center">
-    <span></span> <span>📊 <strong>Demo Mode:</strong> You are viewing sample data. Connect your QuickBooks to see your
-        real financials.</span>
-    <button class="bg-white text-blue-600 px-3 py-1 rounded-md text-xs font-bold hover:bg-slate-100 transition">
-        Get Started
-    </button>
-</div>
-
 </html>
