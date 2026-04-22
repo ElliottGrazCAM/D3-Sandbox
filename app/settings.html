@@ -4,188 +4,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings - FinSimple</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Settings | Frankly.</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="auth.js"></script>
-    <style>
-        body {
-            background-color: #0f172a;
-            display: flex;
-        }
-
-        #main-content {
-            flex-grow: 1;
-            padding: 40px;
-            color: #f8fafc;
-        }
-
-        .settings-card {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 24px;
-        }
-
-        .status-badge {
-            padding: 4px 12px;
-            border-radius: 99px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-
-        .status-connected {
-            background: #065f46;
-            color: #34d399;
-        }
-
-        .status-disconnected {
-            background: #451a1a;
-            color: #f87171;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/app.css">
 </head>
 
-<body>
+<body class="bg-slate-900 text-slate-50 font-sans antialiased flex min-h-screen">
 
-    <div id="sidebar">
-        <h2 style="font-size: 1.2rem; color: #f8fafc; margin-top: 0;">Sample NFP Financials</h2>
-        <a href="index.html" class="nav-item active">General Overview</a>
-        <a href="events.html?event=Luncheon" class="nav-item">Annual Luncheon</a>
-        <a href="events.html?event=Gala" class="nav-item">Winter Gala</a>
-        <a href="events.html?event=Golf" class="nav-item">Golf Tournament</a>
-        <a href="settings.html" class="nav-item">Settings & Integration</a>
-    </div>
+    <aside class="w-64 border-r border-slate-800 bg-slate-950 p-6 hidden md:flex flex-col">
+        <div class="text-xl font-bold tracking-tight mb-10">Frankly.</div>
+        <nav class="flex-1 space-y-2 text-sm font-medium">
+            <a href="index.html"
+                class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-400 hover:bg-slate-900 hover:text-white transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                    </path>
+                </svg>
+                Dashboard
+            </a>
+            <a href="events.html"
+                class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-400 hover:bg-slate-900 hover:text-white transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                    </path>
+                </svg>
+                Events
+            </a>
+            <a href="settings.html"
+                class="flex items-center gap-3 px-3 py-2 rounded-md bg-blue-600/10 text-blue-500 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                    </path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                Settings
+            </a>
+        </nav>
+        <button id="logout-btn" class="text-sm font-medium text-slate-500 hover:text-white transition text-left">
+            Log Out
+        </button>
+    </aside>
 
-    <div id="main-content">
-        <h1 class="text-3xl font-bold mb-8">Settings</h1>
+    <main class="flex-1 p-8 overflow-y-auto">
+        <header class="mb-10">
+            <h1 class="text-3xl font-bold tracking-tight">Settings</h1>
+            <p class="text-slate-400 text-sm mt-1">Manage your association's profile and integrations.</p>
+        </header>
 
-        <div class="settings-card">
-            <h3 class="text-slate-400 uppercase text-xs font-bold tracking-widest mb-4">Association Profile</h3>
-            <div class="flex items-center justify-between">
-                <div>
-                    <div class="text-xl font-bold text-white" id="org-name">Sample NFP</div>
-                    <div class="text-slate-500 text-sm" id="user-email">...</div>
+        <div class="max-w-3xl space-y-8">
+
+            <section class="bg-slate-950 border border-slate-800 rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h2 class="text-lg font-bold">QuickBooks Online</h2>
+                        <p class="text-sm text-slate-400">Sync your ledger directly to Frankly.</p>
+                    </div>
+                    <span
+                        class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-full text-xs font-bold tracking-wide flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Connected
+                    </span>
                 </div>
-                <button onclick="_supabase.auth.signOut().then(() => window.location.href='../index.html')"
-                    class="text-slate-400 hover:text-white text-sm underline transition">Log Out</button>
-            </div>
-        </div>
-
-        <div class="settings-card">
-            <div class="flex justify-between items-start mb-6">
-                <div>
-                    <h3 class="text-slate-400 uppercase text-xs font-bold tracking-widest mb-1">QuickBooks Online
-                        Connection</h3>
-                    <p class="text-slate-500 text-sm">Connect your association's QuickBooks file to sync live data.</p>
-                </div>
-                <div id="connection-status-badge" class="status-badge status-disconnected">NOT CONNECTED</div>
-            </div>
-            <div id="qbo-actions" class="mt-6">
-                <div id="connect-state" class="flex flex-col items-start gap-4">
-                
-                    <button onclick="startQBOAuth()"
-                        class="group relative flex items-center justify-center gap-3 bg-[#2ca01c] hover:bg-[#248a17] text-white px-5 py-2.5 rounded shadow-md transition-all active:scale-95">
-                        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M16 30C23.732 30 30 23.732 30 16C30 8.26801 23.732 2 16 2C8.26801 2 2 8.26801 2 16C2 23.732 8.26801 30 16 30Z"
-                                fill="white" />
-                            <path
-                                d="M18.8 21.2C18.1 21.7 17.1 22 16 22C12.7 22 10 19.3 10 16C10 12.7 12.7 10 16 10C19.3 10 22 12.7 22 16C22 17.5 21.4 18.8 20.5 19.8L23 22.3L21.3 24L18.8 21.2ZM16 19C17.7 19 19 17.7 19 16C19 14.3 17.7 13 16 13C14.3 13 13 14.3 13 16C13 17.7 14.3 19 16 19Z"
-                                fill="#2ca01c" />
-                        </svg>
-                        <span class="font-sans font-bold text-lg tracking-tight">Connect to QuickBooks</span>
+                <div class="border-t border-slate-800 pt-4 mt-2">
+                    <p class="text-sm text-slate-500 mb-4">Last synced: <span class="text-slate-300 font-medium">Today
+                            at 9:42 AM</span></p>
+                    <button
+                        class="bg-slate-800 hover:bg-slate-700 text-white text-sm font-bold py-2 px-4 rounded-md transition">
+                        Force Manual Sync
                     </button>
-                
-                    <p class="text-xs text-slate-500 leading-relaxed max-w-md">
-                        You will be redirected to Intuit's secure servers to authorize FinSimple.
-                        We never see your QuickBooks password.
-                    </p>
+                    <button class="text-red-400 hover:text-red-300 text-sm font-medium ml-4 transition">
+                        Disconnect
+                    </button>
                 </div>
-            
-                <div id="connected-state" class="hidden">
-                    <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 flex justify-between items-center shadow-inner">
+            </section>
+
+            <section class="bg-slate-950 border border-slate-800 rounded-xl p-6">
+                <h2 class="text-lg font-bold mb-6">Association Details</h2>
+                <form class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                                <div class="text-sm font-bold text-white">QuickBooks Online Active</div>
-                            </div>
-                            <div class="text-xs text-slate-500" id="connected-company-id">Company ID: **********</div>
+                            <label
+                                class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Organization
+                                Name</label>
+                            <input type="text"
+                                class="w-full bg-slate-900 border border-slate-800 rounded-md px-4 py-2 text-sm focus:outline-none focus:border-blue-500 text-white"
+                                value="Sample NFP Association">
                         </div>
-                        <button onclick="disconnectQBO()"
-                            class="text-red-400 hover:text-white hover:bg-red-500/20 px-4 py-2 rounded-lg border border-red-500/30 text-xs font-bold transition-all">
-                            Disconnect
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Fiscal
+                                Year End</label>
+                            <select
+                                class="w-full bg-slate-900 border border-slate-800 rounded-md px-4 py-2 text-sm focus:outline-none focus:border-blue-500 text-white appearance-none">
+                                <option>December 31</option>
+                                <option>June 30</option>
+                                <option>September 30</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Brand Color
+                            (Hex)</label>
+                        <div class="flex items-center gap-3">
+                            <input type="color" value="#3b82f6"
+                                class="w-10 h-10 rounded cursor-pointer bg-transparent border-0 p-0">
+                            <input type="text"
+                                class="w-full bg-slate-900 border border-slate-800 rounded-md px-4 py-2 text-sm focus:outline-none focus:border-blue-500 text-white"
+                                value="#3b82f6">
+                        </div>
+                        <p class="text-xs text-slate-500 mt-2">This color will be applied to your board's dashboard
+                            charts.</p>
+                    </div>
+                    <div class="pt-4">
+                        <button type="button"
+                            class="bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold py-2 px-6 rounded-md transition">
+                            Save Changes
                         </button>
                     </div>
-                </div>
-            </div>
+                </form>
+            </section>
+
         </div>
+    </main>
 
-        <div class="settings-card border-red-900/30">
-            <h3 class="text-red-500 uppercase text-xs font-bold tracking-widest mb-4">Danger Zone</h3>
-            <p class="text-slate-500 text-sm mb-4">Deleting your account will permanently remove all account mappings
-                and QuickBooks tokens.</p>
-            <button
-                class="bg-red-600/10 text-red-500 border border-red-500/20 px-4 py-2 rounded text-xs font-bold hover:bg-red-600 hover:text-white transition">Delete
-                All Data</button>
-        </div>
-    </div>
-
-    <script>
-        async function loadSettings() {
-            const { data: { user } } = await _supabase.auth.getUser();
-            if (user) {
-                document.getElementById('user-email').innerText = user.email;
-
-                // Fetch Org Name from Supabase Profiles -> Organizations
-                const { data: profile } = await _supabase
-                    .from('profiles')
-                    .select('organization_id, organizations(name)')
-                    .eq('id', user.id)
-                    .single();
-
-                if (profile && profile.organizations) {
-                    document.getElementById('org-name').innerText = profile.organizations.name;
-                }
-
-                // CHECK QBO CONNECTION STATUS
-                const { data: connection } = await _supabase
-                    .from('qbo_connections')
-                    .select('realm_id')
-                    .eq('organization_id', profile.organization_id)
-                    .single();
-
-                if (connection) {
-                    showConnected(connection.realm_id);
-                }
-            }
-        }
-
-        function showConnected(realmId) {
-            document.getElementById('connect-state').classList.add('hidden');
-            document.getElementById('connected-state').classList.remove('hidden');
-            document.getElementById('connection-status-badge').innerText = "CONNECTED";
-            document.getElementById('connection-status-badge').className = "status-badge status-connected";
-            document.getElementById('connected-company-id').innerText = "Company ID: " + realmId;
-        }
-
-        function startQBOAuth() {
-            alert("Redirecting to QuickBooks OAuth flow...");
-            // This is where your /api/auth/qbo serverless function will live!
-        }
-
-        function disconnectQBO() {
-            if (confirm("Are you sure you want to disconnect QuickBooks? Your dashboard will revert to demo data.")) {
-                // Here we will call Supabase to delete the tokens
-                alert("Disconnected.");
-                window.location.reload();
-            }
-        }
-
-        loadSettings();
-    </script>
+    <script src="js/auth.js"></script>
 </body>
 
 </html>

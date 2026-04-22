@@ -4,93 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome | FinSimple Demo</title>
+    <title>Welcome | Frankly.</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="auth.js"></script>
+
+    <link rel="stylesheet" href="../css/app.css">
     <style>
-        body {
-            background-color: #0f172a;
-            color: #f8fafc;
-        }
-
         .gradient-text {
-            background: linear-gradient(90deg, #3b82f6, #10b981);
-    
-            /* 1. The standard property (makes the editor happy) */
+            background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary));
             background-clip: text; 
-    
-            /* 2. The vendor prefix (makes the browser actually do it) */
             -webkit-background-clip: text; 
-            
-            /* 3. The fill-color (also needs the prefix for now) */
             -webkit-text-fill-color: transparent;
-            
-            /* 4. A fallback for very old browsers */
             color: transparent; 
-        }
-
-        .card-glass {
-            background: rgba(30, 41, 59, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center p-6">
+<body
+    class="bg-slate-900 text-slate-50 font-sans antialiased flex flex-col min-h-screen items-center justify-center p-6">
 
-    <div class="max-w-3xl w-full text-center">
-        <div class="text-3xl font-bold gradient-text mb-8">FINSIMPLE</div>
+    <div class="max-w-lg w-full bg-slate-950 border border-slate-800 rounded-xl p-10 text-center shadow-2xl">
+        <div class="mb-6 flex justify-center">
+            <svg class="w-16 h-16 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                </path>
+            </svg>
+        </div>
 
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-6">
-            Ready to see your <br>financial future?
+        <h1 class="text-3xl font-extrabold mb-4 tracking-tight">Welcome to <span class="gradient-text">Frankly.</span>
         </h1>
-
-        <p class="text-slate-400 text-lg mb-10 max-w-xl mx-auto">
-            You are about to enter the **Interactive Demo**. We've pre-loaded a sample NFP dataset to show you how
-            FinSimple turns QuickBooks complexity into boardroom clarity.
+        <p class="text-slate-400 mb-8 leading-relaxed">
+            Your connection is secure. We are ready to pull your latest QuickBooks data and prepare your board's
+            financial overview.
         </p>
 
-        <div class="grid md:grid-cols-3 gap-6 mb-12 text-left">
-            <div class="card-glass p-6 rounded-xl">
-                <div class="text-2xl mb-3">📊</div>
-                <h3 class="font-bold mb-1">D3 Visuals</h3>
-                <p class="text-xs text-slate-400">High-fidelity charts designed for executive decision-making.</p>
-            </div>
-            <div class="card-glass p-6 rounded-xl">
-                <div class="text-2xl mb-3">⛳</div>
-                <h3 class="font-bold mb-1">Event Logic</h3>
-                <p class="text-xs text-slate-400">Drill down into Galas and Golf Tournaments with one click.</p>
-            </div>
-            <div class="card-glass p-6 rounded-xl">
-                <div class="text-2xl mb-3">🔄</div>
-                <h3 class="font-bold mb-1">Live Sync</h3>
-                <p class="text-xs text-slate-400">Imagine this data updating automatically from your QuickBooks.</p>
-            </div>
-        </div>
-
-        <div class="space-y-4">
-            <a href="index.html"
-                class="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold px-10 py-4 rounded-full text-lg shadow-lg shadow-blue-500/20 transition transform hover:scale-105">
-                Enter Live Demo
-            </a>
-            <p class="text-xs text-slate-500">
-                Logged in as <span id="user-email" class="text-slate-400">...</span>
-            </p>
-        </div>
+        <a href="index.html"
+            class="inline-block w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-md transition active:scale-[0.98] shadow-lg shadow-blue-500/20">
+            Go to Dashboard
+        </a>
     </div>
 
-    <script>
-        // Small script to show the user their email on the splash screen
-        async function displayUser() {
-            const { data: { user } } = await _supabase.auth.getUser();
-            if (user) {
-                document.getElementById('user-email').innerText = user.email;
-            }
-        }
-        displayUser();
-    </script>
+    <script src="js/auth.js"></script>
 </body>
 
 </html>

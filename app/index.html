@@ -4,101 +4,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>General Overview - Sample NFP Financials</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Dashboard | Frankly.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="auth.js"></script>
+    <link rel="stylesheet" href="../css/app.css">
 </head>
 
-<body>
-    
-    <div id="sidebar">
-        <h2 style="font-size: 1.2rem; color: #f8fafc; margin-top: 0;">Sample NFP Financials</h2>
-        <a href="index.html" class="nav-item active">General Overview</a>
-        <a href="events.html?event=Luncheon" class="nav-item">Annual Luncheon</a>
-        <a href="events.html?event=Gala" class="nav-item">Winter Gala</a>
-        <a href="events.html?event=Golf" class="nav-item">Golf Tournament</a>
-        <a href="settings.html" class="nav-item">Settings & Integration</a>
-    </div>
+<body class="bg-slate-900 text-slate-50 font-sans antialiased flex min-h-screen">
 
-    <div id="main-content">
-        <div
-            style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 12px 20px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
-            <div style="color: #94a3b8; font-size: 0.9rem;">
-                <strong style="color: #3b82f6; margin-right: 8px;">DEMO MODE</strong>
+    <aside class="w-64 border-r border-slate-800 bg-slate-950 p-6 hidden md:flex flex-col">
+        <div class="text-xl font-bold tracking-tight mb-10">Frankly.</div>
+        <nav class="flex-1 space-y-2 text-sm font-medium">
+            <a href="index.html"
+                class="flex items-center gap-3 px-3 py-2 rounded-md bg-blue-600/10 text-blue-500 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                    </path>
+                </svg>
+                Dashboard
+            </a>
+            <a href="events.html"
+                class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-400 hover:bg-slate-900 hover:text-white transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                    </path>
+                </svg>
+                Events
+            </a>
+            <a href="settings.html"
+                class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-400 hover:bg-slate-900 hover:text-white transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                    </path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                Settings
+            </a>
+        </nav>
+        <button id="logout-btn" class="text-sm font-medium text-slate-500 hover:text-white transition text-left">
+            Log Out
+        </button>
+    </aside>
+
+    <main class="flex-1 p-8 overflow-y-auto">
+
+        <div class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4 mb-8 flex justify-between items-center">
+            <div class="text-sm text-blue-200">
+                <strong class="text-blue-400 mr-2 uppercase tracking-wide">Demo Mode</strong>
                 You are viewing sample data. Connect QuickBooks to view live financials.
             </div>
-            <button onclick="window.location.href='settings.html'"
-                style="background: #3b82f6; color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; cursor: pointer;">
+            <a href="settings.html"
+                class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2 px-4 rounded transition">
                 Connect Now
-            </button>
+            </a>
         </div>
 
-        <div style="display: flex; align-items: center; margin-bottom: 24px;">
-            <button onclick="document.getElementById('sidebar').classList.toggle('collapsed')"
-                style="background: #1e293b; color: white; border: 1px solid #334155; padding: 8px 12px; border-radius: 6px; cursor: pointer; margin-right: 16px;">☰
-                Menu</button>
-            <h1 style="margin: 0; color: #f8fafc;">General Overview
-                <select class="year-dropdown" id="year-select" onchange="changeYear()">
-                    <option value="2026">2026</option>
-                    <option value="2025">2025</option>
-                    <option value="2024">2024</option>
-                    <option value="2023">2023</option>
-                </select>
-            </h1>
-        </div>
+        <header class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-3xl font-bold tracking-tight">General Overview</h1>
+                <p class="text-slate-400 text-sm mt-1">High-level financial health for your association.</p>
+            </div>
+            <select id="year-select" onchange="changeYear()"
+                class="bg-slate-950 border border-slate-800 text-white text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                <option value="2026">2026</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+            </select>
+        </header>
 
-        <div class="kpi-container">
-            <div class="kpi-card">
-                <h2>Total Annual Revenue</h2>
-                <div class="kpi-value" id="ov-total-rev">--</div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 shadow-sm">
+                <h2 class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Total Revenue</h2>
+                <div class="text-2xl font-extrabold text-white" id="ov-total-rev">--</div>
             </div>
-            <div class="kpi-card">
-                <h2>Total Annual Expenses</h2>
-                <div class="kpi-value" id="ov-total-exp">--</div>
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 shadow-sm">
+                <h2 class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Total Expenses</h2>
+                <div class="text-2xl font-extrabold text-white" id="ov-total-exp">--</div>
             </div>
-            <div class="kpi-card">
-                <h2>Net Income</h2>
-                <div class="kpi-value" id="ov-net-income">--</div>
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 shadow-sm">
+                <h2 class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Net Income</h2>
+                <div class="text-2xl font-extrabold text-white" id="ov-net-income">--</div>
             </div>
-            <div class="kpi-card">
-                <h2>Total Paying Members</h2>
-                <div class="kpi-value" id="ov-total-members" style="color: #3b82f6;">--</div>
-            </div>
-        </div>
-
-        <div class="chart-container">
-            <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 16px; margin-top: 0;">Event Performance Summary
-            </h3>
-            <div id="chart-ov-events">Loading...</div>
-        </div>
-
-        <div style="display: flex; gap: 24px; flex-wrap: wrap;">
-            <div class="chart-container" style="flex: 1; min-width: 400px;">
-                <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 16px; margin-top: 0;">Membership Breakdown
-                </h3>
-                <div id="chart-ov-members">Loading...</div>
-            </div>
-            <div class="chart-container" style="flex: 1; min-width: 400px;">
-                <h3 style="color: #f8fafc; font-size: 1.2rem; margin-bottom: 16px; margin-top: 0;">Administrative &
-                    Software Overhead</h3>
-                <div id="chart-ov-admin">Loading...</div>
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 shadow-sm">
+                <h2 class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Paying Members</h2>
+                <div class="text-2xl font-extrabold text-blue-400" id="ov-total-members">--</div>
             </div>
         </div>
 
-        <div class="footer-wrapper">
-            <div class="explainer-toggle">
-                <button class="explainer-btn" onclick="toggleExplainer()">How is this data calculated?</button>
-            </div>
-            <div id="data-explainer" class="data-explainer">
-                <h4>Data Parameters & Filters</h4>
-                <div id="explainer-text"></div>
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 mb-8 shadow-sm">
+            <h3 class="text-lg font-bold text-white mb-4">Event Performance Summary</h3>
+            <div id="chart-ov-events" class="w-full h-64 flex items-center justify-center text-slate-500">Loading...
             </div>
         </div>
 
-    </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 shadow-sm">
+                <h3 class="text-lg font-bold text-white mb-4">Membership Breakdown</h3>
+                <div id="chart-ov-members" class="w-full h-64 flex items-center justify-center text-slate-500">
+                    Loading...</div>
+            </div>
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 shadow-sm">
+                <h3 class="text-lg font-bold text-white mb-4">Administrative Overhead</h3>
+                <div id="chart-ov-admin" class="w-full h-64 flex items-center justify-center text-slate-500">Loading...
+                </div>
+            </div>
+        </div>
+    </main>
 
-    <script src="overview.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/fetch_data.js"></script>
+    <script src="js/overview.js"></script>
 </body>
+
 </html>
