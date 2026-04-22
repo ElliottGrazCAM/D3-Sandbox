@@ -4,39 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frankly | It's for non-profits.</title>
+    <title>Frankly | Log In</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <link rel="stylesheet" href="css/app.css">
+
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+    </style>
 </head>
 
 <body class="flex flex-col min-h-screen">
 
     <nav class="max-w-7xl mx-auto px-6 py-8 w-full">
-        <a href="index.html" class="text-2xl font-bold gradient-text">FINSIMPLE</a>
+        <a href="index.html"
+            class="text-2xl font-bold gradient-text tracking-tight hover:opacity-80 transition">Frankly.</a>
     </nav>
 
-    <div class="flex-grow flex items-center justify-center px-6">
-        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-2xl w-full max-w-md">
-            <h2 id="auth-title" class="text-3xl font-bold mb-2">Welcome Back</h2>
+    <div class="flex-grow flex items-center justify-center px-6 pb-20">
+        <div class="bg-slate-900 border border-slate-800 p-8 rounded-xl shadow-2xl w-full max-w-md">
+            <h2 id="auth-title" class="text-3xl font-bold mb-2 tracking-tight">Welcome Back</h2>
             <p id="auth-subtitle" class="text-slate-400 mb-8 text-sm">Log in to access your association dashboard.</p>
 
-            <form id="auth-form" class="space-y-4">
+            <form id="auth-form" class="space-y-5">
                 <div>
-                    <label class="block text-sm font-medium text-slate-400 mb-1">Email Address</label>
+                    <label class="block text-sm font-bold text-slate-400 mb-2">Email Address</label>
                     <input type="email" id="email" required
-                        class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 transition text-white">
+                        class="w-full bg-slate-950 border border-slate-800 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition text-white placeholder-slate-600"
+                        placeholder="executive@association.org">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-slate-400 mb-1">Password</label>
+                    <label class="block text-sm font-bold text-slate-400 mb-2">Password</label>
                     <input type="password" id="password" required
-                        class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 transition text-white">
+                        class="w-full bg-slate-950 border border-slate-800 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition text-white placeholder-slate-600"
+                        placeholder="••••••••">
                 </div>
 
-                <div id="error-msg" class="text-red-500 text-xs hidden"></div>
+                <div id="error-msg"
+                    class="text-red-400 bg-red-400/10 border border-red-400/20 p-3 rounded-md text-xs hidden font-medium">
+                </div>
 
                 <button type="submit" id="submit-btn"
-                    class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg transition mt-4">
+                    class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-md transition mt-2 active:scale-[0.98]">
                     Sign In
                 </button>
             </form>
@@ -45,14 +67,15 @@
                 <p class="text-slate-400 text-sm">
                     <span id="toggle-text">Don't have an account?</span>
                     <button id="toggle-auth"
-                        class="text-blue-500 font-bold hover:underline focus:outline-none ml-1">Sign Up</button>
+                        class="text-blue-500 font-bold hover:text-blue-400 transition focus:outline-none ml-1">Sign
+                        Up</button>
                 </p>
             </div>
         </div>
     </div>
 
     <script>
-        // 1. INITIALIZE SUPABASE (Use your actual keys here)
+        // 1. INITIALIZE SUPABASE
         const SUPABASE_URL = 'https://yxmfcvuotkgmnyuewfyg.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWZjdnVvdGtnbW55dWV3ZnlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3OTk5MjIsImV4cCI6MjA5MjM3NTkyMn0.RAXRy1QJI7Z2L6_lKFRJukJ5QZhCJY98ThH9OfjjuEQ';
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -70,7 +93,7 @@
         toggleBtn.addEventListener('click', () => {
             isLogin = !isLogin;
             authTitle.innerText = isLogin ? "Welcome Back" : "Create Account";
-            authSubtitle.innerText = isLogin ? "Log in to access your association dashboard." : "Join FinSimple to automate your financial reporting.";
+            authSubtitle.innerText = isLogin ? "Log in to access your association dashboard." : "Join Frankly. No clutter, just clarity.";
             submitBtn.innerText = isLogin ? "Sign In" : "Get Started";
             toggleBtn.innerText = isLogin ? "Sign Up" : "Sign In";
             document.getElementById('toggle-text').innerText = isLogin ? "Don't have an account?" : "Already have an account?";
@@ -83,6 +106,7 @@
             errorDiv.classList.add('hidden');
             submitBtn.innerText = "Processing...";
             submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -90,10 +114,8 @@
             let result;
 
             if (isLogin) {
-                // SIGN IN
                 result = await _supabase.auth.signInWithPassword({ email, password });
             } else {
-                // SIGN UP
                 result = await _supabase.auth.signUp({ email, password });
             }
 
@@ -102,6 +124,7 @@
                 errorDiv.classList.remove('hidden');
                 submitBtn.innerText = isLogin ? "Sign In" : "Get Started";
                 submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
             } else {
                 // SUCCESS!
                 if (!isLogin && result.data.user && result.data.session === null) {
