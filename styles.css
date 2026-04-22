@@ -1,0 +1,41 @@
+/* --- GLOBAL VARIABLES --- */
+:root {
+    /* Frankly Default Brand Colors */
+    --bg-dark: #0f172a;
+    --text-main: #f8fafc;
+
+    /* We can change these via Javascript later for the 50 NFPs */
+    --brand-primary: #3b82f6;
+    --brand-secondary: #10b981;
+}
+
+/* --- BASE STYLES --- */
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+}
+
+/* --- REUSABLE UTILITIES --- */
+/* Now you don't have to paste this block of code on every page */
+.gradient-text {
+    background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+/* --- REUSABLE COMPONENTS --- */
+.btn-primary {
+    background-color: var(--brand-primary);
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.375rem;
+    font-weight: 700;
+    transition: all 150ms ease-in-out;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+    transform: scale(0.98);
+}
