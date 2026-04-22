@@ -52,7 +52,7 @@
     </aside>
 
     <main class="flex-1 p-8 overflow-y-auto">
-
+    
         <header class="flex justify-between items-end mb-6">
             <div>
                 <h1 class="text-3xl font-bold tracking-tight" id="event-title-display">Annual Luncheon</h1>
@@ -66,7 +66,7 @@
                 <option value="2023">2023</option>
             </select>
         </header>
-
+    
         <div class="border-b border-slate-800 mb-8">
             <nav class="-mb-px flex space-x-8">
                 <button onclick="switchEvent('Luncheon', this)"
@@ -80,7 +80,7 @@
                     Tournament</button>
             </nav>
         </div>
-
+    
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 shadow-sm">
                 <h2 class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Total Registrants</h2>
@@ -95,7 +95,7 @@
                 <div class="text-2xl font-extrabold text-emerald-400" id="kpi-net">--</div>
             </div>
         </div>
-
+    
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 shadow-sm">
                 <h3 class="text-lg font-bold text-white mb-4">Net Performance vs. Budget</h3>
@@ -108,7 +108,112 @@
                     Loading...</div>
             </div>
         </div>
-
+    
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 mb-8 shadow-sm">
+            <h3 class="text-lg font-bold text-white mb-1">Revenue Composition</h3>
+            <p class="text-slate-400 text-sm mb-6">Click any category on the bar chart to instantly filter the ledger.</p>
+            <div id="chart-rev-composition" class="w-full h-48 mb-4 flex items-center justify-center text-slate-500">
+                Loading...</div>
+    
+            <button onclick="toggleLedger('rev-ledger-container', this)"
+                class="text-blue-400 hover:text-blue-300 text-sm font-bold flex items-center gap-2 mb-4 transition">
+                👁️ Show Transaction Ledger
+            </button>
+    
+            <div id="rev-ledger-container" style="display: none;" class="mt-6 border-t border-slate-800 pt-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="text-white font-bold">Revenue Ledger</h4>
+                    <div class="flex gap-2">
+                        <input type="text" id="rev-search" onkeyup="searchTable('rev-table', this.value)"
+                            placeholder="Search contributors..."
+                            class="bg-slate-900 border border-slate-700 text-sm rounded-md px-3 py-2 text-white focus:outline-none focus:border-blue-500">
+                        <button onclick="resetFilters('rev-table')"
+                            class="bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded-md transition font-medium">Reset</button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto rounded-lg border border-slate-800">
+                    <table class="w-full text-left text-sm text-slate-400" id="rev-table">
+                        <thead class="bg-slate-900 text-xs uppercase text-slate-500">
+                            <tr>
+                                <th onclick="sortTable('rev-table', 0)" class="px-4 py-3 cursor-pointer hover:text-white">
+                                    Date ⇕</th>
+                                <th onclick="sortTable('rev-table', 1)" class="px-4 py-3 cursor-pointer hover:text-white">
+                                    Contributor ⇕</th>
+                                <th onclick="sortTable('rev-table', 2)" class="px-4 py-3 cursor-pointer hover:text-white">
+                                    Account ⇕</th>
+                                <th onclick="sortTable('rev-table', 3)" class="px-4 py-3 cursor-pointer hover:text-white">
+                                    Amount ⇕</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rev-tbody" class="divide-y divide-slate-800"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 mb-8 shadow-sm">
+            <h3 class="text-lg font-bold text-white mb-1">Expense Composition</h3>
+            <p class="text-slate-400 text-sm mb-6">Click any category on the bar chart to instantly filter the ledger.</p>
+            <div id="chart-exp-composition" class="w-full h-48 mb-4 flex items-center justify-center text-slate-500">
+                Loading...</div>
+    
+            <button onclick="toggleLedger('exp-ledger-container', this)"
+                class="text-blue-400 hover:text-blue-300 text-sm font-bold flex items-center gap-2 mb-4 transition">
+                👁️ Show Transaction Ledger
+            </button>
+    
+            <div id="exp-ledger-container" style="display: none;" class="mt-6 border-t border-slate-800 pt-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="text-white font-bold">Expense Ledger</h4>
+                    <div class="flex gap-2">
+                        <input type="text" id="exp-search" onkeyup="searchTable('exp-table', this.value)"
+                            placeholder="Search vendors..."
+                            class="bg-slate-900 border border-slate-700 text-sm rounded-md px-3 py-2 text-white focus:outline-none focus:border-blue-500">
+                        <button onclick="resetFilters('exp-table')"
+                            class="bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded-md transition font-medium">Reset</button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto rounded-lg border border-slate-800">
+                    <table class="w-full text-left text-sm text-slate-400" id="exp-table">
+                        <thead class="bg-slate-900 text-xs uppercase text-slate-500">
+                            <tr>
+                                <th onclick="sortTable('exp-table', 0)" class="px-4 py-3 cursor-pointer hover:text-white">
+                                    Date ⇕</th>
+                                <th onclick="sortTable('exp-table', 1)" class="px-4 py-3 cursor-pointer hover:text-white">
+                                    Vendor ⇕</th>
+                                <th onclick="sortTable('exp-table', 2)" class="px-4 py-3 cursor-pointer hover:text-white">
+                                    Account ⇕</th>
+                                <th onclick="sortTable('exp-table', 3)" class="px-4 py-3 cursor-pointer hover:text-white">
+                                    Amount ⇕</th>
+                            </tr>
+                        </thead>
+                        <tbody id="exp-tbody" class="divide-y divide-slate-800"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 border-t border-slate-800 pt-8">
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4">Year-over-Year Revenue by Account</h3>
+                <div id="chart-yoy-rev" class="w-full h-64 flex items-center justify-center text-slate-500">Loading...</div>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4">Year-over-Year Expenses by Account</h3>
+                <div id="chart-yoy-exp" class="w-full h-64 flex items-center justify-center text-slate-500">Loading...</div>
+            </div>
+        </div>
+    
+        <div class="border-t border-slate-800 pt-8 pb-4">
+            <button class="text-slate-500 hover:text-white text-sm font-medium transition underline"
+                onclick="toggleExplainer()">How is this data calculated?</button>
+            <div id="data-explainer" style="display: none;"
+                class="mt-4 bg-slate-900 border border-slate-800 rounded-lg p-6 text-slate-400 text-sm">
+                <h4 class="text-white font-bold mb-2">Data Parameters & Filters</h4>
+                <div id="explainer-text"></div>
+            </div>
+        </div>
+    
     </main>
 
     <script src="js/auth.js"></script>
