@@ -21,7 +21,7 @@ jobs:
       - run: npm install intuit-oauth
       
       - name: Run Fetch Script
-        run: node fetch_data.js
+        run: node app/js/fetch_data.js
         env:
           QBO_CLIENT_ID: ${{ secrets.QBO_CLIENT_ID }}
           QBO_CLIENT_SECRET: ${{ secrets.QBO_CLIENT_SECRET }}
