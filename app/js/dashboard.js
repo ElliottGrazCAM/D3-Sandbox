@@ -394,8 +394,19 @@ window.sortTable = function (tableId, columnIndex) {
     rows.forEach(row => tbody.appendChild(row));
 };
 window.toggleLedger = function (containerId, btnElement) {
-    const container = document.getElementById(containerId); if (!container) return;
-    if (container.style.display === "none") { container.style.display = "block"; btnElement.innerText = "👁️‍🗨️ Hide Transaction Ledger"; } else { container.style.display = "none"; btnElement.innerText = "👁️ Show Transaction Ledger"; }
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    // Find the text span inside the button we clicked
+    const textSpan = btnElement.querySelector('span');
+
+    if (container.style.display === "none") {
+        container.style.display = "block";
+        textSpan.innerText = "Hide Transaction Ledger"; // Updates text, leaves SVG alone
+    } else {
+        container.style.display = "none";
+        textSpan.innerText = "Show Transaction Ledger"; // Updates text, leaves SVG alone
+    }
 };
 window.toggleExplainer = function () {
     const el = document.getElementById("data-explainer");
