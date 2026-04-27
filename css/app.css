@@ -110,6 +110,27 @@ body {
 }
 
 /* =========================================
+   D3 CHART TOOLTIPS
+========================================= */
+.tooltip {
+    position: absolute;
+    /* Forces it to float above the page */
+    z-index: 9999;
+    /* Ensures it stays on top of everything */
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    pointer-events: none;
+    /* Prevents the mouse from getting "stuck" on the tooltip */
+    opacity: 0;
+    /* Starts hidden until D3 calls it */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+/* =========================================
    COMPONENTS
 ========================================= */
 /* Headers & Banners */
