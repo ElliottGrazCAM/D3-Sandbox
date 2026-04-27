@@ -4,21 +4,24 @@ on:
     - cron: '0 0 * * *'
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           
       - run: npm install intuit-oauth
       
       - name: Run Fetch Script
-        run: node fetch_data.js
+        run: node app/js/fetch_data.js
         env:
           QBO_CLIENT_ID: ${{ secrets.QBO_CLIENT_ID }}
           QBO_CLIENT_SECRET: ${{ secrets.QBO_CLIENT_SECRET }}
