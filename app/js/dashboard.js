@@ -212,7 +212,7 @@ function renderEvent(eventType) {
     d3.select("#chart-budget-actuals").html("");
     const combinedData = [...sortedRev.map(d => ({ ...d, type: 'Rev' })), ...sortedExp.map(d => ({ ...d, type: 'Exp' }))];
     if (combinedData.length > 0) {
-        const marginAcc = { top: 10, right: 30, bottom: 40, left: 60 }, widthAcc = 800 - marginAcc.left - marginAcc.right, heightAcc = (combinedData.length * 40) || 100;
+        const marginAcc = { top: 10, right: 30, bottom: 10, left: 100 }, widthAcc = 800 - marginAcc.left - marginAcc.right, heightAcc = (combinedData.length * 40) || 100;
         const svgAcc = d3.select("#chart-budget-actuals").append("svg").attr("viewBox", `0 0 ${widthAcc + marginAcc.left + marginAcc.right} ${heightAcc + marginAcc.top + marginAcc.bottom}`).attr("width", "100%").attr("height", "100%").attr("preserveAspectRatio", "xMidYMid meet").append("g").attr("transform", `translate(${marginAcc.left},${marginAcc.top})`);
         const yAcc = d3.scaleBand().domain(combinedData.map(d => d.name)).range([0, heightAcc]).padding(0.4);
         const maxAccVal = d3.max(combinedData, d => Math.max(d.total, d.budget)) * 1.1 || 1;
