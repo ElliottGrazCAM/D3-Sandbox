@@ -5,226 +5,154 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events | Frankly.</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="../css/app.css">
 </head>
 
-<body class="bg-slate-900 text-slate-50 font-sans antialiased flex min-h-screen">
+<body>
 
-    <aside class="w-64 border-r border-slate-800 bg-slate-950 p-6 hidden md:flex flex-col">
-        <div class="text-xl font-bold tracking-tight mb-10">Frankly.</div>
-        <nav class="flex-1 space-y-2 text-sm font-medium">
-            <a href="index.html"
-                class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-400 hover:bg-slate-900 hover:text-white transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
-                    </path>
-                </svg>
-                Dashboard
-            </a>
-            <a href="events.html"
-                class="flex items-center gap-3 px-3 py-2 rounded-md bg-emerald-600/10 text-emerald-500 transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                    </path>
-                </svg>
-                Events
-            </a>
-            <a href="settings.html"
-                class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-400 hover:bg-slate-900 hover:text-white transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
-                    </path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                </svg>
-                Settings
-            </a>
+    <aside class="sidebar">
+        <div class="sidebar-logo">Frankly.</div>
+        <nav class="nav-menu">
+            <a href="index.html" class="nav-item">📊 Dashboard</a>
+            <a href="events.html" class="nav-item active-event">⛳ Events</a>
+            <a href="settings.html" class="nav-item">⚙️ Settings</a>
         </nav>
-        <button id="logout-btn" class="text-sm font-medium text-slate-500 hover:text-white transition text-left">
-            Log Out
-        </button>
+        <button id="logout-btn" class="logout-btn">Log Out</button>
     </aside>
 
-    <main class="flex-1 p-8 overflow-y-auto">
+    <main class="main-content">
 
-        <div class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4 mb-8 flex justify-between items-center">
-            <div class="text-sm text-blue-200">
-                <strong class="text-blue-400 mr-2 uppercase tracking-wide">Demo Mode</strong>
-                You are viewing sample data. Connect QuickBooks to view live financials.
-            </div>
-            <a href="settings.html"
-                class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2 px-4 rounded transition">
-                Connect Now
-            </a>
-        </div>
-    
-        <header class="flex justify-between items-end mb-6">
+        <header class="header-flex">
             <div>
-                <h1 class="text-3xl font-bold tracking-tight" id="event-title-display">Annual Luncheon</h1>
-                <p class="text-slate-400 text-sm mt-1">Deep dive into specific program performance.</p>
+                <h1 class="page-title" id="event-title-display">Annual Luncheon</h1>
+                <p class="page-subtitle">Deep dive into specific program performance.</p>
             </div>
-            <select id="year-select" onchange="changeYear()"
-                class="bg-slate-950 border border-slate-800 text-white text-sm rounded-md focus:ring-emerald-500 focus:border-emerald-500 block p-2.5">
+            <select id="year-select" class="year-dropdown" onchange="changeYear()">
                 <option value="2026">2026</option>
                 <option value="2025">2025</option>
                 <option value="2024">2024</option>
                 <option value="2023">2023</option>
             </select>
         </header>
-    
-        <div class="border-b border-slate-800 mb-8">
-            <nav class="-mb-px flex space-x-8">
-                <button onclick="switchEvent('Luncheon', this)"
-                    class="border-emerald-500 text-emerald-400 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition">Annual
-                    Luncheon</button>
-                <button onclick="switchEvent('Gala', this)"
-                    class="border-transparent text-slate-400 hover:text-slate-300 hover:border-slate-700 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition">Winter
-                    Gala</button>
-                <button onclick="switchEvent('Golf', this)"
-                    class="border-transparent text-slate-400 hover:text-slate-300 hover:border-slate-700 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition">Golf
-                    Tournament</button>
-            </nav>
+
+        <div class="tabs-container">
+            <button onclick="switchEvent('Luncheon', this)" class="tab active">Annual Luncheon</button>
+            <button onclick="switchEvent('Gala', this)" class="tab">Winter Gala</button>
+            <button onclick="switchEvent('Golf', this)" class="tab">Golf Tournament</button>
         </div>
-    
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 shadow-sm">
-                <h2 class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Total Registrants</h2>
-                <div class="text-2xl font-extrabold text-white" id="kpi-registrants">--</div>
+
+        <div class="kpi-grid">
+            <div class="card">
+                <div class="kpi-title">Total Registrants</div>
+                <div class="kpi-value" id="kpi-registrants">--</div>
             </div>
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 shadow-sm">
-                <h2 class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Total Sponsors</h2>
-                <div class="text-2xl font-extrabold text-white" id="kpi-sponsors">--</div>
+            <div class="card">
+                <div class="kpi-title">Total Sponsors</div>
+                <div class="kpi-value" id="kpi-sponsors">--</div>
             </div>
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 shadow-sm">
-                <h2 class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Net Revenue</h2>
-                <div class="text-2xl font-extrabold text-emerald-400" id="kpi-net">--</div>
+            <div class="card">
+                <div class="kpi-title">Net Revenue</div>
+                <div class="kpi-value text-emerald" id="kpi-net">--</div>
             </div>
         </div>
-    
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 shadow-sm">
-                <h3 class="text-lg font-bold text-white mb-4">Net Performance vs. Budget</h3>
-                <div id="chart-net-performance" class="w-full h-64 flex items-center justify-center text-slate-500">
-                    Loading...</div>
+
+        <div class="chart-grid">
+            <div class="card">
+                <h3 class="chart-title">Net Performance vs. Budget</h3>
+                <div id="chart-net-performance" class="chart-box">Loading...</div>
             </div>
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 shadow-sm">
-                <h3 class="text-lg font-bold text-white mb-4">Budget vs. Actuals</h3>
-                <div id="chart-budget-actuals" class="w-full h-64 flex items-center justify-center text-slate-500">
-                    Loading...</div>
+            <div class="card">
+                <h3 class="chart-title">Budget vs. Actuals</h3>
+                <div id="chart-budget-actuals" class="chart-box">Loading...</div>
             </div>
         </div>
-    
-        <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 mb-8 shadow-sm">
-            <h3 class="text-lg font-bold text-white mb-1">Revenue Composition</h3>
-            <p class="text-slate-400 text-sm mb-6">Click any category on the bar chart to instantly filter the ledger.</p>
-            <div id="chart-rev-composition" class="w-full h-48 mb-4 flex items-center justify-center text-slate-500">
-                Loading...</div>
-    
-            <button onclick="toggleLedger('rev-ledger-container', this)"
-                class="text-blue-400 hover:text-blue-300 text-sm font-bold flex items-center gap-2 mb-4 transition">
+
+        <div class="card">
+            <h3 class="chart-title">Revenue Composition</h3>
+            <p class="chart-subtitle">Click any category on the bar chart to instantly filter the ledger.</p>
+            <div id="chart-rev-composition" class="chart-box" style="height: 200px;">Loading...</div>
+
+            <button onclick="toggleLedger('rev-ledger-container', this)" class="btn btn-outline"
+                style="margin-bottom: 1rem;">
                 👁️ Show Transaction Ledger
             </button>
-    
-            <div id="rev-ledger-container" style="display: none;" class="mt-6 border-t border-slate-800 pt-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h4 class="text-white font-bold">Revenue Ledger</h4>
-                    <div class="flex gap-2">
+
+            <div id="rev-ledger-container"
+                style="display: none; border-top: 1px solid var(--border); padding-top: 1rem;">
+                <div class="header-flex" style="margin-bottom: 1rem;">
+                    <h4>Revenue Ledger</h4>
+                    <div style="display: flex; gap: 0.5rem;">
                         <input type="text" id="rev-search" onkeyup="searchTable('rev-table', this.value)"
                             placeholder="Search contributors..."
-                            class="bg-slate-900 border border-slate-700 text-sm rounded-md px-3 py-2 text-white focus:outline-none focus:border-blue-500">
-                        <button onclick="resetFilters('rev-table')"
-                            class="bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded-md transition font-medium">Reset</button>
+                            style="padding: 0.5rem; border-radius: 0.375rem; border: 1px solid var(--border); background: var(--bg-card); color: white;">
+                        <button onclick="resetFilters('rev-table')" class="btn btn-outline">Reset</button>
                     </div>
                 </div>
-                <div class="max-h-96 overflow-y-auto overflow-x-auto rounded-lg border border-slate-800">
-                    <table class="w-full text-left text-sm text-slate-400" id="rev-table">
-                        <thead class="bg-slate-900 text-xs uppercase text-slate-500">
+                <div class="table-wrapper">
+                    <table class="data-table" id="rev-table">
+                        <thead>
                             <tr>
-                                <th onclick="sortTable('rev-table', 0)" class="px-4 py-3 cursor-pointer hover:text-white">
-                                    Date ⇕</th>
-                                <th onclick="sortTable('rev-table', 1)" class="px-4 py-3 cursor-pointer hover:text-white">
-                                    Contributor ⇕</th>
-                                <th onclick="sortTable('rev-table', 2)" class="px-4 py-3 cursor-pointer hover:text-white">
-                                    Account ⇕</th>
-                                <th onclick="sortTable('rev-table', 3)" class="px-4 py-3 cursor-pointer hover:text-white">
-                                    Amount ⇕</th>
+                                <th onclick="sortTable('rev-table', 0)">Date ⇕</th>
+                                <th onclick="sortTable('rev-table', 1)">Contributor ⇕</th>
+                                <th onclick="sortTable('rev-table', 2)">Account ⇕</th>
+                                <th onclick="sortTable('rev-table', 3)">Amount ⇕</th>
                             </tr>
                         </thead>
-                        <tbody id="rev-tbody" class="divide-y divide-slate-800"></tbody>
+                        <tbody id="rev-tbody"></tbody>
                     </table>
                 </div>
             </div>
         </div>
-    
-        <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 mb-8 shadow-sm">
-            <h3 class="text-lg font-bold text-white mb-1">Expense Composition</h3>
-            <p class="text-slate-400 text-sm mb-6">Click any category on the bar chart to instantly filter the ledger.</p>
-            <div id="chart-exp-composition" class="w-full h-48 mb-4 flex items-center justify-center text-slate-500">
-                Loading...</div>
-    
-            <button onclick="toggleLedger('exp-ledger-container', this)"
-                class="text-blue-400 hover:text-blue-300 text-sm font-bold flex items-center gap-2 mb-4 transition">
+
+        <div class="card">
+            <h3 class="chart-title">Expense Composition</h3>
+            <p class="chart-subtitle">Click any category on the bar chart to instantly filter the ledger.</p>
+            <div id="chart-exp-composition" class="chart-box" style="height: 200px;">Loading...</div>
+
+            <button onclick="toggleLedger('exp-ledger-container', this)" class="btn btn-outline"
+                style="margin-bottom: 1rem;">
                 👁️ Show Transaction Ledger
             </button>
-    
-            <div id="exp-ledger-container" style="display: none;" class="mt-6 border-t border-slate-800 pt-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h4 class="text-white font-bold">Expense Ledger</h4>
-                    <div class="flex gap-2">
+
+            <div id="exp-ledger-container"
+                style="display: none; border-top: 1px solid var(--border); padding-top: 1rem;">
+                <div class="header-flex" style="margin-bottom: 1rem;">
+                    <h4>Expense Ledger</h4>
+                    <div style="display: flex; gap: 0.5rem;">
                         <input type="text" id="exp-search" onkeyup="searchTable('exp-table', this.value)"
                             placeholder="Search vendors..."
-                            class="bg-slate-900 border border-slate-700 text-sm rounded-md px-3 py-2 text-white focus:outline-none focus:border-blue-500">
-                        <button onclick="resetFilters('exp-table')"
-                            class="bg-slate-800 hover:bg-slate-700 text-white text-sm px-4 py-2 rounded-md transition font-medium">Reset</button>
+                            style="padding: 0.5rem; border-radius: 0.375rem; border: 1px solid var(--border); background: var(--bg-card); color: white;">
+                        <button onclick="resetFilters('exp-table')" class="btn btn-outline">Reset</button>
                     </div>
                 </div>
-                <div class="max-h-96 overflow-y-auto overflow-x-auto rounded-lg border border-slate-800">
-                    <table class="w-full text-left text-sm text-slate-400" id="exp-table">
-                        <thead class="bg-slate-900 text-xs uppercase text-slate-500">
+                <div class="table-wrapper">
+                    <table class="data-table" id="exp-table">
+                        <thead>
                             <tr>
-                                <th onclick="sortTable('exp-table', 0)" class="px-4 py-3 cursor-pointer hover:text-white">
-                                    Date ⇕</th>
-                                <th onclick="sortTable('exp-table', 1)" class="px-4 py-3 cursor-pointer hover:text-white">
-                                    Vendor ⇕</th>
-                                <th onclick="sortTable('exp-table', 2)" class="px-4 py-3 cursor-pointer hover:text-white">
-                                    Account ⇕</th>
-                                <th onclick="sortTable('exp-table', 3)" class="px-4 py-3 cursor-pointer hover:text-white">
-                                    Amount ⇕</th>
+                                <th onclick="sortTable('exp-table', 0)">Date ⇕</th>
+                                <th onclick="sortTable('exp-table', 1)">Vendor ⇕</th>
+                                <th onclick="sortTable('exp-table', 2)">Account ⇕</th>
+                                <th onclick="sortTable('exp-table', 3)">Amount ⇕</th>
                             </tr>
                         </thead>
-                        <tbody id="exp-tbody" class="divide-y divide-slate-800"></tbody>
+                        <tbody id="exp-tbody"></tbody>
                     </table>
                 </div>
             </div>
         </div>
-    
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 border-t border-slate-800 pt-8">
-            <div>
-                <h3 class="text-lg font-bold text-white mb-4">Year-over-Year Revenue by Account</h3>
-                <div id="chart-yoy-rev" class="w-full h-64 flex items-center justify-center text-slate-500">Loading...</div>
+
+        <div class="chart-grid">
+            <div class="card">
+                <h3 class="chart-title">YoY Revenue by Account</h3>
+                <div id="chart-yoy-rev" class="chart-box">Loading...</div>
             </div>
-            <div>
-                <h3 class="text-lg font-bold text-white mb-4">Year-over-Year Expenses by Account</h3>
-                <div id="chart-yoy-exp" class="w-full h-64 flex items-center justify-center text-slate-500">Loading...</div>
-            </div>
-        </div>
-    
-        <div class="border-t border-slate-800 pt-8 pb-4">
-            <button class="text-slate-500 hover:text-white text-sm font-medium transition underline"
-                onclick="toggleExplainer()">How is this data calculated?</button>
-            <div id="data-explainer" style="display: none;"
-                class="mt-4 bg-slate-900 border border-slate-800 rounded-lg p-6 text-slate-400 text-sm">
-                <h4 class="text-white font-bold mb-2">Data Parameters & Filters</h4>
-                <div id="explainer-text"></div>
+            <div class="card">
+                <h3 class="chart-title">YoY Expenses by Account</h3>
+                <div id="chart-yoy-exp" class="chart-box">Loading...</div>
             </div>
         </div>
-    
     </main>
 
     <script src="js/auth.js"></script>

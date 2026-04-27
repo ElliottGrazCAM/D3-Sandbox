@@ -22,11 +22,18 @@ d3.json("data.json").then(data => {
     console.error("CRITICAL ERROR: Failed to load or parse data.json", error);
 });
 
-// Sidebar Click Handler
+// Sidebar & Tab Click Handler
 window.switchEvent = function (eventType, element) {
-    currentEventType = eventType; // Update the global tracker
-    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    currentEventType = eventType;
+
+    // 1. Remove the "active" class from all tabs
+    const tabs = element.parentElement.querySelectorAll('.tab');
+    tabs.forEach(tab => tab.classList.remove('active'));
+
+    // 2. Add the "active" class strictly to the clicked tab
     element.classList.add('active');
+
+    // 3. Render the new data
     renderEvent(eventType);
 };
 
