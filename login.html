@@ -5,77 +5,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frankly | Log In</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
     <link rel="stylesheet" href="css/marketing.css">
-
-    <style>
-        body {
-            background-color: #0f172a;
-            color: #f8fafc;
-        }
-
-        .gradient-text {
-            background: linear-gradient(90deg, #3b82f6, #10b981);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-        }
-    </style>
 </head>
 
-<body class="flex flex-col min-h-screen">
+<body>
 
-    <nav class="max-w-7xl mx-auto px-6 py-8 w-full">
-        <a href="index.html"
-            class="text-2xl font-bold gradient-text tracking-tight hover:opacity-80 transition">Frankly.</a>
+    <nav class="container nav-bar">
+        <a href="index.html" class="logo gradient-text">Frankly.</a>
     </nav>
 
-    <div class="flex-grow flex items-center justify-center px-6 pb-20">
-        <div class="bg-slate-900 border border-slate-800 p-8 rounded-xl shadow-2xl w-full max-w-md">
-            <h2 id="auth-title" class="text-3xl font-bold mb-2 tracking-tight">Welcome Back</h2>
-            <p id="auth-subtitle" class="text-slate-400 mb-8 text-sm">Log in to access your association dashboard.</p>
+    <div class="auth-wrapper">
+        <div class="auth-box">
+            <h2 id="auth-title" style="font-size: 1.875rem; font-weight: bold; margin-bottom: 0.5rem;">Welcome Back</h2>
+            <p id="auth-subtitle" style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 2rem;">Log in to
+                access your association dashboard.</p>
 
-            <form id="auth-form" class="space-y-5">
+            <form id="auth-form">
                 <div>
-                    <label class="block text-sm font-bold text-slate-400 mb-2">Email Address</label>
-                    <input type="email" id="email" required
-                        class="w-full bg-slate-950 border border-slate-800 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition text-white placeholder-slate-600"
-                        placeholder="executive@association.org">
+                    <label class="auth-label">Email Address</label>
+                    <input type="email" id="email" required class="auth-input" placeholder="executive@association.org">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-slate-400 mb-2">Password</label>
-                    <input type="password" id="password" required
-                        class="w-full bg-slate-950 border border-slate-800 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition text-white placeholder-slate-600"
-                        placeholder="••••••••">
+                    <label class="auth-label">Password</label>
+                    <input type="password" id="password" required class="auth-input" placeholder="••••••••">
                 </div>
 
                 <div id="error-msg"
-                    class="text-red-400 bg-red-400/10 border border-red-400/20 p-3 rounded-md text-xs hidden font-medium">
+                    style="display: none; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; padding: 0.75rem; border-radius: 0.375rem; font-size: 0.875rem; margin-bottom: 1rem;">
                 </div>
 
-                <button type="submit" id="submit-btn"
-                    class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-md transition mt-2 active:scale-[0.98]">
-                    Sign In
-                </button>
+                <button type="submit" id="submit-btn" class="auth-btn">Sign In</button>
             </form>
 
-            <div class="mt-8 pt-6 border-t border-slate-800 text-center">
-                <p class="text-slate-400 text-sm">
-                    <span id="toggle-text">Don't have an account?</span>
-                    <button id="toggle-auth"
-                        class="text-blue-500 font-bold hover:text-blue-400 transition focus:outline-none ml-1">Sign
-                        Up</button>
-                </p>
+            <div
+                style="border-top: 1px solid #334155; margin-top: 2rem; padding-top: 1.5rem; text-align: center; font-size: 0.875rem;">
+                <span id="toggle-text" style="color: var(--text-muted);">Don't have an account?</span>
+                <button id="toggle-auth"
+                    style="background: none; border: none; color: var(--brand-blue); font-weight: bold; cursor: pointer; margin-left: 0.5rem;">Sign
+                    Up</button>
             </div>
         </div>
     </div>
 
     <script>
-        // 1. INITIALIZE SUPABASE
         const SUPABASE_URL = 'https://yxmfcvuotkgmnyuewfyg.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWZjdnVvdGtnbW55dWV3ZnlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3OTk5MjIsImV4cCI6MjA5MjM3NTkyMn0.RAXRy1QJI7Z2L6_lKFRJukJ5QZhCJY98ThH9OfjjuEQ';
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -86,10 +59,8 @@
         const submitBtn = document.getElementById('submit-btn');
         const toggleBtn = document.getElementById('toggle-auth');
         const errorDiv = document.getElementById('error-msg');
-
         let isLogin = true;
 
-        // Toggle between Login and Signup modes
         toggleBtn.addEventListener('click', () => {
             isLogin = !isLogin;
             authTitle.innerText = isLogin ? "Welcome Back" : "Create Account";
@@ -97,20 +68,17 @@
             submitBtn.innerText = isLogin ? "Sign In" : "Get Started";
             toggleBtn.innerText = isLogin ? "Sign Up" : "Sign In";
             document.getElementById('toggle-text').innerText = isLogin ? "Don't have an account?" : "Already have an account?";
-            errorDiv.classList.add('hidden');
+            errorDiv.style.display = "none";
         });
 
-        // Handle Form Submission
         authForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            errorDiv.classList.add('hidden');
+            errorDiv.style.display = "none";
             submitBtn.innerText = "Processing...";
             submitBtn.disabled = true;
-            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-
             let result;
 
             if (isLogin) {
@@ -121,17 +89,14 @@
 
             if (result.error) {
                 errorDiv.innerText = result.error.message;
-                errorDiv.classList.remove('hidden');
+                errorDiv.style.display = "block";
                 submitBtn.innerText = isLogin ? "Sign In" : "Get Started";
                 submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
             } else {
-                // SUCCESS!
                 if (!isLogin && result.data.user && result.data.session === null) {
                     alert("Check your email for a confirmation link!");
                     window.location.reload();
                 } else {
-                    // Redirect to the App
                     window.location.href = 'app/welcome.html';
                 }
             }

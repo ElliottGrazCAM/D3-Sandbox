@@ -5,41 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome | Frankly.</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="../css/app.css">
 </head>
 
-<body
-    class="bg-slate-900 text-slate-50 font-sans antialiased flex flex-col min-h-screen items-center justify-center p-6">
+<body style="justify-content: center; align-items: center; padding: 2rem;">
 
-    <div class="max-w-lg w-full bg-slate-950 border border-slate-800 rounded-xl p-10 text-center shadow-2xl">
+    <div class="card" style="max-width: 500px; width: 100%; text-align: center; padding: 3rem 2rem;">
 
-        <div class="mb-4 flex justify-center">
-            <svg class="w-16 h-16 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
-                </path>
-            </svg>
+        <div style="margin-bottom: 1.5rem;">
+            <span
+                style="background: rgba(59, 130, 246, 0.15); color: var(--brand-blue); padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; border: 1px solid rgba(59, 130, 246, 0.3);">
+                🔵 Demo Mode Active
+            </span>
         </div>
 
-        <div id="data-status"
-            class="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-900/30 border border-blue-500/30 text-blue-400 text-xs font-bold tracking-wide uppercase">
-            <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-            Demo Mode Active
-        </div>
+        <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem;">
+            Welcome to <span
+                style="background: linear-gradient(90deg, var(--brand-blue), var(--brand-emerald)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Frankly.</span>
+        </h1>
 
-        <h1 class="text-3xl font-extrabold mb-4 tracking-tight">Welcome to <span
-                class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-emerald-500">Frankly.</span></h1>
-
-        <p class="text-slate-400 mb-8 leading-relaxed">
+        <p style="color: var(--text-muted); margin-bottom: 2rem; line-height: 1.6;">
             Your connection is secure. We are ready to pull your latest QuickBooks data and prepare your board's
             financial overview.
         </p>
 
-        <a href="index.html"
-            class="inline-block w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-md transition active:scale-[0.98] shadow-lg shadow-blue-500/20">
+        <a href="index.html" class="btn btn-primary"
+            style="display: block; width: 100%; padding: 1rem; font-size: 1.125rem;">
             Go to Dashboard
         </a>
     </div>
