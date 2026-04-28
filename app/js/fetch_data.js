@@ -97,7 +97,7 @@ oauthClient.refresh()
       Budgets: allBudgets
     };
 
-    fs.writeFileSync('data.json', JSON.stringify(finalData, null, 2));
+    fs.writeFileSync('app/data.json', JSON.stringify(finalData, null, 2));
 
     console.log(`✅ SUCCESS: Harvested ${allDeposits.length} deposits, ${allExpenses.length} expenses, and ${allBudgets.length} budgets!`);
   })
