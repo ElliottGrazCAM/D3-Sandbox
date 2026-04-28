@@ -226,15 +226,13 @@ function drawSunburst(targetYear) {
     // 1. DATA TRANSFORM: Build the Hierarchy Tree
     const rootData = { name: "P&L", children: [] };
 
-    // 1. DATA TRANSFORM: Build the Hierarchy Tree
-    const rootData = { name: "P&L", children: [] };
-
-    function addToTree(accountPath, amount, isExpense, txnDate, desc) {
+    function addToTree(accountPath, amount, isExpense) {
         if (!accountPath || amount <= 0) return;
 
         let currentLevel = rootData.children;
         const topLevelName = isExpense ? "Expenses" : "Income";
 
+        // Create Income/Expense root if missing
         let topNode = currentLevel.find(d => d.name === topLevelName);
         if (!topNode) {
             topNode = { name: topLevelName, children: [] };
@@ -244,16 +242,15 @@ function drawSunburst(targetYear) {
         currentLevel = topNode.children;
         const parts = accountPath.split(':');
 
+        // Traverse and build branches
         parts.forEach((part, index) => {
             let existingNode = currentLevel.find(d => d.name === part);
 
-            if (index === parts.length - 1) { // It's a LEAF node!
+            if (index === parts.length - 1) { // It's a leaf node
                 if (existingNode) {
                     existingNode.value = (existingNode.value || 0) + amount;
-                    if (!existingNode.txns) existingNode.txns = [];
-                    existingNode.txns.push({ date: txnDate, desc: desc, amount: amount });
                 } else {
-                    currentLevel.push({ name: part, value: amount, txns: [{ date: txnDate, desc: desc, amount: amount }] });
+                    currentLevel.push({ name: part, value: amount });
                 }
             } else { // It's a parent branch
                 if (!existingNode) {
@@ -265,6 +262,7 @@ function drawSunburst(targetYear) {
         });
     }
 
+    // Process all transactions for the selected year
     function processForSunburst(records, isExpense) {
         if (!records) return;
         records.forEach(record => {
@@ -279,12 +277,7 @@ function drawSunburst(targetYear) {
                     } else if (!isExpense && line.DetailType === "DepositLineDetail" && line.DepositLineDetail.AccountRef) {
                         acctName = line.DepositLineDetail.AccountRef.name;
                     }
-
-                    // NEW: Grab the extra data for the ledger!
-                    const date = record.TxnDate;
-                    const desc = line.Description || (record.EntityRef ? record.EntityRef.name : "Online Transaction");
-
-                    if (acctName) addToTree(acctName, amt, isExpense, date, desc);
+                    if (acctName) addToTree(acctName, amt, isExpense);
                 });
             }
         });
