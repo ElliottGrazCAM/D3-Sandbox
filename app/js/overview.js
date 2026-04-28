@@ -121,14 +121,6 @@ function renderOverview() {
         .text(netIncome < 0 ? `-$${Math.abs(netIncome).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}` : `$${netIncome.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`)
         .style("color", netIncome < 0 ? "#ef4444" : "#10b981");
 
-    const netIncome = totalAnnualRev - totalAnnualExp;
-    d3.select("#ov-total-rev").text(`$${totalAnnualRev.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`);
-    d3.select("#ov-total-exp").text(`$${totalAnnualExp.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`);
-    d3.select("#ov-total-members").text(totalMembersCount);
-    d3.select("#ov-net-income")
-        .text(netIncome < 0 ? `-$${Math.abs(netIncome).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}` : `$${netIncome.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`)
-        .style("color", netIncome < 0 ? "#ef4444" : "#10b981");
-
     // ==========================================
     // CHART A: EVENT PERFORMANCE
     // ==========================================
