@@ -226,7 +226,7 @@ function renderEvent(eventType) {
             .on("mouseover", function (event, d) {
                 d3.select(this).style("opacity", 0.8); tooltip.transition().duration(200).style("opacity", 1);
                 const diff = d.actual - d.budget; const diffText = diff > 0 ? `+$${diff.toLocaleString()}` : `-$${Math.abs(diff).toLocaleString()}`;
-                tooltip.html(`<div style="font-weight:bold; font-size:14px; margin-bottom:4px;">${d.label}</div><div>Actual: <b>$${d.actual.toLocaleString()}</b></div><div>Budget: <b style="color:#cbd5e1">$${d.budget.toLocaleString()}</b></div><div style="font-size: 12px; margin-top:4px; color:#94a3b8;">Variance: ${diffText}</div>`).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
+                tooltip.html(`<div style="font-weight:bold; font-size:14px; margin-bottom:4px;">${d.label}</div><div>Actual: <b>$${d.actual.toLocaleString()}</b></div><div>Budget: <b style="color:#cbd5e1">$${d.budget.toLocaleString()}</b></div><div style="font-size: 12px; margin-top:4px; color:#94a3b8;">Variance: ${diffText}</div>`).style("left", () => (event.pageX + 15 + tooltip.node().offsetWidth > window.innerWidth - 20) ? (event.pageX - tooltip.node().offsetWidth - 15) + "px" : (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
             }).on("mouseout", function () { d3.select(this).style("opacity", 1); tooltip.transition().duration(500).style("opacity", 0); });
         svgNet.selectAll(".target-line").data(netData).enter().append("line").attr("x1", d => xNet(d.label) - 15).attr("x2", d => xNet(d.label) + xNet.bandwidth() + 15).attr("y1", d => yNet(d.budget)).attr("y2", d => yNet(d.budget)).attr("stroke", "#f8fafc").attr("stroke-width", 2).attr("stroke-dasharray", "4,2");
     }
@@ -248,7 +248,7 @@ function renderEvent(eventType) {
             .attr("fill", d => { if (d.type === 'Rev') return d.total > d.budget ? "#10b981" : "#065f46"; else return d.total > d.budget ? "#991b1b" : "#ef4444"; }).attr("rx", 2)
             .on("mouseover", function (event, d) {
                 d3.select(this).style("opacity", 0.8); tooltip.transition().duration(200).style("opacity", 1);
-                tooltip.html(`<div style="font-weight:bold; font-size:14px; margin-bottom:4px;">${d.name}</div><div>Actual: <b>$${d.total.toLocaleString()}</b></div><div>Budget: <b style="color:#cbd5e1">$${d.budget.toLocaleString()}</b></div>`).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
+                tooltip.html(`<div style="font-weight:bold; font-size:14px; margin-bottom:4px;">${d.name}</div><div>Actual: <b>$${d.total.toLocaleString()}</b></div><div>Budget: <b style="color:#cbd5e1">$${d.budget.toLocaleString()}</b></div>`).style("left", () => (event.pageX + 15 + tooltip.node().offsetWidth > window.innerWidth - 20) ? (event.pageX - tooltip.node().offsetWidth - 15) + "px" : (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
             }).on("mouseout", function () { d3.select(this).style("opacity", 1); tooltip.transition().duration(500).style("opacity", 0); });
         svgAcc.selectAll(".target-line-acc").data(combinedData).enter().append("line").attr("y1", d => yAcc(d.name) - 6).attr("y2", d => yAcc(d.name) + yAcc.bandwidth() + 6).attr("x1", d => xAcc(d.budget)).attr("x2", d => xAcc(d.budget)).attr("stroke", "#f8fafc").attr("stroke-width", 2).attr("stroke-dasharray", "3,2");
     }
@@ -287,7 +287,7 @@ function renderEvent(eventType) {
         } else {
             innerHtml += `<div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;"><span style="color:#94a3b8;">Total Contributions:</span> <span style="color:#f8fafc; font-weight:bold;">${bucket.txns.length}</span></div><div style="display:flex; justify-content:space-between; font-size:13px;"><span style="color:#94a3b8;">Average Amount:</span> <span style="color:#f8fafc; font-weight:bold;">$${bucket.txns.length ? (bucket.total / bucket.txns.length).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0}</span></div>`;
         }
-        tooltip.html(innerHtml).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
+        tooltip.html(innerHtml).style("left", () => (event.pageX + 15 + tooltip.node().offsetWidth > window.innerWidth - 20) ? (event.pageX - tooltip.node().offsetWidth - 15) + "px" : (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
     }
 
     function hideTooltip(event) { d3.select(event.currentTarget).style("opacity", 1); tooltip.transition().duration(500).style("opacity", 0); }
@@ -369,7 +369,7 @@ function renderEvent(eventType) {
                     if (prev1 > 0) { const pct1 = (((d.value - prev1) / prev1) * 100).toFixed(1); const c1 = pct1 >= 0 ? "#10b981" : "#ef4444"; percentHtml += `<div style="font-size:12px; margin-top:4px;">Vs Previous Year: <span style="color:${c1}; font-weight:bold;">${pct1 > 0 ? '+' : ''}${pct1}%</span></div>`; }
                     if (prev2 > 0) { const pct2 = (((d.value - prev2) / prev2) * 100).toFixed(1); const c2 = pct2 >= 0 ? "#10b981" : "#ef4444"; percentHtml += `<div style="font-size:12px;">Vs Year Prior (2 Yr): <span style="color:${c2}; font-weight:bold;">${pct2 > 0 ? '+' : ''}${pct2}%</span></div>`; }
                 }
-                tooltip.html(`<div style="font-weight:bold; font-size:14px; margin-bottom:4px; color:${colorScaleYoY(d.year)}">${d.fullData.account} (${d.year})</div><div style="font-size: 16px;">Total: <b>$${d.value.toLocaleString()}</b></div>${percentHtml}`).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
+                tooltip.html(`<div style="font-weight:bold; font-size:14px; margin-bottom:4px; color:${colorScaleYoY(d.year)}">${d.fullData.account} (${d.year})</div><div style="font-size: 16px;">Total: <b>$${d.value.toLocaleString()}</b></div>${percentHtml}`).style("left", () => (event.pageX + 15 + tooltip.node().offsetWidth > window.innerWidth - 20) ? (event.pageX - tooltip.node().offsetWidth - 15) + "px" : (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
             }).on("mouseout", function () { d3.select(this).style("opacity", 1); tooltip.transition().duration(500).style("opacity", 0); });
 
         const legend = svg.append("g").attr("transform", `translate(${width - 250}, -25)`);

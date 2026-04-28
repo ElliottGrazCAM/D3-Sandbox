@@ -207,7 +207,7 @@ function renderOverview() {
             .on("mouseover", function (event, d) {
                 tooltip.transition().duration(200).style("opacity", 1);
                 tooltip.html(`<b>${d.name}</b><br>Total Expense: <span style="color:#f59e0b">$${d.total.toLocaleString()}</span>`)
-                    .style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
+                    .style("left", () => (event.pageX + 15 + tooltip.node().offsetWidth > window.innerWidth - 20) ? (event.pageX - tooltip.node().offsetWidth - 15) + "px" : (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
             }).on("mouseout", () => tooltip.transition().duration(500).style("opacity", 0));
         svgAd.selectAll(".val-label").data(adData).enter().append("text").attr("y", d => yAd(d.name) + (yAd.bandwidth() / 2) + 4).attr("x", d => xAd(d.total) + 5).text(d => `$${d.total.toLocaleString()}`).style("fill", "#94a3b8").style("font-size", "11px");
     }
