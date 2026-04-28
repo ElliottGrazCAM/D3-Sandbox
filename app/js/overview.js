@@ -225,9 +225,7 @@ function drawSunburst(targetYear) {
 
     // 1. DATA TRANSFORM: Build the Hierarchy Tree
     const rootData = { name: "P&L", children: [] };
-
-    // 1. DATA TRANSFORM: Build the Hierarchy Tree
-    const rootData = { name: "P&L", children: [] };
+    // [FIX] REMOVED DUPLICATE rootData DECLARATION HERE
 
     function addToTree(accountPath, amount, isExpense, txnDate, desc) {
         if (!accountPath || amount <= 0) return;
