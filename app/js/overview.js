@@ -43,9 +43,11 @@ function renderOverview() {
 
     let totalAnnualRev = 0;
     let totalAnnualExp = 0;
-    let totalMembersCount = 0;
 
-    // ADDED CONFERENCE AND ONLINE EVENTS HERE
+    // NEW: Data structure to hold our 12 months of cash flow
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const cashFlowData = months.map(m => ({ month: m, rev: 0, exp: 0 }));
+
     const events = {
         "Luncheon": { rev: 0, exp: 0 },
         "Winter Gala": { rev: 0, exp: 0 },
@@ -53,13 +55,15 @@ function renderOverview() {
         "Conference": { rev: 0, exp: 0 },
         "Online Events": { rev: 0, exp: 0 }
     };
-    const memberships = {};
     const admins = {};
 
     function processMacroData(records, isExpense) {
         if (!records) return;
         records.forEach(record => {
-            const year = new Date(record.TxnDate).getFullYear();
+            const txnDate = new Date(record.TxnDate);
+            const year = txnDate.getFullYear();
+            const monthIdx = txnDate.getMonth(); // Grabs the 0-11 index of the month
+
             if (year === TARGET_YEAR) {
                 if (!record.Line) return;
                 record.Line.forEach(line => {
@@ -73,10 +77,16 @@ function renderOverview() {
                         acctName = line.DepositLineDetail.AccountRef.name || "";
                     }
 
-                    if (isExpense) totalAnnualExp += amt;
-                    else totalAnnualRev += amt;
+                    // Log the grand totals AND the monthly totals
+                    if (isExpense) {
+                        totalAnnualExp += amt;
+                        cashFlowData[monthIdx].exp += amt;
+                    } else {
+                        totalAnnualRev += amt;
+                        cashFlowData[monthIdx].rev += amt;
+                    }
 
-                    // NEW EVENT LOGIC CAUGHT HERE
+                    // Event logic
                     if (acctName.includes("Annual Luncheon")) {
                         isExpense ? events["Luncheon"].exp += amt : events["Luncheon"].rev += amt;
                     } else if (acctName.includes("Winter Gala")) {
@@ -86,18 +96,10 @@ function renderOverview() {
                     } else if (acctName.includes("Annual Conference")) {
                         isExpense ? events["Conference"].exp += amt : events["Conference"].rev += amt;
                     } else if (acctName.startsWith("Online Event")) {
-                        // Note: This safely captures both "Online Events" (Revenue) and "Online Event Expenses" (Expense)
                         isExpense ? events["Online Events"].exp += amt : events["Online Events"].rev += amt;
                     }
 
-                    if (acctName.startsWith("Membership Dues") && acctName.includes(":")) {
-                        const type = acctName.split(":")[1];
-                        if (!memberships[type]) memberships[type] = { type: type, count: 0, revenue: 0 };
-                        memberships[type].revenue += amt;
-                        memberships[type].count += 1;
-                        totalMembersCount += 1;
-                    }
-
+                    // Admin logic
                     if (acctName.startsWith("Administrative Expenses") || acctName.startsWith("Software/Communications")) {
                         let shortName = acctName.includes(":") ? acctName.split(":")[1] : acctName;
                         if (shortName === "Administrative Expenses") shortName = "Other Admin";
@@ -111,6 +113,13 @@ function renderOverview() {
 
     processMacroData(globalData.Deposits, false);
     processMacroData(globalData.Expenses, true);
+
+    const netIncome = totalAnnualRev - totalAnnualExp;
+    d3.select("#ov-total-rev").text(`$${totalAnnualRev.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`);
+    d3.select("#ov-total-exp").text(`$${totalAnnualExp.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`);
+    d3.select("#ov-net-income")
+        .text(netIncome < 0 ? `-$${Math.abs(netIncome).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}` : `$${netIncome.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`)
+        .style("color", netIncome < 0 ? "#ef4444" : "#10b981");
 
     const netIncome = totalAnnualRev - totalAnnualExp;
     d3.select("#ov-total-rev").text(`$${totalAnnualRev.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`);
@@ -153,34 +162,65 @@ function renderOverview() {
         }).on("mouseout", () => tooltip.transition().duration(500).style("opacity", 0));
 
     // ==========================================
-    // CHART B: MEMBERSHIP BREAKDOWN
+    // CHART B: MONTHLY CASH FLOW
     // ==========================================
-    d3.select("#chart-ov-members").html("");
-    const memData = Object.values(memberships).sort((a, b) => b.revenue - a.revenue);
-    if (memData.length > 0) {
-        const marginMem = { top: 5, right: 40, bottom: 5, left: 105 }, widthMem = 400 - marginMem.left - marginMem.right, heightMem = 250 - marginMem.top - marginMem.bottom;
+    d3.select("#chart-ov-cashflow").html("");
 
-        const svgMem = d3.select("#chart-ov-members").append("svg")
-            .attr("viewBox", `0 0 ${widthMem + marginMem.left + marginMem.right} ${heightMem + marginMem.top + marginMem.bottom}`)
-            .attr("width", "100%")
-            .style("height", "auto") // FIXED OVERFLOW BUG
-            .attr("preserveAspectRatio", "xMidYMid meet")
-            .append("g").attr("transform", `translate(${marginMem.left},${marginMem.top})`);
+    // We make the width dynamically adapt to standard card sizes
+    const marginCf = { top: 10, right: 15, bottom: 25, left: 45 };
+    const widthCf = 500 - marginCf.left - marginCf.right;
+    const heightCf = 250 - marginCf.top - marginCf.bottom;
 
-        const yMem = d3.scaleBand().domain(memData.map(d => d.type)).range([0, heightMem]).padding(0.3);
-        const maxMem = d3.max(memData, d => d.revenue) * 1.1 || 1;
-        const xMem = d3.scaleLinear().domain([0, maxMem]).range([0, widthMem]);
+    const svgCf = d3.select("#chart-ov-cashflow").append("svg")
+        .attr("viewBox", `0 0 ${widthCf + marginCf.left + marginCf.right} ${heightCf + marginCf.top + marginCf.bottom}`)
+        .attr("width", "100%")
+        .style("height", "auto")
+        .attr("preserveAspectRatio", "xMidYMid meet")
+        .append("g").attr("transform", `translate(${marginCf.left},${marginCf.top})`);
 
-        svgMem.append("g").call(d3.axisLeft(yMem).tickSize(0)).selectAll("text").style("font-size", "12px").style("fill", "#cbd5e1");
-        svgMem.select(".domain").remove();
-        svgMem.selectAll("rect").data(memData).enter().append("rect").attr("y", d => yMem(d.type)).attr("x", 0).attr("height", yMem.bandwidth()).attr("width", d => xMem(d.revenue)).attr("fill", "#3b82f6").attr("rx", 3)
-            .on("mouseover", function (event, d) {
-                tooltip.transition().duration(200).style("opacity", 1);
-                tooltip.html(`<b>${d.type}s</b><br>Total Members: <b>${d.count}</b><br>Revenue: <span style="color:#3b82f6">$${d.revenue.toLocaleString()}</span>`)
-                    .style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
-            }).on("mouseout", () => tooltip.transition().duration(500).style("opacity", 0));
-        svgMem.selectAll(".val-label").data(memData).enter().append("text").attr("y", d => yMem(d.type) + (yMem.bandwidth() / 2) + 4).attr("x", d => xMem(d.revenue) + 5).text(d => `$${d.revenue.toLocaleString()}`).style("fill", "#94a3b8").style("font-size", "11px");
-    }
+    const x0Cf = d3.scaleBand().domain(months).range([0, widthCf]).padding(0.2);
+    const x1Cf = d3.scaleBand().domain(["rev", "exp"]).range([0, x0Cf.bandwidth()]).padding(0.05);
+    const maxCf = d3.max(cashFlowData, d => Math.max(d.rev, d.exp)) * 1.1 || 1;
+    const yCf = d3.scaleLinear().domain([0, maxCf]).range([heightCf, 0]);
+
+    // X-Axis (Months)
+    svgCf.append("g")
+        .attr("transform", `translate(0,${heightCf})`)
+        .call(d3.axisBottom(x0Cf).tickSizeOuter(0))
+        .selectAll("text").style("font-size", "11px").style("fill", "#cbd5e1");
+
+    // Y-Axis (Values format to "k" for thousands to save space)
+    svgCf.append("g")
+        .attr("class", "grid")
+        .call(d3.axisLeft(yCf).ticks(5).tickFormat(d => "$" + (d >= 1000 ? (d / 1000).toFixed(0) + "k" : d)).tickSize(-widthCf))
+        .style("stroke-dasharray", "3,3").style("opacity", 0.1);
+    svgCf.select(".domain").remove();
+
+    // Grouping the bars by month
+    const cfGroup = svgCf.selectAll(".cf-group").data(cashFlowData).enter().append("g").attr("transform", d => `translate(${x0Cf(d.month)},0)`);
+
+    // Drawing the Rev and Exp bars inside each month
+    cfGroup.selectAll("rect").data(d => [
+        { key: "rev", val: d.rev, month: d.month },
+        { key: "exp", val: d.exp, month: d.month }
+    ])
+        .enter().append("rect")
+        .attr("x", d => x1Cf(d.key))
+        .attr("y", d => yCf(d.val))
+        .attr("width", x1Cf.bandwidth())
+        .attr("height", d => heightCf - yCf(d.val))
+        .attr("fill", d => d.key === "rev" ? "#10b981" : "#ef4444")
+        .attr("rx", 2)
+        .on("mouseover", function (event, d) {
+            d3.select(this).style("opacity", 0.8);
+            tooltip.transition().duration(200).style("opacity", 1);
+            tooltip.html(`<b>${d.month} ${d.key === 'rev' ? 'Revenue' : 'Expenses'}</b><br><span style="font-size:16px; color:${d.key === 'rev' ? '#10b981' : '#ef4444'}">$${d.val.toLocaleString()}</span>`)
+                .style("left", () => (event.pageX + 15 + tooltip.node().offsetWidth > window.innerWidth - 20) ? (event.pageX - tooltip.node().offsetWidth - 15) + "px" : (event.pageX + 15) + "px")
+                .style("top", (event.pageY - 28) + "px");
+        }).on("mouseout", function () {
+            d3.select(this).style("opacity", 1);
+            tooltip.transition().duration(500).style("opacity", 0);
+        });
 
     // ==========================================
     // CHART C: ADMIN & SOFTWARE EXPENSES

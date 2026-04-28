@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Events | Frankly.</title>
+    <title>Membership | Frankly.</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="../css/app.css">
@@ -24,7 +24,7 @@
                 Dashboard
             </a>
 
-            <a href="membership.html" class="nav-item">
+            <a href="membership.html" class="nav-item active">
                 <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
@@ -32,21 +32,23 @@
                 </svg>
                 Membership
             </a>
-        
-            <a href="events.html" class="nav-item active">
+
+            <a href="events.html" class="nav-item">
                 <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                    </path>
                 </svg>
                 Events
             </a>
-        
+
             <a href="settings.html" class="nav-item">
                 <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
                     </path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
                     </path>
                 </svg>
                 Settings
@@ -113,7 +115,8 @@
             <div class="card">
                 <h3 class="chart-title">Budget vs. Actuals</h3>
                 <div id="chart-budget-actuals" class="chart-box"
-                    style="max-height: 450px; overflow-y: auto; overflow-x: hidden; padding-right: 10px; padding-top: 30px; padding-left: 20px;">Loading...</div>
+                    style="max-height: 450px; overflow-y: auto; overflow-x: hidden; padding-right: 10px; padding-top: 30px; padding-left: 20px;">
+                    Loading...</div>
             </div>
         </div>
 
@@ -125,7 +128,8 @@
             <button onclick="toggleLedger('rev-ledger-container', this)" class="btn btn-outline"
                 style="margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 0.5rem;">
                 <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
                     </path>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
@@ -169,7 +173,8 @@
             <button onclick="toggleLedger('exp-ledger-container', this)" class="btn btn-outline"
                 style="margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 0.5rem;">
                 <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
                     </path>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
@@ -209,14 +214,16 @@
             <div class="card-header">
                 <h2>Year-Over-Year Income Trends</h2>
             </div>
-            <div id="chart-yoy-rev" class="chart-container" style="width: 100%; overflow-x: auto; padding-bottom: 20px;"></div>
+            <div id="chart-yoy-rev" class="chart-container"
+                style="width: 100%; overflow-x: auto; padding-bottom: 20px;"></div>
         </div>
-        
+
         <div class="card" style="margin-top: 20px;">
             <div class="card-header">
                 <h2>Year-Over-Year Expense Trends</h2>
             </div>
-            <div id="chart-yoy-exp" class="chart-container" style="width: 100%; overflow-x: auto; padding-bottom: 20px;"></div>
+            <div id="chart-yoy-exp" class="chart-container"
+                style="width: 100%; overflow-x: auto; padding-bottom: 20px;"></div>
         </div>
 
 
@@ -231,7 +238,7 @@
                 How is this data calculated?
             </button>
         </div>
-        
+
         <div id="data-explainer" class="card"
             style="display: none; margin-bottom: 40px; border: 1px dashed #475569; background: rgba(15, 23, 42, 0.5);">
             <h4 style="color: #cbd5e1; margin-bottom: 10px; font-size: 14px;">Data Mapping Information</h4>
