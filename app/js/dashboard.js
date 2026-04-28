@@ -276,14 +276,16 @@ function renderEvent(eventType) {
 
         if (sortedData.length === 0) return;
 
-        // OVERRIDE THE HTML TRAP: We remove the strict 200px height limit 
-        // so the container can grow naturally to fit both the bar and the legend.
-        container.style("height", "auto").style("padding-bottom", "15px");
+        // FORCE VERTICAL STACKING: This overrides any background CSS trying to make it a row
+        container.style("height", "auto")
+            .style("padding-bottom", "15px")
+            .style("display", "flex")
+            .style("flex-direction", "column")
+            .style("align-items", "center");
 
         const compHeight = 60, widthComp = 900;
 
-        // Dynamic width, but we apply a max-height so the bar stays sleek 
-        // instead of stretching into a giant vertical rectangle on large monitors.
+        // Dynamic width, but we apply a max-height so the bar stays sleek
         const svgComp = container.append("svg")
             .attr("viewBox", `0 0 ${widthComp} ${compHeight}`)
             .attr("width", "100%")
@@ -306,7 +308,7 @@ function renderEvent(eventType) {
                 .on("mouseout", hideTooltip)
                 .on("click", () => filterByAccount(isExp ? 'exp-table' : 'rev-table', bucket.name, isExp));
 
-            // REQUIRED FIX 1: Pure black text for the slice labels
+            // Pure black text for the slice labels
             if (segWidth > 80) {
                 g.append("text").attr("x", segWidth / 2).attr("y", compHeight / 2).attr("dy", ".35em")
                     .style("text-anchor", "middle")
@@ -320,7 +322,7 @@ function renderEvent(eventType) {
             currentX += segWidth;
         });
 
-        // REQUIRED FIX 2: Safely append the legend underneath
+        // The Legend Container
         const legendContainer = container.append("div")
             .style("display", "flex")
             .style("flex-wrap", "wrap")
@@ -349,13 +351,13 @@ function renderEvent(eventType) {
         });
     }
 
-    // REQUIRED FIX 3: Removed the duplicate function calls. We only call these ONCE now.
+    // Call the functions ONCE
     drawCompositionChart("#chart-rev-composition", sortedRev, totalRev,
         (i) => d3.interpolateGreens(1 - (i / Math.max(sortedRev.length, 2)) * 0.6), false);
 
     drawCompositionChart("#chart-exp-composition", sortedExp, totalExp,
         (i) => d3.interpolateReds(1 - (i / Math.max(sortedExp.length, 2)) * 0.6), true);
-        
+
     function showTooltip(event, bucket, isExp, grandTotal) {
         d3.select(event.currentTarget).style("opacity", 0.7);
         tooltip.transition().duration(200).style("opacity", 1);
