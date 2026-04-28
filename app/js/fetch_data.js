@@ -1,5 +1,6 @@
 const OAuthClient = require('intuit-oauth');
 const fs = require('fs');
+const path = require('path');
 
 if (!process.env.QBO_REFRESH_TOKEN || !process.env.QBO_CLIENT_ID) {
   console.error("CRITICAL ERROR: Secrets are missing entirely.");
@@ -97,7 +98,9 @@ oauthClient.refresh()
       Budgets: allBudgets
     };
 
-    fs.writeFileSync('app/data.json', JSON.stringify(finalData, null, 2));
+    // __dirname is the folder the script is in (app/js). '..' steps back to 'app'.
+    const targetPath = path.join(__dirname, '..', 'data.json');
+    fs.writeFileSync(targetPath, JSON.stringify(finalData, null, 2));
 
     console.log(`✅ SUCCESS: Harvested ${allDeposits.length} deposits, ${allExpenses.length} expenses, and ${allBudgets.length} budgets!`);
   })
