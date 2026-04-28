@@ -74,6 +74,22 @@ function renderEvent(eventType) {
         EXP_PARENT = "Events and Program Expenses:Golf Tournament Expenses";
         startDate = new Date(TARGET_YEAR - 1, 11, 1);
         endDate = new Date(TARGET_YEAR, 7, 31);
+    } else if (eventType === "Conference") {
+        // NEW: Annual Conference
+        title = "Annual Conference";
+        REV_PARENT = "Events and Programs:Annual Conference Revenue";
+        EXP_PARENT = "Events and Program Expenses:Annual Conference Expenses";
+        // Registration starts in May, event wraps up in October
+        startDate = new Date(TARGET_YEAR, 4, 1);
+        endDate = new Date(TARGET_YEAR, 10, 31);
+    } else if (eventType === "Online") {
+        // NEW: Online Events
+        title = "Digital Programming";
+        REV_PARENT = "Online Events";
+        EXP_PARENT = "Online Event Expenses";
+        // Online programming happens year-round
+        startDate = new Date(TARGET_YEAR, 0, 1);
+        endDate = new Date(TARGET_YEAR, 11, 31);
     }
 
     document.getElementById("event-title-display").innerText = title;

@@ -59,18 +59,26 @@
                 <h1 class="page-title" id="event-title-display">Annual Luncheon</h1>
                 <p class="page-subtitle">Deep dive into specific program performance.</p>
             </div>
-            <select id="year-select" class="year-dropdown" onchange="changeYear()">
-                <option value="2026">2026</option>
+            <select id="year-select" onchange="changeYear()" class="year-dropdown">
                 <option value="2025">2025</option>
                 <option value="2024">2024</option>
                 <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
             </select>
         </header>
 
         <div class="tabs-container">
-            <button onclick="switchEvent('Luncheon', this)" class="tab active">Annual Luncheon</button>
+            <button onclick="switchEvent('Conference', this)" class="tab active">Annual Conference</button>
+            <button onclick="switchEvent('Luncheon', this)" class="tab">Annual Luncheon</button>
             <button onclick="switchEvent('Gala', this)" class="tab">Winter Gala</button>
             <button onclick="switchEvent('Golf', this)" class="tab">Golf Tournament</button>
+            <button onclick="switchEvent('Online', this)" class="tab">Online Events</button>
         </div>
 
         <div class="kpi-grid">
