@@ -271,21 +271,30 @@ function renderEvent(eventType) {
 
     // CHARTS 2 & 3: COMPOSITION BARS
     function drawCompositionChart(containerId, sortedData, totalAmount, colorScale, isExp) {
-        d3.select(containerId).html("");
+        const container = d3.select(containerId);
+        container.html(""); // Clear old data
+
         if (sortedData.length === 0) return;
+
+        // OVERRIDE THE HTML TRAP: We remove the strict 200px height limit 
+        // so the container can grow naturally to fit both the bar and the legend.
+        container.style("height", "auto").style("padding-bottom", "15px");
 
         const compHeight = 60, widthComp = 900;
 
-        // 1. REVERTED TO ORIGINAL: 100% dynamic scaling
-        const svgComp = d3.select(containerId).append("svg")
+        // Dynamic width, but we apply a max-height so the bar stays sleek 
+        // instead of stretching into a giant vertical rectangle on large monitors.
+        const svgComp = container.append("svg")
             .attr("viewBox", `0 0 ${widthComp} ${compHeight}`)
             .attr("width", "100%")
-            .attr("height", "100%");
+            .style("height", "auto")
+            .style("max-height", "80px")
+            .style("display", "block");
 
         const xComp = d3.scaleLinear().domain([0, totalAmount || 1]).range([0, widthComp]);
         let currentX = 0;
 
-        // Loop 1: Draw the dynamic SVG chart
+        // Loop 1: Draw the SVG chart
         sortedData.forEach((bucket, i) => {
             const segWidth = xComp(bucket.total);
             const g = svgComp.append("g").attr("transform", `translate(${currentX}, 0)`);
@@ -297,18 +306,22 @@ function renderEvent(eventType) {
                 .on("mouseout", hideTooltip)
                 .on("click", () => filterByAccount(isExp ? 'exp-table' : 'rev-table', bucket.name, isExp));
 
+            // REQUIRED FIX 1: Pure black text for the slice labels
             if (segWidth > 80) {
                 g.append("text").attr("x", segWidth / 2).attr("y", compHeight / 2).attr("dy", ".35em")
-                    .style("text-anchor", "middle").style("fill", isExp ? "#540000" : "#020617")
-                    .style("font-size", "12px").style("font-weight", "600").style("pointer-events", "none")
+                    .style("text-anchor", "middle")
+                    .style("fill", "#000000") // Forces absolute black text
+                    .style("font-size", "12px")
+                    .style("font-weight", "700")
+                    .style("pointer-events", "none")
                     .text(bucket.name);
             }
 
             currentX += segWidth;
         });
 
-        // 2. THE LEGEND: Safely appended under the SVG as a separate dynamic HTML block
-        const legendContainer = d3.select(containerId).append("div")
+        // REQUIRED FIX 2: Safely append the legend underneath
+        const legendContainer = container.append("div")
             .style("display", "flex")
             .style("flex-wrap", "wrap")
             .style("gap", "12px")
@@ -316,7 +329,7 @@ function renderEvent(eventType) {
             .style("justify-content", "center")
             .style("width", "100%");
 
-        // Loop 2: Generate the legend items mapping to the colors we just used
+        // Loop 2: Generate the legend items
         sortedData.forEach((bucket, i) => {
             const legendItem = legendContainer.append("div")
                 .style("display", "flex")
@@ -336,20 +349,13 @@ function renderEvent(eventType) {
         });
     }
 
-    // Dynamic Mathematical Color Scaling to handle 4+ accounts perfectly
+    // REQUIRED FIX 3: Removed the duplicate function calls. We only call these ONCE now.
     drawCompositionChart("#chart-rev-composition", sortedRev, totalRev,
         (i) => d3.interpolateGreens(1 - (i / Math.max(sortedRev.length, 2)) * 0.6), false);
 
     drawCompositionChart("#chart-exp-composition", sortedExp, totalExp,
         (i) => d3.interpolateReds(1 - (i / Math.max(sortedExp.length, 2)) * 0.6), true);
-
-    // Dynamic Mathematical Color Scaling (Smooth sweep from dark to light)
-    drawCompositionChart("#chart-rev-composition", sortedRev, totalRev,
-        (i) => d3.interpolateGreens(1 - (i / Math.max(sortedRev.length, 2)) * 0.6), false);
-
-    drawCompositionChart("#chart-exp-composition", sortedExp, totalExp,
-        (i) => d3.interpolateReds(1 - (i / Math.max(sortedExp.length, 2)) * 0.6), true);
-
+        
     function showTooltip(event, bucket, isExp, grandTotal) {
         d3.select(event.currentTarget).style("opacity", 0.7);
         tooltip.transition().duration(200).style("opacity", 1);
