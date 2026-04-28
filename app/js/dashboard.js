@@ -208,7 +208,7 @@ function renderEvent(eventType) {
     // CHART 1: NET PERFORMANCE
     d3.select("#chart-net-performance").html("");
     if (sortedRev.length > 0 || sortedExp.length > 0) {
-        const marginNet = { top: 20, right: 20, bottom: 25, left: 50 }, widthNet = 800 - marginNet.left - marginNet.right, heightNet = 400 - marginNet.top - marginNet.bottom;
+        const marginNet = { top: 10, right: 20, bottom: 10, left: 50 }, widthNet = 800 - marginNet.left - marginNet.right, heightNet = 400 - marginNet.top - marginNet.bottom;
         const svgNet = d3.select("#chart-net-performance").append("svg").attr("viewBox", `0 0 ${widthNet + marginNet.left + marginNet.right} ${heightNet + marginNet.top + marginNet.bottom}`).attr("width", "100%").attr("height", "100%").attr("preserveAspectRatio", "xMidYMid meet").append("g").attr("transform", `translate(${marginNet.left},${marginNet.top})`);
         const xNet = d3.scaleBand().domain(["Total Revenue", "Total Expenses"]).range([0, widthNet]).padding(0.4);
         const maxVal = Math.max(totalRev, totalExp, totalRevBudget, totalExpBudget) * 1.1 || 1;
@@ -235,7 +235,7 @@ function renderEvent(eventType) {
     d3.select("#chart-budget-actuals").html("");
     const combinedData = [...sortedRev.map(d => ({ ...d, type: 'Rev' })), ...sortedExp.map(d => ({ ...d, type: 'Exp' }))];
     if (combinedData.length > 0) {
-        const marginAcc = { top: 20, right: 30, bottom: 20, left: 120 }, widthAcc = 800 - marginAcc.left - marginAcc.right, heightAcc = Math.max((combinedData.length * 50), 350);
+        const marginAcc = { top: 10, right: 30, bottom: 10, left: 120 }, widthAcc = 800 - marginAcc.left - marginAcc.right, heightAcc = Math.max((combinedData.length * 50), 350);
         const svgAcc = d3.select("#chart-budget-actuals").append("svg").attr("viewBox", `0 0 ${widthAcc + marginAcc.left + marginAcc.right} ${heightAcc + marginAcc.top + marginAcc.bottom}`).attr("width", "100%").attr("height", "100%").attr("preserveAspectRatio", "xMidYMid meet").append("g").attr("transform", `translate(${marginAcc.left},${marginAcc.top})`);
         const yAcc = d3.scaleBand().domain(combinedData.map(d => d.name)).range([0, heightAcc]).padding(0.4);
         const maxAccVal = d3.max(combinedData, d => Math.max(d.total, d.budget)) * 1.1 || 1;
@@ -344,7 +344,7 @@ function renderEvent(eventType) {
     function drawYoYChart(containerId, chartData) {
         d3.select(containerId).html("");
         if (chartData.length === 0) return;
-        const margin = { top: 40, right: 30, bottom: 100, left: 60 }, width = 800 - margin.left - margin.right, height = 350 - margin.top - margin.bottom;
+        const margin = { top: 20, right: 30, bottom: 40, left: 60 }, width = 800 - margin.left - margin.right, height = 350 - margin.top - margin.bottom;
         const svg = d3.select(containerId).append("svg").attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`).attr("width", "100%").attr("height", "100%").attr("preserveAspectRatio", "xMidYMid meet").append("g").attr("transform", `translate(${margin.left},${margin.top})`);
         const x0 = d3.scaleBand().domain(chartData.map(d => d.account)).range([0, width]).padding(0.2);
         const x1 = d3.scaleBand().domain(yoyYears).range([0, x0.bandwidth()]).padding(0.05);
