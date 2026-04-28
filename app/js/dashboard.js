@@ -1,5 +1,5 @@
 let globalData = null;
-let currentEventType = 'Luncheon'; // Tracks which event is currently open
+let currentEventType = 'Conference'; // Tracks which event is currently open
 const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
 // Load the data ONCE when the page opens
@@ -11,7 +11,7 @@ d3.json("data.json").then(data => {
     document.getElementById("year-select").value = defaultYear;
 
     const urlParams = new URLSearchParams(window.location.search);
-    currentEventType = urlParams.get('event') || 'Luncheon';
+    currentEventType = urlParams.get('event') || 'Conference';
 
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
     const activeNav = document.getElementById(`nav-${currentEventType.toLowerCase()}`);
@@ -364,7 +364,7 @@ function renderEvent(eventType) {
         // Gives each account 80px of breathing room, or defaults to 800px minimum
         const dynamicWidth = Math.max((chartData.length * 80), 800);
 
-        const margin = { top: 40, right: 30, bottom: 60, left: 60 };
+        const margin = { top: 40, right: 30, bottom: 110, left: 60 };
         const width = dynamicWidth - margin.left - margin.right;
         const height = 320 - margin.top - margin.bottom;
 
