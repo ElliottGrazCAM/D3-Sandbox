@@ -225,7 +225,9 @@ function drawSunburst(targetYear) {
 
     // 1. DATA TRANSFORM: Build the Hierarchy Tree
     const rootData = { name: "P&L", children: [] };
-    // [FIX] REMOVED DUPLICATE rootData DECLARATION HERE
+
+    // 1. DATA TRANSFORM: Build the Hierarchy Tree
+    const rootData = { name: "P&L", children: [] };
 
     function addToTree(accountPath, amount, isExpense, txnDate, desc) {
         if (!accountPath || amount <= 0) return;
@@ -333,72 +335,38 @@ function drawSunburst(targetYear) {
         .data(root.descendants().slice(1)) // Skip the invisible center root
         .join("path")
         .attr("fill", d => {
+            // 1. Find the master ancestor for this slice (Expenses or Income)
             let ancestor = d;
             while (ancestor.depth > 1) ancestor = ancestor.parent;
+
             const isExp = ancestor.data.name === "Expenses";
 
-            if (d.depth === 1) return isExp ? "#ef4444" : "#10b981";
+            // 2. Give the main inner ring a solid, distinct anchor color
+            if (d.depth === 1) {
+                return isExp ? "#ef4444" : "#10b981"; // Dark Red / Dark Green
+            }
 
+            // 3. For outer rings, calculate where this specific slice sits along the arc
+            // This gives us a percentage (0.0 to 1.0) of its position in the hemisphere
             let t = (d.x0 - ancestor.x0) / (ancestor.x1 - ancestor.x0);
+
+            // 4. Restrict 't' to a safe range (0.3 to 0.8) so we don't get pure white or pitch black slices
             let safeT = 0.3 + (t * 0.5);
+
+            // 5. Apply the correct D3 interpolator!
             return isExp ? d3.interpolateReds(safeT) : d3.interpolateGreens(safeT);
         })
         .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.8 : 0.6) : 0)
         .attr("pointer-events", d => arcVisible(d.current) ? "auto" : "none")
         .attr("d", d => arc(d.current));
 
-    // NEW: Smart HTML Tooltips and White Hover Borders
     path.filter(d => d.children)
-        .style("cursor", "pointer");
+        .style("cursor", "pointer")
+        .on("click", clicked);
 
-    path.on("mouseover", function (event, d) {
-        // Highlight the slice with a stark white border
-        d3.select(this).attr("stroke", "#f8fafc").attr("stroke-width", 2);
-        tooltip.transition().duration(200).style("opacity", 1);
+    path.append("title")
+        .text(d => `${d.ancestors().map(d => d.data.name).reverse().slice(1).join(" → ")}\n$${d.value.toLocaleString()}`);
 
-        const isLeaf = !d.children;
-        const percent = d.parent ? ((d.value / d.parent.value) * 100).toFixed(1) : 100;
-        const fullPathName = d.ancestors().map(d => d.data.name).reverse().slice(1).join(" → ") || d.data.name;
-
-        // Build the core tooltip header
-        let html = `<div style="border-bottom: 1px solid #334155; padding-bottom: 8px; margin-bottom: 8px;">
-            <span style="font-weight:bold; font-size: 13px; color: #94a3b8;">${fullPathName}</span><br>
-            <span style="font-size: 18px; font-weight: 700; color: #f8fafc;">$${d.value.toLocaleString()} Total</span>
-        </div>`;
-
-        // If it has a parent, show the percentage share
-        if (d.parent) {
-            html += `<div style="font-size: 13px; color: #cbd5e1; margin-bottom: 8px;">Share of ${d.parent.data.name}: <b style="color: #f8fafc;">${percent}%</b></div>`;
-        }
-
-        // If it is a leaf node, generate the transaction ledger!
-        if (isLeaf && d.data.txns) {
-            let sortedTxns = d.data.txns.sort((a, b) => b.amount - a.amount);
-            let topTxns = sortedTxns.slice(0, 5);
-
-            html += `<div style="font-size: 11px; font-weight: bold; color: #94a3b8; margin-bottom: 4px; border-top: 1px dashed #475569; padding-top: 8px;">TOP TRANSACTIONS</div>`;
-            html += topTxns.map(t => `
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size: 12px;">
-                    <span style="color:#cbd5e1; padding-right:16px;">${t.date} | ${t.desc.substring(0, 18)}${t.desc.length > 18 ? '...' : ''}</span>
-                    <span style="font-family:monospace; color: #f8fafc;">$${t.amount.toLocaleString()}</span>
-                </div>`).join("");
-
-            if (sortedTxns.length > 5) {
-                html += `<div style="color:#64748b; margin-top:6px; font-size:11px; text-align:center;">+ ${sortedTxns.length - 5} more transactions...</div>`;
-            }
-        }
-
-        tooltip.html(html)
-            .style("left", () => (event.pageX + 15 + tooltip.node().offsetWidth > window.innerWidth - 20) ? (event.pageX - tooltip.node().offsetWidth - 15) + "px" : (event.pageX + 15) + "px")
-            .style("top", (event.pageY - 28) + "px");
-    })
-        .on("mouseout", function () {
-            d3.select(this).attr("stroke", "none"); // Remove the highlight border
-            tooltip.transition().duration(500).style("opacity", 0);
-        })
-        .on("click", clicked); // Keep the zoom function intact
-
-    // NEW: Horizontal Centroid Text Labels
     const label = g.append("g")
         .attr("pointer-events", "none")
         .attr("text-anchor", "middle")
@@ -411,12 +379,9 @@ function drawSunburst(targetYear) {
         .attr("transform", d => labelTransform(d.current))
         .style("fill", "#f8fafc")
         .style("font-size", "11px")
-        .style("font-weight", "bold")
-        // Added a slight text shadow so it pops against the colors
-        .style("text-shadow", "0px 1px 2px rgba(0,0,0,0.8)")
         .text(d => {
             const name = d.data.name;
-            return name.length > 12 ? name.substring(0, 10) + "..." : name;
+            return name.length > 15 ? name.substring(0, 15) + "..." : name;
         });
 
     const parent = g.append("circle")
@@ -481,14 +446,13 @@ function drawSunburst(targetYear) {
     }
 
     function labelVisible(d) {
-        // Only show text if the slice is wide/tall enough to comfortably hold a horizontal word
-        return d.y1 <= 3 && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.10;
+        return d.y1 <= 3 && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.05;
     }
 
     function labelTransform(d) {
-        // Uses D3's built-in centroid math to find the absolute center of the arc, no rotation required!
-        const [x, y] = arc.centroid(d);
-        return `translate(${x}, ${y})`;
+        const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
+        const y = (d.y0 + d.y1) / 2 * radius;
+        return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
     }
 }
 
