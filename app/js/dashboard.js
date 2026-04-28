@@ -371,9 +371,9 @@ function renderEvent(eventType) {
 
         // Statistical Data Section
         if (isExp) {
-            innerHtml += `<div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;"><span style="color:#94a3b8;">Total Expenses:</span> <span style="color:#f8fafc; font-weight:bold;">${txnCount}</span></div><div style="display:flex; justify-content:space-between; font-size:13px;"><span style="color:#94a3b8;">Average Expense:</span> <span style="color:#f8fafc; font-weight:bold;">$${avgAmt.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>`;
+            innerHtml += `<div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;"><span style="color:#94a3b8;">Total Expenses:</span> <span style="color:#f8fafc; font-weight:bold;">${txnCount}</span></div><div style="display:flex; justify-content:space-between; font-size:13px;"><span style="color:#94a3b8;">Average Expense: </span> <span style="color:#f8fafc; font-weight:bold;">$${avgAmt.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>`;
         } else {
-            innerHtml += `<div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;"><span style="color:#94a3b8;">Total Contributions:</span> <span style="color:#f8fafc; font-weight:bold;">${txnCount}</span></div><div style="display:flex; justify-content:space-between; font-size:13px;"><span style="color:#94a3b8;">Average Amount:</span> <span style="color:#f8fafc; font-weight:bold;">$${avgAmt.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>`;
+            innerHtml += `<div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;"><span style="color:#94a3b8;">Total Contributions:</span> <span style="color:#f8fafc; font-weight:bold;">${txnCount}</span></div><div style="display:flex; justify-content:space-between; font-size:13px;"><span style="color:#94a3b8;">Average Amount: </span> <span style="color:#f8fafc; font-weight:bold;">$${avgAmt.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>`;
         }
 
         // Smart screen edge detection
