@@ -1,8 +1,8 @@
 let globalData = null;
 const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
-// Load the data ONCE when the page opens
-d3.json("data.json").then(data => {
+// Load the data ONCE when the page opens (with Cache-Buster!)
+d3.json(`data.json?v=${new Date().getTime()}`).then(data => {
     globalData = data;
 
     // Set default dropdown value to Prior Year automatically on load
@@ -33,7 +33,7 @@ function renderOverview() {
         <ul>
             <li><strong>Target Year:</strong> ${TARGET_YEAR}</li>
             <li><strong>Date Window:</strong> Strict calendar year (January 1, ${TARGET_YEAR} to December 31, ${TARGET_YEAR}).</li>
-            <li><strong>Event Totals:</strong> Aggregates any account name containing "Annual Luncheon", "Winter Gala", or "Golf Tournament".</li>
+            <li><strong>Event Totals:</strong> Aggregates any account name containing "Annual Luncheon", "Winter Gala", "Golf Tournament", "Annual Conference", or "Online Event".</li>
             <li><strong>Memberships:</strong> Aggregates accounts starting exactly with <code>"Membership Dues:"</code>.</li>
             <li><strong>Admin Overhead:</strong> Aggregates accounts starting exactly with <code>"Administrative Expenses"</code> or <code>"Software/Communications"</code>.</li>
         </ul>
@@ -45,10 +45,13 @@ function renderOverview() {
     let totalAnnualExp = 0;
     let totalMembersCount = 0;
 
+    // ADDED CONFERENCE AND ONLINE EVENTS HERE
     const events = {
         "Luncheon": { rev: 0, exp: 0 },
         "Winter Gala": { rev: 0, exp: 0 },
-        "Golf Tournament": { rev: 0, exp: 0 }
+        "Golf Tournament": { rev: 0, exp: 0 },
+        "Conference": { rev: 0, exp: 0 },
+        "Online Events": { rev: 0, exp: 0 }
     };
     const memberships = {};
     const admins = {};
@@ -73,12 +76,18 @@ function renderOverview() {
                     if (isExpense) totalAnnualExp += amt;
                     else totalAnnualRev += amt;
 
+                    // NEW EVENT LOGIC CAUGHT HERE
                     if (acctName.includes("Annual Luncheon")) {
                         isExpense ? events["Luncheon"].exp += amt : events["Luncheon"].rev += amt;
                     } else if (acctName.includes("Winter Gala")) {
                         isExpense ? events["Winter Gala"].exp += amt : events["Winter Gala"].rev += amt;
                     } else if (acctName.includes("Golf Tournament")) {
                         isExpense ? events["Golf Tournament"].exp += amt : events["Golf Tournament"].rev += amt;
+                    } else if (acctName.includes("Annual Conference")) {
+                        isExpense ? events["Conference"].exp += amt : events["Conference"].rev += amt;
+                    } else if (acctName.startsWith("Online Event")) {
+                        // Note: This safely captures both "Online Events" (Revenue) and "Online Event Expenses" (Expense)
+                        isExpense ? events["Online Events"].exp += amt : events["Online Events"].rev += amt;
                     }
 
                     if (acctName.startsWith("Membership Dues") && acctName.includes(":")) {
