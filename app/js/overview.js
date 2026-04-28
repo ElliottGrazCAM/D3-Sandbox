@@ -375,21 +375,11 @@ function drawSunburst(targetYear) {
             html += `<div style="font-size: 13px; color: #cbd5e1; margin-bottom: 8px;">Share of ${d.parent.data.name}: <b style="color: #f8fafc;">${percent}%</b></div>`;
         }
 
-        // If it is a leaf node, generate the transaction ledger!
+        // Clean out the old mini-ledger logic and replace it with this:
         if (isLeaf && d.data.txns) {
-            let sortedTxns = d.data.txns.sort((a, b) => b.amount - a.amount);
-            let topTxns = sortedTxns.slice(0, 5);
-
-            html += `<div style="font-size: 11px; font-weight: bold; color: #94a3b8; margin-bottom: 4px; border-top: 1px dashed #475569; padding-top: 8px;">TOP TRANSACTIONS</div>`;
-            html += topTxns.map(t => `
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size: 12px;">
-                    <span style="color:#cbd5e1; padding-right:16px;">${t.date} | ${t.desc.substring(0, 18)}${t.desc.length > 18 ? '...' : ''}</span>
-                    <span style="font-family:monospace; color: #f8fafc;">$${t.amount.toLocaleString()}</span>
-                </div>`).join("");
-
-            if (sortedTxns.length > 5) {
-                html += `<div style="color:#64748b; margin-top:6px; font-size:11px; text-align:center;">+ ${sortedTxns.length - 5} more transactions...</div>`;
-            }
+            html += `<div style="font-size: 11px; font-weight: bold; color: #3b82f6; margin-top: 8px; border-top: 1px dashed #475569; padding-top: 8px; text-align: center; letter-spacing: 0.5px;">
+                CLICK TO VIEW FULL LEDGER
+            </div>`;
         }
 
         tooltip.html(html)
@@ -442,12 +432,23 @@ function drawSunburst(targetYear) {
         .text(`$${root.value.toLocaleString()}`);
 
     function clicked(event, p) {
+        // 1. INTERCEPTOR: If it is a leaf node, open the modal instead of zooming!
+        if (!p.children) {
+            openSunburstModal(p);
+            return;
+        }
+
+        // 2. DYNAMIC TITLE: Update the breadcrumb header
+        const breadcrumbs = p.ancestors().map(d => d.data.name).reverse().join(" → ");
+        document.getElementById("sunburst-dynamic-title").innerText = `Overview: ${breadcrumbs}`;
+
         parent.datum(p.parent || root);
 
         centerText.text(p.depth === 0 ? "Click to Zoom In" : "Click to Zoom Out");
         centerValue.text(`$${p.value.toLocaleString()}`);
 
         root.each(d => d.target = {
+            // ... (keep your existing coordinate math here)
             x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
             x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
             y0: Math.max(0, d.y0 - p.depth),
@@ -493,4 +494,50 @@ function drawSunburst(targetYear) {
 window.toggleExplainer = function () {
     const el = document.getElementById("data-explainer");
     el.style.display = el.style.display === "none" || el.style.display === "" ? "block" : "none";
+};
+
+// ==========================================
+// SUNBURST MODAL CONTROLS
+// ==========================================
+window.openSunburstModal = function (node) {
+    const modal = document.getElementById("sunburst-modal");
+    const tbody = document.getElementById("sunburst-modal-tbody");
+    const title = document.getElementById("sunburst-modal-title");
+    const subtitle = document.getElementById("sunburst-modal-subtitle");
+
+    if (!modal || !tbody || !title) return;
+
+    // Determine if we should color the amounts red (Expense) or green (Income)
+    let ancestor = node;
+    while (ancestor.depth > 1) ancestor = ancestor.parent;
+    const isExp = ancestor.data.name === "Expenses";
+    const amountColor = isExp ? '#ef4444' : '#10b981';
+
+    title.innerText = node.data.name;
+    subtitle.innerHTML = `Full Ledger | Total: <b style="color: ${amountColor}">$${node.value.toLocaleString()}</b>`;
+
+    tbody.innerHTML = "";
+
+    if (node.data.txns && node.data.txns.length > 0) {
+        // Sort transactions chronologically (newest first)
+        let sortedTxns = node.data.txns.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        sortedTxns.forEach(t => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${t.date}</td>
+                <td><strong>${t.desc}</strong></td>
+                <td style="font-family: monospace; font-size:14px; color:${amountColor};">$${t.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    // Display the modal using flexbox to keep it perfectly centered
+    modal.style.display = "flex";
+};
+
+window.closeSunburstModal = function () {
+    const modal = document.getElementById("sunburst-modal");
+    if (modal) modal.style.display = "none";
 };
