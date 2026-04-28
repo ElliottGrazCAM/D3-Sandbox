@@ -27,7 +27,7 @@
             <a href="membership.html" class="nav-item active">
                 <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
                     </path>
                 </svg>
                 Membership
@@ -48,8 +48,7 @@
                         d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
                     </path>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
-                    </path>
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
                 Settings
             </a>
@@ -67,189 +66,55 @@
 
         <header class="header-flex">
             <div>
-                <h1 class="page-title" id="event-title-display">Annual Conference</h1>
-                <p class="page-subtitle">Dive into specific event performance.</p>
+                <h1 class="page-title">Membership Base</h1>
+                <p class="page-subtitle">Track member growth, revenue, and geographic distribution.</p>
             </div>
-            <select id="year-select" onchange="changeYear()" class="year-dropdown">
-                <option value="2025">2025</option>
-                <option value="2024">2024</option>
-                <option value="2023">2023</option>
-                <option value="2022">2022</option>
-                <option value="2021">2021</option>
-                <option value="2020">2020</option>
-                <option value="2019">2019</option>
-                <option value="2018">2018</option>
-                <option value="2017">2017</option>
-                <option value="2016">2016</option>
-            </select>
         </header>
-
-        <div class="tabs-container">
-            <button onclick="switchEvent('Conference', this)" class="tab active">Annual Conference</button>
-            <button onclick="switchEvent('Luncheon', this)" class="tab">Annual Luncheon</button>
-            <button onclick="switchEvent('Gala', this)" class="tab">Winter Gala</button>
-            <button onclick="switchEvent('Golf', this)" class="tab">Golf Tournament</button>
-            <button onclick="switchEvent('Online', this)" class="tab">Online Events</button>
-        </div>
 
         <div class="kpi-grid">
             <div class="card">
-                <div class="kpi-title">Total Registrants</div>
-                <div class="kpi-value" id="kpi-registrants">--</div>
+                <div class="kpi-title">Total Active Members</div>
+                <div class="kpi-value text-blue" id="mem-total-count">--</div>
             </div>
             <div class="card">
-                <div class="kpi-title">Total Sponsors</div>
-                <div class="kpi-value" id="kpi-sponsors">--</div>
+                <div class="kpi-title">Membership Revenue</div>
+                <div class="kpi-value text-emerald" id="mem-total-rev">--</div>
             </div>
             <div class="card">
-                <div class="kpi-title">Net Revenue</div>
-                <div class="kpi-value text-emerald" id="kpi-net">--</div>
+                <div class="kpi-title">Top State</div>
+                <div class="kpi-value" id="mem-top-state">--</div>
             </div>
         </div>
 
-        <div class="chart-grid">
-            <div class="card">
-                <h3 class="chart-title">Net Performance vs. Budget</h3>
-                <div id="chart-net-performance" class="chart-box">Loading...</div>
+        <div class="card full-width" style="margin-top: 20px;">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 class="chart-title" style="margin: 0;">Geographic Distribution</h3>
+                <span id="map-year-display" style="font-size: 24px; font-weight: bold; color: #3b82f6;">2025</span>
             </div>
-            <div class="card">
-                <h3 class="chart-title">Budget vs. Actuals</h3>
-                <div id="chart-budget-actuals" class="chart-box"
-                    style="max-height: 450px; overflow-y: auto; overflow-x: hidden; padding-right: 10px; padding-top: 30px; padding-left: 20px;">
-                    Loading...</div>
+
+            <div id="chart-mem-map"
+                style="width: 100%; height: 500px; position: relative; background: rgba(15, 23, 42, 0.3); border-radius: 8px; margin-top: 15px;">
             </div>
-        </div>
 
-        <div class="card">
-            <h3 class="chart-title">Revenue Composition</h3>
-            <p class="chart-subtitle">Click any category on the bar chart to filter the ledger.</p>
-            <div id="chart-rev-composition" class="chart-box" style="height: 200px;">Loading...</div>
-
-            <button onclick="toggleLedger('rev-ledger-container', this)" class="btn btn-outline"
-                style="margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 0.5rem;">
-                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
-                    </path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                    </path>
-                </svg>
-                <span>Show Transaction Ledger</span>
-            </button>
-
-            <div id="rev-ledger-container"
-                style="display: none; border-top: 1px solid var(--border); padding-top: 1rem;">
-                <div class="header-flex" style="margin-bottom: 1rem;">
-                    <h4>Revenue Ledger</h4>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <input type="text" id="rev-search" onkeyup="searchTable('rev-table', this.value)"
-                            placeholder="Search contributors..."
-                            style="padding: 0.5rem; border-radius: 0.375rem; border: 1px solid var(--border); background: var(--bg-card); color: white;">
-                        <button onclick="resetFilters('rev-table')" class="btn btn-outline">Reset</button>
-                    </div>
-                </div>
-                <div class="table-wrapper">
-                    <table class="data-table" id="rev-table">
-                        <thead>
-                            <tr>
-                                <th onclick="sortTable('rev-table', 0)">Date ⇕</th>
-                                <th onclick="sortTable('rev-table', 1)">Contributor ⇕</th>
-                                <th onclick="sortTable('rev-table', 2)">Account ⇕</th>
-                                <th onclick="sortTable('rev-table', 3)">Amount ⇕</th>
-                            </tr>
-                        </thead>
-                        <tbody id="rev-tbody"></tbody>
-                    </table>
+            <div style="margin-top: 20px; padding: 0 20px;">
+                <input type="range" id="map-year-slider" min="2016" max="2025" value="2025" step="1"
+                    style="width: 100%; cursor: pointer;">
+                <div
+                    style="display: flex; justify-content: space-between; color: #94a3b8; font-size: 12px; margin-top: 8px;">
+                    <span>2016</span>
+                    <span>2025</span>
                 </div>
             </div>
         </div>
 
-        <div class="card">
-            <h3 class="chart-title">Expense Composition</h3>
-            <p class="chart-subtitle">Click any category on the bar chart to filter the ledger.</p>
-            <div id="chart-exp-composition" class="chart-box" style="height: 200px;">Loading...</div>
-
-            <button onclick="toggleLedger('exp-ledger-container', this)" class="btn btn-outline"
-                style="margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 0.5rem;">
-                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
-                    </path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                    </path>
-                </svg>
-                <span>Show Transaction Ledger</span>
-            </button>
-
-            <div id="exp-ledger-container"
-                style="display: none; border-top: 1px solid var(--border); padding-top: 1rem;">
-                <div class="header-flex" style="margin-bottom: 1rem;">
-                    <h4>Expense Ledger</h4>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <input type="text" id="exp-search" onkeyup="searchTable('exp-table', this.value)"
-                            placeholder="Search vendors..."
-                            style="padding: 0.5rem; border-radius: 0.375rem; border: 1px solid var(--border); background: var(--bg-card); color: white;">
-                        <button onclick="resetFilters('exp-table')" class="btn btn-outline">Reset</button>
-                    </div>
-                </div>
-                <div class="table-wrapper">
-                    <table class="data-table" id="exp-table">
-                        <thead>
-                            <tr>
-                                <th onclick="sortTable('exp-table', 0)">Date ⇕</th>
-                                <th onclick="sortTable('exp-table', 1)">Vendor ⇕</th>
-                                <th onclick="sortTable('exp-table', 2)">Account ⇕</th>
-                                <th onclick="sortTable('exp-table', 3)">Amount ⇕</th>
-                            </tr>
-                        </thead>
-                        <tbody id="exp-tbody"></tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="card" style="margin-top: 20px; max-width: 600px;">
+            <h3 class="chart-title">Membership Tier Breakdown</h3>
+            <div id="chart-mem-breakdown" class="chart-box" style="height: 350px;">Loading...</div>
         </div>
 
-        <div class="card" style="margin-top: 20px;">
-            <div class="card-header">
-                <h2>Year-Over-Year Income Trends</h2>
-            </div>
-            <div id="chart-yoy-rev" class="chart-container"
-                style="width: 100%; overflow-x: auto; padding-bottom: 20px;"></div>
-        </div>
-
-        <div class="card" style="margin-top: 20px;">
-            <div class="card-header">
-                <h2>Year-Over-Year Expense Trends</h2>
-            </div>
-            <div id="chart-yoy-exp" class="chart-container"
-                style="width: 100%; overflow-x: auto; padding-bottom: 20px;"></div>
-        </div>
-
-
-        <div style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
-            <button onclick="toggleExplainer()" class="btn btn-outline"
-                style="font-size: 12px; color: #94a3b8; border-color: #334155; display: inline-flex; align-items: center; justify-content: center;">
-                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    style="width: 16px; height: 16px; margin-right: 6px;">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                How is this data calculated?
-            </button>
-        </div>
-
-        <div id="data-explainer" class="card"
-            style="display: none; margin-bottom: 40px; border: 1px dashed #475569; background: rgba(15, 23, 42, 0.5);">
-            <h4 style="color: #cbd5e1; margin-bottom: 10px; font-size: 14px;">Data Mapping Information</h4>
-            <div id="explainer-text" style="color: #94a3b8; font-size: 13px; line-height: 1.6;">
-            </div>
-        </div>
     </main>
 
-    <script src="js/auth.js"></script>
-    <script src="js/fetch_data.js"></script>
-    <script src="js/dashboard.js"></script>
+    <script src="js/membership.js"></script>
 </body>
 
 </html>
