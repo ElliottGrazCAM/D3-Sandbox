@@ -34,7 +34,6 @@ function renderOverview() {
             <li><strong>Target Year:</strong> ${TARGET_YEAR}</li>
             <li><strong>Date Window:</strong> Strict calendar year (January 1, ${TARGET_YEAR} to December 31, ${TARGET_YEAR}).</li>
             <li><strong>Event Totals:</strong> Aggregates any account name containing "Annual Conference", "Annual Luncheon", "Winter Gala", "Golf Tournament", "Annual Conference", or "Online Event".</li>
-            <li><strong>Memberships:</strong> Aggregates accounts starting exactly with <code>"Membership Dues:"</code>.</li>
             <li><strong>Admin Overhead:</strong> Aggregates accounts starting exactly with <code>"Administrative Expenses"</code> or <code>"Software/Communications"</code>.</li>
         </ul>
     `;
@@ -158,10 +157,10 @@ function renderOverview() {
     // ==========================================
     d3.select("#chart-ov-cashflow").html("");
 
-    // We make the width dynamically adapt to standard card sizes
-    const marginCf = { top: 10, right: 15, bottom: 25, left: 45 };
+    // We make the chart taller (350px base height) to give the bars vertical breathing room
+    const marginCf = { top: 20, right: 20, bottom: 30, left: 50 };
     const widthCf = 500 - marginCf.left - marginCf.right;
-    const heightCf = 250 - marginCf.top - marginCf.bottom;
+    const heightCf = 350 - marginCf.top - marginCf.bottom; // Increased from 250!
 
     const svgCf = d3.select("#chart-ov-cashflow").append("svg")
         .attr("viewBox", `0 0 ${widthCf + marginCf.left + marginCf.right} ${heightCf + marginCf.top + marginCf.bottom}`)
@@ -220,8 +219,11 @@ function renderOverview() {
     d3.select("#chart-ov-admin").html("");
     const adData = Object.keys(admins).map(k => ({ name: k, total: admins[k] })).sort((a, b) => b.total - a.total);
     if (adData.length > 0) {
-        const marginAd = { top: 5, right: 50, bottom: 5, left: 105 }, widthAd = 400 - marginAd.left - marginAd.right, heightAd = 250 - marginAd.top - marginAd.bottom;
-
+        // Standardized to 500x350 so it perfectly matches the height of the Cash Flow card next to it
+        const marginAd = { top: 20, right: 30, bottom: 20, left: 130 }; // Widened left margin for long text
+        const widthAd = 500 - marginAd.left - marginAd.right; // Increased from 400!
+        const heightAd = 350 - marginAd.top - marginAd.bottom; // Increased from 250!
+        
         const svgAd = d3.select("#chart-ov-admin").append("svg")
             .attr("viewBox", `0 0 ${widthAd + marginAd.left + marginAd.right} ${heightAd + marginAd.top + marginAd.bottom}`)
             .attr("width", "100%")
