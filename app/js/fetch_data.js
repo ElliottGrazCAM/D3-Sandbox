@@ -25,14 +25,15 @@ oauthClient.getToken().setToken({
   expires_in: 3600
 });
 
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 oauthClient.refresh()
   .then(async (authResponse) => {
     console.log("🎉 SUCCESS: Connection established!");
     fs.writeFileSync('new_token.txt', authResponse.token.refresh_token);
 
     // --- HELPER FUNCTION FOR PAGINATION ---
-    // Added a whereClause parameter that defaults to empty
-    async function fetchAll(entityName, whereClause = "") {
+    async function fetchAll(entityName, whereClause = "", orderByClause = "") {
       let allRecords = [];
       let startPosition = 1;
       const maxResults = 1000;
@@ -41,8 +42,8 @@ oauthClient.refresh()
       console.log(`Starting full harvest for ${entityName}...`);
 
       while (keepFetching) {
-        // Injects the whereClause safely
-        const query = `SELECT * FROM ${entityName} ${whereClause} STARTPOSITION ${startPosition} MAXRESULTS ${maxResults}`;
+        // Enforces strict sorting so pagination doesn't skip records
+        const query = `SELECT * FROM ${entityName} ${whereClause} ${orderByClause} STARTPOSITION ${startPosition} MAXRESULTS ${maxResults}`;
         const url = `https://sandbox-quickbooks.api.intuit.com/v3/company/${cleanRealmId}/query?query=${encodeURIComponent(query)}&minorversion=65`;
 
         console.log(`Fetching ${entityName} records ${startPosition} to ${startPosition + maxResults - 1}...`);
@@ -61,6 +62,8 @@ oauthClient.refresh()
             keepFetching = false;
           } else {
             startPosition += maxResults;
+            // Add a tiny sleep to prevent QBO from throttling our massive data pull
+            await sleep(500);
           }
         } else {
           keepFetching = false;
@@ -70,13 +73,15 @@ oauthClient.refresh()
     }
 
     // --- EXECUTE ALL THREE LOOPS ---
-    const dateFilter = "WHERE TxnDate >= '2023-01-01'";
+    // FIXED: Changed constraint to 2016 to capture our historical narrative
+    const dateFilter = "WHERE TxnDate >= '2016-01-01'";
+    const sortFilter = "ORDER BY TxnDate ASC";
 
-    // Transactions need the date filter
-    const allDeposits = await fetchAll('Deposit', dateFilter);
-    const allExpenses = await fetchAll('Purchase', dateFilter);
+    // Transactions need the date filter AND the order by clause to prevent skip bugs
+    const allDeposits = await fetchAll('Deposit', dateFilter, sortFilter);
+    const allExpenses = await fetchAll('Purchase', dateFilter, sortFilter);
 
-    // Budgets do NOT use TxnDate, so we omit the filter
+    // Budgets do NOT use TxnDate, so we omit the filters
     const allBudgets = await fetchAll('Budget');
 
     // Wrap the master arrays in a clean JSON structure
@@ -89,7 +94,7 @@ oauthClient.refresh()
       },
       Deposits: allDeposits,
       Expenses: allExpenses,
-      Budgets: allBudgets // Added the budget array here!
+      Budgets: allBudgets
     };
 
     fs.writeFileSync('data.json', JSON.stringify(finalData, null, 2));
@@ -99,4 +104,4 @@ oauthClient.refresh()
   .catch(e => {
     console.error("ERROR REFRESHING DATA:", e);
     process.exit(1);
-  }); 
+  });

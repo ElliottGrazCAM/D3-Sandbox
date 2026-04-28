@@ -1,7 +1,7 @@
 const OAuthClient = require('intuit-oauth');
 
 // --- PASTE YOUR KEYS HERE ---
-const REFRESH_TOKEN = 'RT1-186-H0-17811471834uqilya123a60z265j1d';
+const REFRESH_TOKEN = 'RT1-20-H0-1786068826v693ip5qs14kp1tfalp7';
 const CLIENT_ID = 'ABSLR3oreZAlb0pQsR8nvaMLeMF5EK3IQbYJCGZ2chkUuG0h1K';
 const CLIENT_SECRET = 'vfumnWSEhjrpECdSlXrV0PRK6DTsLuM23yexCT2Y';
 const REALM_ID = '9341456470897772';
