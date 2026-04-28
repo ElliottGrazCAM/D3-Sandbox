@@ -293,7 +293,7 @@ function drawSunburst(targetYear) {
     }
 
     // 2. D3 VISUALIZATION: The Zoomable Sunburst
-    const width = container.node().getBoundingClientRect().width || 800;
+    const width = container.node().getBoundingClientRect().width || 600;
     const radius = width / 6;
 
     const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, rootData.children[0]?.children?.length || 10 + 1));
