@@ -296,8 +296,6 @@ function drawSunburst(targetYear) {
     const width = container.node().getBoundingClientRect().width || 600;
     const radius = width / 6;
 
-    const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, rootData.children[0]?.children?.length || 10 + 1));
-
     const hierarchy = d3.hierarchy(rootData)
         .sum(d => d.value)
         .sort((a, b) => b.value - a.value);
@@ -330,10 +328,26 @@ function drawSunburst(targetYear) {
         .data(root.descendants().slice(1)) // Skip the invisible center root
         .join("path")
         .attr("fill", d => {
-            // Expenses are red-tinted, Income is green/blue-tinted
-            while (d.depth > 2) d = d.parent;
-            if (d.depth === 1) return d.data.name === "Expenses" ? "#7f1d1d" : "#064e3b";
-            return color(d.data.name);
+            // 1. Find the master ancestor for this slice (Expenses or Income)
+            let ancestor = d;
+            while (ancestor.depth > 1) ancestor = ancestor.parent;
+
+            const isExp = ancestor.data.name === "Expenses";
+
+            // 2. Give the main inner ring a solid, distinct anchor color
+            if (d.depth === 1) {
+                return isExp ? "#991b1b" : "#065f46"; // Dark Red / Dark Green
+            }
+
+            // 3. For outer rings, calculate where this specific slice sits along the arc
+            // This gives us a percentage (0.0 to 1.0) of its position in the hemisphere
+            let t = (d.x0 - ancestor.x0) / (ancestor.x1 - ancestor.x0);
+
+            // 4. Restrict 't' to a safe range (0.3 to 0.8) so we don't get pure white or pitch black slices
+            let safeT = 0.3 + (t * 0.5);
+
+            // 5. Apply the correct D3 interpolator!
+            return isExp ? d3.interpolateReds(safeT) : d3.interpolateGreens(safeT);
         })
         .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.8 : 0.6) : 0)
         .attr("pointer-events", d => arcVisible(d.current) ? "auto" : "none")
