@@ -33,7 +33,7 @@ function renderOverview() {
         <ul>
             <li><strong>Target Year:</strong> ${TARGET_YEAR}</li>
             <li><strong>Date Window:</strong> Strict calendar year (January 1, ${TARGET_YEAR} to December 31, ${TARGET_YEAR}).</li>
-            <li><strong>Event Totals:</strong> Aggregates any account name containing "Annual Luncheon", "Winter Gala", "Golf Tournament", "Annual Conference", or "Online Event".</li>
+            <li><strong>Event Totals:</strong> Aggregates any account name containing "Annual Conference", "Annual Luncheon", "Winter Gala", "Golf Tournament", "Annual Conference", or "Online Event".</li>
             <li><strong>Memberships:</strong> Aggregates accounts starting exactly with <code>"Membership Dues:"</code>.</li>
             <li><strong>Admin Overhead:</strong> Aggregates accounts starting exactly with <code>"Administrative Expenses"</code> or <code>"Software/Communications"</code>.</li>
         </ul>
@@ -491,11 +491,6 @@ function drawSunburst(targetYear) {
     }
 }
 
-window.toggleExplainer = function () {
-    const el = document.getElementById("data-explainer");
-    el.style.display = el.style.display === "none" || el.style.display === "" ? "block" : "none";
-};
-
 // ==========================================
 // SUNBURST MODAL CONTROLS
 // ==========================================
@@ -540,4 +535,9 @@ window.openSunburstModal = function (node) {
 window.closeSunburstModal = function () {
     const modal = document.getElementById("sunburst-modal");
     if (modal) modal.style.display = "none";
+};
+
+window.toggleExplainer = function () {
+    const el = document.getElementById("data-explainer");
+    el.style.display = el.style.display === "none" || el.style.display === "" ? "block" : "none";
 };
