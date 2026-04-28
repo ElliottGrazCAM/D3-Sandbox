@@ -346,7 +346,7 @@ function renderEvent(eventType) {
         if (chartData.length === 0) return;
 
         // FIX: Increased top margin to 40 (room for legend), bottom to 60 (room for rotated text)
-        const margin = { top: 40, right: 30, bottom: 60, left: 60 };
+        const margin = { top: 40, right: 30, bottom: 90, left: 60 };
         const width = 800 - margin.left - margin.right;
         const height = 320 - margin.top - margin.bottom;
 
