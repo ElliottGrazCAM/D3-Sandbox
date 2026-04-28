@@ -350,9 +350,9 @@ function drawSunburst(targetYear) {
         .attr("pointer-events", d => arcVisible(d.current) ? "auto" : "none")
         .attr("d", d => arc(d.current));
 
-    // NEW: Smart HTML Tooltips with Transaction Ledgers
-    path.filter(d => d.children)
-        .style("cursor", "pointer")
+
+    // FIX: Removed the filter so EVERY slice (including leaf nodes) is clickable!
+    path.style("cursor", "pointer")
         .on("click", clicked);
 
     path.on("mouseover", function (event, d) {
