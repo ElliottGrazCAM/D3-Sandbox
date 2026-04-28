@@ -192,9 +192,15 @@ function renderEvent(eventType) {
     const sortedRev = Object.values(revBuckets).sort((a, b) => b.total - a.total);
     const sortedExp = Object.values(expBuckets).sort((a, b) => b.total - a.total);
 
-    const numRegistrants = revBuckets["Registration"] ? revBuckets["Registration"].txns.length : 0;
-    const numSponsors = (revBuckets["Gold Sponsorship"] ? revBuckets["Gold Sponsorship"].txns.length : 0) +
-        (revBuckets["Silver Sponsorship"] ? revBuckets["Silver Sponsorship"].txns.length : 0);
+    // Dynamically count ALL transactions in any account containing "Registration"
+    const numRegistrants = Object.values(revBuckets)
+        .filter(bucket => bucket.name.toLowerCase().includes("registration"))
+        .reduce((sum, bucket) => sum + bucket.txns.length, 0);
+
+    // Dynamically count ALL transactions in any account containing "Sponsor"
+    const numSponsors = Object.values(revBuckets)
+        .filter(bucket => bucket.name.toLowerCase().includes("sponsor"))
+        .reduce((sum, bucket) => sum + bucket.txns.length, 0);
     const netRev = totalRev - totalExp;
 
     if (document.getElementById("kpi-registrants")) d3.select("#kpi-registrants").text(numRegistrants);
