@@ -276,30 +276,20 @@ function renderEvent(eventType) {
 
         const compHeight = 60, widthComp = 900;
 
-        // FIX: Restored the full-width stretch and locked the height to 60px so it stays sleek
+        // 1. REVERTED TO ORIGINAL: 100% dynamic scaling
         const svgComp = d3.select(containerId).append("svg")
             .attr("viewBox", `0 0 ${widthComp} ${compHeight}`)
             .attr("width", "100%")
-            .style("height", "60px")
-            .style("display", "block"); // Prevents invisible padding below the SVG
+            .attr("height", "100%");
 
         const xComp = d3.scaleLinear().domain([0, totalAmount || 1]).range([0, widthComp]);
         let currentX = 0;
 
-        // The flexbox legend sits perfectly inside the container, right below the chart
-        const legendContainer = d3.select(containerId).append("div")
-            .style("display", "flex")
-            .style("flex-wrap", "wrap")
-            .style("gap", "12px")
-            .style("margin-top", "12px")
-            .style("justify-content", "center")
-            .style("width", "100%"); // Ensures the legend uses the full width too
-
+        // Loop 1: Draw the dynamic SVG chart
         sortedData.forEach((bucket, i) => {
             const segWidth = xComp(bucket.total);
             const g = svgComp.append("g").attr("transform", `translate(${currentX}, 0)`);
 
-            // Draw the slice
             g.append("rect").attr("width", segWidth).attr("height", compHeight)
                 .attr("fill", colorScale(i))
                 .attr("stroke", "#0f172a").attr("stroke-width", 2).style("cursor", "pointer")
@@ -307,7 +297,6 @@ function renderEvent(eventType) {
                 .on("mouseout", hideTooltip)
                 .on("click", () => filterByAccount(isExp ? 'exp-table' : 'rev-table', bucket.name, isExp));
 
-            // Draw text ONLY if the slice is wide enough
             if (segWidth > 80) {
                 g.append("text").attr("x", segWidth / 2).attr("y", compHeight / 2).attr("dy", ".35em")
                     .style("text-anchor", "middle").style("fill", isExp ? "#540000" : "#020617")
@@ -316,8 +305,19 @@ function renderEvent(eventType) {
             }
 
             currentX += segWidth;
+        });
 
-            // Generate legend item for this slice
+        // 2. THE LEGEND: Safely appended under the SVG as a separate dynamic HTML block
+        const legendContainer = d3.select(containerId).append("div")
+            .style("display", "flex")
+            .style("flex-wrap", "wrap")
+            .style("gap", "12px")
+            .style("margin-top", "15px")
+            .style("justify-content", "center")
+            .style("width", "100%");
+
+        // Loop 2: Generate the legend items mapping to the colors we just used
+        sortedData.forEach((bucket, i) => {
             const legendItem = legendContainer.append("div")
                 .style("display", "flex")
                 .style("align-items", "center")
@@ -335,6 +335,13 @@ function renderEvent(eventType) {
             legendItem.append("span").text(bucket.name);
         });
     }
+
+    // Dynamic Mathematical Color Scaling to handle 4+ accounts perfectly
+    drawCompositionChart("#chart-rev-composition", sortedRev, totalRev,
+        (i) => d3.interpolateGreens(1 - (i / Math.max(sortedRev.length, 2)) * 0.6), false);
+
+    drawCompositionChart("#chart-exp-composition", sortedExp, totalExp,
+        (i) => d3.interpolateReds(1 - (i / Math.max(sortedExp.length, 2)) * 0.6), true);
 
     // Dynamic Mathematical Color Scaling (Smooth sweep from dark to light)
     drawCompositionChart("#chart-rev-composition", sortedRev, totalRev,
