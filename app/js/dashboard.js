@@ -273,48 +273,113 @@ function renderEvent(eventType) {
     function drawCompositionChart(containerId, sortedData, totalAmount, colorScale, isExp) {
         d3.select(containerId).html("");
         if (sortedData.length === 0) return;
+
         const compHeight = 60, widthComp = 900;
-        const svgComp = d3.select(containerId).append("svg").attr("viewBox", `0 0 ${widthComp} ${compHeight}`).attr("width", "100%").attr("height", "100%");
+        const svgComp = d3.select(containerId).append("svg")
+            .attr("viewBox", `0 0 ${widthComp} ${compHeight}`)
+            .attr("width", "100%")
+            .style("height", "auto"); // Responsive height
+
         const xComp = d3.scaleLinear().domain([0, totalAmount || 1]).range([0, widthComp]);
         let currentX = 0;
+
+        // Create the flexbox container for the dynamic legend
+        const legendContainer = d3.select(containerId).append("div")
+            .style("display", "flex")
+            .style("flex-wrap", "wrap")
+            .style("gap", "12px")
+            .style("margin-top", "12px")
+            .style("justify-content", "center");
 
         sortedData.forEach((bucket, i) => {
             const segWidth = xComp(bucket.total);
             const g = svgComp.append("g").attr("transform", `translate(${currentX}, 0)`);
-            g.append("rect").attr("width", segWidth).attr("height", compHeight).attr("fill", colorScale(i)).attr("stroke", "#0f172a").attr("stroke-width", 2).style("cursor", "pointer")
-                .on("mouseover", (event) => showTooltip(event, bucket, isExp, totalAmount)).on("mouseout", hideTooltip).on("click", () => filterByAccount(isExp ? 'exp-table' : 'rev-table', bucket.name, isExp));
-            if (segWidth > 80) { g.append("text").attr("x", segWidth / 2).attr("y", compHeight / 2).attr("dy", ".35em").style("text-anchor", "middle").style("fill", isExp ? "#540000" : "#020617").style("font-size", "12px").style("font-weight", "600").style("pointer-events", "none").text(bucket.name); }
+
+            // Draw the slice
+            g.append("rect").attr("width", segWidth).attr("height", compHeight)
+                .attr("fill", colorScale(i))
+                .attr("stroke", "#0f172a").attr("stroke-width", 2).style("cursor", "pointer")
+                .on("mouseover", (event) => showTooltip(event, bucket, isExp, totalAmount))
+                .on("mouseout", hideTooltip)
+                .on("click", () => filterByAccount(isExp ? 'exp-table' : 'rev-table', bucket.name, isExp));
+
+            // Draw text ONLY if the slice is wide enough
+            if (segWidth > 80) {
+                g.append("text").attr("x", segWidth / 2).attr("y", compHeight / 2).attr("dy", ".35em")
+                    .style("text-anchor", "middle").style("fill", isExp ? "#540000" : "#020617")
+                    .style("font-size", "12px").style("font-weight", "600").style("pointer-events", "none")
+                    .text(bucket.name);
+            }
+
             currentX += segWidth;
+
+            // Generate legend item for this slice
+            const legendItem = legendContainer.append("div")
+                .style("display", "flex")
+                .style("align-items", "center")
+                .style("font-size", "12px")
+                .style("color", "#94a3b8");
+
+            legendItem.append("div")
+                .style("width", "12px")
+                .style("height", "12px")
+                .style("background-color", colorScale(i))
+                .style("border", "1px solid #0f172a")
+                .style("margin-right", "6px")
+                .style("border-radius", "2px");
+
+            legendItem.append("span").text(bucket.name);
         });
     }
 
-    drawCompositionChart("#chart-rev-composition", sortedRev, totalRev, d3.scaleOrdinal().range(["#059669", "#10b981", "#34d399", "#6ee7b7"]), false);
-    drawCompositionChart("#chart-exp-composition", sortedExp, totalExp, d3.scaleOrdinal().range(["#b91c1c", "#ef4444", "#f87171", "#fca5a5", "#fecaca"]), true);
+    // Dynamic Mathematical Color Scaling (Smooth sweep from dark to light)
+    drawCompositionChart("#chart-rev-composition", sortedRev, totalRev,
+        (i) => d3.interpolateGreens(1 - (i / Math.max(sortedRev.length, 2)) * 0.6), false);
+
+    drawCompositionChart("#chart-exp-composition", sortedExp, totalExp,
+        (i) => d3.interpolateReds(1 - (i / Math.max(sortedExp.length, 2)) * 0.6), true);
 
     function showTooltip(event, bucket, isExp, grandTotal) {
-        d3.select(event.currentTarget).style("opacity", 0.7); tooltip.transition().duration(200).style("opacity", 1);
+        d3.select(event.currentTarget).style("opacity", 0.7);
+        tooltip.transition().duration(200).style("opacity", 1);
+
         const percent = grandTotal ? ((bucket.total / grandTotal) * 100).toFixed(1) : 0;
+        const txnCount = bucket.txns.length;
+        const avgAmt = txnCount ? (bucket.total / txnCount) : 0;
+
+        // Header Section
         let innerHtml = `<div style="border-bottom: 1px solid #334155; padding-bottom: 8px; margin-bottom: 8px;"><span style="color:${isExp ? '#ef4444' : '#10b981'}; font-weight:bold; font-size: 14px;">${bucket.name.toUpperCase()}</span><br><span style="color:#f8fafc; font-size: 18px; font-weight: 700;">$${bucket.total.toLocaleString()} Total</span></div><div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px; border-bottom: 1px dashed #475569; padding-bottom: 8px;"><span style="color:#94a3b8;">Share of Total:</span> <span style="color:#f8fafc; font-weight:bold;">${percent}%</span></div>`;
+
+        // Statistical Data Section
         if (isExp) {
-            bucket.txns.sort((a, b) => b.amount - a.amount);
-            const topTxns = bucket.txns.slice(0, 5);
-            innerHtml += topTxns.map(t => `<div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:#cbd5e1; padding-right:16px;">${t.date} | ${t.desc.substring(0, 25)}${t.desc.length > 25 ? '...' : ''}</span><span style="font-family:monospace;">$${t.amount.toLocaleString()}</span></div>`).join("");
-            if (bucket.txns.length - 5 > 0) innerHtml += `<div style="color:#64748b; margin-top:8px; font-size:11px; text-align:center;">+ ${bucket.txns.length - 5} more transactions...</div>`;
+            innerHtml += `<div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;"><span style="color:#94a3b8;">Total Expenses:</span> <span style="color:#f8fafc; font-weight:bold;">${txnCount}</span></div><div style="display:flex; justify-content:space-between; font-size:13px;"><span style="color:#94a3b8;">Average Expense:</span> <span style="color:#f8fafc; font-weight:bold;">$${avgAmt.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>`;
         } else {
-            innerHtml += `<div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;"><span style="color:#94a3b8;">Total Contributions:</span> <span style="color:#f8fafc; font-weight:bold;">${bucket.txns.length}</span></div><div style="display:flex; justify-content:space-between; font-size:13px;"><span style="color:#94a3b8;">Average Amount:</span> <span style="color:#f8fafc; font-weight:bold;">$${bucket.txns.length ? (bucket.total / bucket.txns.length).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0}</span></div>`;
+            innerHtml += `<div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;"><span style="color:#94a3b8;">Total Contributions:</span> <span style="color:#f8fafc; font-weight:bold;">${txnCount}</span></div><div style="display:flex; justify-content:space-between; font-size:13px;"><span style="color:#94a3b8;">Average Amount:</span> <span style="color:#f8fafc; font-weight:bold;">$${avgAmt.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>`;
         }
-        tooltip.html(innerHtml).style("left", () => (event.pageX + 15 + tooltip.node().offsetWidth > window.innerWidth - 20) ? (event.pageX - tooltip.node().offsetWidth - 15) + "px" : (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
+
+        // Smart screen edge detection
+        tooltip.html(innerHtml)
+            .style("left", () => (event.pageX + 15 + tooltip.node().offsetWidth > window.innerWidth - 20) ? (event.pageX - tooltip.node().offsetWidth - 15) + "px" : (event.pageX + 15) + "px")
+            .style("top", (event.pageY - 28) + "px");
     }
 
-    function hideTooltip(event) { d3.select(event.currentTarget).style("opacity", 1); tooltip.transition().duration(500).style("opacity", 0); }
+    function hideTooltip(event) {
+        d3.select(event.currentTarget).style("opacity", 1);
+        tooltip.transition().duration(500).style("opacity", 0);
+    }
 
     function populateTable(tbodyId, buckets, isExp) {
         const tbody = document.getElementById(tbodyId);
-        if (!tbody) return; tbody.innerHTML = ""; let allTxns = [];
+        if (!tbody) return;
+        tbody.innerHTML = "";
+        let allTxns = [];
+
         Object.values(buckets).forEach(b => b.txns.forEach(t => allTxns.push({ ...t, account: b.name })));
         allTxns.sort((a, b) => new Date(b.date) - new Date(a.date));
+
         allTxns.forEach(t => {
-            const tr = document.createElement("tr"); tr.setAttribute("data-account", t.account);
+            const tr = document.createElement("tr");
+            tr.setAttribute("data-account", t.account);
             tr.innerHTML = `<td>${t.date}</td><td><strong>${t.desc}</strong></td><td><span class="badge ${isExp ? 'expense' : 'sponsor'}">${t.account}</span></td><td style="font-family: monospace; font-size:14px; color:${isExp ? '#ef4444' : '#10b981'};">$${t.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>`;
             tbody.appendChild(tr);
         });
@@ -325,7 +390,7 @@ function renderEvent(eventType) {
 
     window.resetFilters('rev-table');
     window.resetFilters('exp-table');
-
+    
     // YOY CHARTS
     const yoyYears = [TARGET_YEAR - 2, TARGET_YEAR - 1, TARGET_YEAR];
     const colorScaleYoY = d3.scaleOrdinal().domain(yoyYears).range(["#475569", "#3b82f6", "#f59e0b"]);
