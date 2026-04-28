@@ -361,9 +361,11 @@ function renderEvent(eventType) {
         d3.select(containerId).html("");
         if (chartData.length === 0) return;
 
-        // FIX: Increased top margin to 40 (room for legend), bottom to 60 (room for rotated text)
-        const margin = { top: 40, right: 30, bottom: 110, left: 60 };
-        const width = 800 - margin.left - margin.right;
+        // Gives each account 80px of breathing room, or defaults to 800px minimum
+        const dynamicWidth = Math.max((chartData.length * 80), 800);
+
+        const margin = { top: 40, right: 30, bottom: 60, left: 60 };
+        const width = dynamicWidth - margin.left - margin.right;
         const height = 320 - margin.top - margin.bottom;
 
         const svg = d3.select(containerId).append("svg")

@@ -103,7 +103,8 @@
             </div>
             <div class="card">
                 <h3 class="chart-title">Budget vs. Actuals</h3>
-                <div id="chart-budget-actuals" class="chart-box">Loading...</div>
+                <div id="chart-budget-actuals" class="chart-box"
+                    style="max-height: 450px; overflow-y: auto; overflow-x: hidden; padding-right: 10px;">Loading...</div>
             </div>
         </div>
 
@@ -199,14 +200,14 @@
             <div class="card-header">
                 <h2>Year-Over-Year Contribution Growth</h2>
             </div>
-            <div id="chart-yoy-rev" class="chart-container" style="min-height: auto; padding-bottom: 20px;"></div>
+            <div id="chart-yoy-rev" class="chart-container" style="width: 100%; overflow-x: auto; padding-bottom: 20px;"></div>
         </div>
         
         <div class="card" style="margin-top: 20px;">
             <div class="card-header">
                 <h2>Year-Over-Year Expense Trends</h2>
             </div>
-            <div id="chart-yoy-exp" class="chart-container" style="min-height: auto; padding-bottom: 20px;"></div>
+            <div id="chart-yoy-exp" class="chart-container" style="width: 100%; overflow-x: auto; padding-bottom: 20px;"></div>
         </div>
     </main>
 
