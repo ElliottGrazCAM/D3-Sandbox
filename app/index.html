@@ -122,6 +122,25 @@
                 <div id="chart-ov-admin" class="chart-box">Loading...</div>
             </div>
         </div>
+
+        <div style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
+            <button onclick="toggleExplainer()" class="btn btn-outline"
+                style="font-size: 12px; color: #94a3b8; border-color: #334155; display: inline-flex; align-items: center; justify-content: center;">
+                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    style="width: 16px; height: 16px; margin-right: 6px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                How is this data calculated?
+            </button>
+        </div>
+        
+        <div id="data-explainer" class="card"
+            style="display: none; margin-bottom: 40px; border: 1px dashed #475569; background: rgba(15, 23, 42, 0.5);">
+            <h4 style="color: #cbd5e1; margin-bottom: 10px; font-size: 14px;">Data Mapping Information</h4>
+            <div id="explainer-text" style="color: #94a3b8; font-size: 13px; line-height: 1.6;">
+            </div>
+        </div>
     </main>
 
     <div id="sunburst-modal"
