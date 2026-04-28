@@ -235,21 +235,37 @@ function renderEvent(eventType) {
     d3.select("#chart-budget-actuals").html("");
     const combinedData = [...sortedRev.map(d => ({ ...d, type: 'Rev' })), ...sortedExp.map(d => ({ ...d, type: 'Exp' }))];
     if (combinedData.length > 0) {
-        const marginAcc = { top: 10, right: 30, bottom: 10, left: 120 }, widthAcc = 800 - marginAcc.left - marginAcc.right, heightAcc = Math.max((combinedData.length * 50), 350);
-        const svgAcc = d3.select("#chart-budget-actuals").append("svg").attr("viewBox", `0 0 ${widthAcc + marginAcc.left + marginAcc.right} ${heightAcc + marginAcc.top + marginAcc.bottom}`).attr("width", "100%").attr("height", "100%").attr("preserveAspectRatio", "xMidYMid meet").append("g").attr("transform", `translate(${marginAcc.left},${marginAcc.top})`);
+
+        // FIX 1: Shrank the base width from 800 to 500 (perfect for half-page cards)
+        // Also tightened the left margin slightly to give the bars more room to breathe
+        const marginAcc = { top: 10, right: 30, bottom: 10, left: 110 };
+        const widthAcc = 500 - marginAcc.left - marginAcc.right;
+        const heightAcc = Math.max((combinedData.length * 50), 350); // Kept your brilliant dynamic height logic!
+
+        // FIX 2: Swapped attr("height", "100%") to style("height", "auto")
+        const svgAcc = d3.select("#chart-budget-actuals").append("svg")
+            .attr("viewBox", `0 0 ${widthAcc + marginAcc.left + marginAcc.right} ${heightAcc + marginAcc.top + marginAcc.bottom}`)
+            .attr("width", "100%")
+            .style("height", "auto") // CRITICAL FIX: lets the box shrink-wrap the chart
+            .attr("preserveAspectRatio", "xMidYMid meet")
+            .append("g").attr("transform", `translate(${marginAcc.left},${marginAcc.top})`);
+
         const yAcc = d3.scaleBand().domain(combinedData.map(d => d.name)).range([0, heightAcc]).padding(0.4);
         const maxAccVal = d3.max(combinedData, d => Math.max(d.total, d.budget)) * 1.1 || 1;
         const xAcc = d3.scaleLinear().domain([0, maxAccVal]).range([0, widthAcc]);
 
         svgAcc.append("g").call(d3.axisLeft(yAcc).tickSize(0)).selectAll("text").style("font-size", "12px").style("fill", "#cbd5e1");
         svgAcc.select(".domain").remove();
+
         svgAcc.selectAll(".bg-acc").data(combinedData).enter().append("rect").attr("y", d => yAcc(d.name) - 4).attr("x", 0).attr("height", yAcc.bandwidth() + 8).attr("width", d => xAcc(d.budget)).attr("fill", d => d.type === 'Rev' ? "rgba(16, 185, 129, 0.15)" : "rgba(239, 68, 68, 0.15)").attr("rx", 2);
+
         svgAcc.selectAll(".fg-acc").data(combinedData).enter().append("rect").attr("y", d => yAcc(d.name)).attr("x", 0).attr("height", yAcc.bandwidth()).attr("width", d => xAcc(d.total))
             .attr("fill", d => { if (d.type === 'Rev') return d.total > d.budget ? "#10b981" : "#065f46"; else return d.total > d.budget ? "#991b1b" : "#ef4444"; }).attr("rx", 2)
             .on("mouseover", function (event, d) {
                 d3.select(this).style("opacity", 0.8); tooltip.transition().duration(200).style("opacity", 1);
                 tooltip.html(`<div style="font-weight:bold; font-size:14px; margin-bottom:4px;">${d.name}</div><div>Actual: <b>$${d.total.toLocaleString()}</b></div><div>Budget: <b style="color:#cbd5e1">$${d.budget.toLocaleString()}</b></div>`).style("left", () => (event.pageX + 15 + tooltip.node().offsetWidth > window.innerWidth - 20) ? (event.pageX - tooltip.node().offsetWidth - 15) + "px" : (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
             }).on("mouseout", function () { d3.select(this).style("opacity", 1); tooltip.transition().duration(500).style("opacity", 0); });
+
         svgAcc.selectAll(".target-line-acc").data(combinedData).enter().append("line").attr("y1", d => yAcc(d.name) - 6).attr("y2", d => yAcc(d.name) + yAcc.bandwidth() + 6).attr("x1", d => xAcc(d.budget)).attr("x2", d => xAcc(d.budget)).attr("stroke", "#f8fafc").attr("stroke-width", 2).attr("stroke-dasharray", "3,2");
     }
 
@@ -346,7 +362,7 @@ function renderEvent(eventType) {
         if (chartData.length === 0) return;
 
         // FIX: Increased top margin to 40 (room for legend), bottom to 60 (room for rotated text)
-        const margin = { top: 40, right: 30, bottom: 90, left: 60 };
+        const margin = { top: 40, right: 30, bottom: 110, left: 60 };
         const width = 800 - margin.left - margin.right;
         const height = 320 - margin.top - margin.bottom;
 
