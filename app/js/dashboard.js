@@ -344,7 +344,7 @@ function renderEvent(eventType) {
     function drawYoYChart(containerId, chartData) {
         d3.select(containerId).html("");
         if (chartData.length === 0) return;
-        const margin = { top: 20, right: 30, bottom: 40, left: 60 }, width = 800 - margin.left - margin.right, height = 300 - margin.top - margin.bottom;
+        const margin = { top: 20, right: 30, bottom: 20, left: 60 }, width = 800 - margin.left - margin.right, height = 200 - margin.top - margin.bottom;
         const svg = d3.select(containerId).append("svg").attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`).attr("width", "100%").attr("height", "100%").attr("preserveAspectRatio", "xMidYMid meet").append("g").attr("transform", `translate(${margin.left},${margin.top})`);
         const x0 = d3.scaleBand().domain(chartData.map(d => d.account)).range([0, width]).padding(0.2);
         const x1 = d3.scaleBand().domain(yoyYears).range([0, x0.bandwidth()]).padding(0.05);
