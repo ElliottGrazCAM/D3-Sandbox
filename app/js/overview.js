@@ -336,7 +336,7 @@ function drawSunburst(targetYear) {
 
             // 2. Give the main inner ring a solid, distinct anchor color
             if (d.depth === 1) {
-                return isExp ? "#991b1b" : "#065f46"; // Dark Red / Dark Green
+                return isExp ? "#ef4444" : "#10b981"; // Dark Red / Dark Green
             }
 
             // 3. For outer rings, calculate where this specific slice sits along the arc
