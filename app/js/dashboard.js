@@ -275,21 +275,25 @@ function renderEvent(eventType) {
         if (sortedData.length === 0) return;
 
         const compHeight = 60, widthComp = 900;
+
+        // FIX: Restored the full-width stretch and locked the height to 60px so it stays sleek
         const svgComp = d3.select(containerId).append("svg")
             .attr("viewBox", `0 0 ${widthComp} ${compHeight}`)
             .attr("width", "100%")
-            .style("height", "auto"); // Responsive height
+            .style("height", "60px")
+            .style("display", "block"); // Prevents invisible padding below the SVG
 
         const xComp = d3.scaleLinear().domain([0, totalAmount || 1]).range([0, widthComp]);
         let currentX = 0;
 
-        // Create the flexbox container for the dynamic legend
+        // The flexbox legend sits perfectly inside the container, right below the chart
         const legendContainer = d3.select(containerId).append("div")
             .style("display", "flex")
             .style("flex-wrap", "wrap")
             .style("gap", "12px")
             .style("margin-top", "12px")
-            .style("justify-content", "center");
+            .style("justify-content", "center")
+            .style("width", "100%"); // Ensures the legend uses the full width too
 
         sortedData.forEach((bucket, i) => {
             const segWidth = xComp(bucket.total);
@@ -390,7 +394,7 @@ function renderEvent(eventType) {
 
     window.resetFilters('rev-table');
     window.resetFilters('exp-table');
-    
+
     // YOY CHARTS
     const yoyYears = [TARGET_YEAR - 2, TARGET_YEAR - 1, TARGET_YEAR];
     const colorScaleYoY = d3.scaleOrdinal().domain(yoyYears).range(["#475569", "#3b82f6", "#f59e0b"]);
