@@ -32,8 +32,9 @@ jobs:
         run: |
           git config --global user.name 'Data Bot'
           git config --global user.email 'bot@github.com'
-          if [ -f data.json ]; then
-            git add data.json
+          # CRITICAL FIX: Look for and add the file inside the app folder
+          if [ -f app/data.json ]; then
+            git add app/data.json
             git diff --quiet && git diff --staged --quiet || (git commit -m "Update QBO data" && git push)
           fi
 
