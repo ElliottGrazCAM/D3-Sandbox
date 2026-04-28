@@ -125,7 +125,7 @@ function renderOverview() {
     // ==========================================
     d3.select("#chart-ov-events").html("");
     const eventData = Object.keys(events).map(k => ({ name: k, rev: events[k].rev, exp: events[k].exp }));
-    const marginEv = { top: 10, right: 20, bottom: 20, left: 60 }, widthEv = 900 - marginEv.left - marginEv.right, heightEv = 300 - marginEv.top - marginEv.bottom;
+    const marginEv = { top: 5, right: 20, bottom: 20, left: 60 }, widthEv = 900 - marginEv.left - marginEv.right, heightEv = 300 - marginEv.top - marginEv.bottom;
 
     const svgEv = d3.select("#chart-ov-events").append("svg")
         .attr("viewBox", `0 0 ${widthEv + marginEv.left + marginEv.right} ${heightEv + marginEv.top + marginEv.bottom}`)
@@ -158,7 +158,7 @@ function renderOverview() {
     d3.select("#chart-ov-members").html("");
     const memData = Object.values(memberships).sort((a, b) => b.revenue - a.revenue);
     if (memData.length > 0) {
-        const marginMem = { top: 10, right: 40, bottom: 10, left: 100 }, widthMem = 400 - marginMem.left - marginMem.right, heightMem = 250 - marginMem.top - marginMem.bottom;
+        const marginMem = { top: 5, right: 40, bottom: 5, left: 105 }, widthMem = 400 - marginMem.left - marginMem.right, heightMem = 250 - marginMem.top - marginMem.bottom;
 
         const svgMem = d3.select("#chart-ov-members").append("svg")
             .attr("viewBox", `0 0 ${widthMem + marginMem.left + marginMem.right} ${heightMem + marginMem.top + marginMem.bottom}`)
@@ -188,7 +188,7 @@ function renderOverview() {
     d3.select("#chart-ov-admin").html("");
     const adData = Object.keys(admins).map(k => ({ name: k, total: admins[k] })).sort((a, b) => b.total - a.total);
     if (adData.length > 0) {
-        const marginAd = { top: 10, right: 50, bottom: 10, left: 100 }, widthAd = 400 - marginAd.left - marginAd.right, heightAd = 250 - marginAd.top - marginAd.bottom;
+        const marginAd = { top: 5, right: 50, bottom: 5, left: 105 }, widthAd = 400 - marginAd.left - marginAd.right, heightAd = 250 - marginAd.top - marginAd.bottom;
 
         const svgAd = d3.select("#chart-ov-admin").append("svg")
             .attr("viewBox", `0 0 ${widthAd + marginAd.left + marginAd.right} ${heightAd + marginAd.top + marginAd.bottom}`)
