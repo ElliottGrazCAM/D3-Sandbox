@@ -211,7 +211,230 @@ function renderOverview() {
             }).on("mouseout", () => tooltip.transition().duration(500).style("opacity", 0));
         svgAd.selectAll(".val-label").data(adData).enter().append("text").attr("y", d => yAd(d.name) + (yAd.bandwidth() / 2) + 4).attr("x", d => xAd(d.total) + 5).text(d => `$${d.total.toLocaleString()}`).style("fill", "#94a3b8").style("font-size", "11px");
     }
+
+    // Call the new Sunburst Chart!
+    drawSunburst(TARGET_YEAR);
 }
+
+// ==========================================
+// CHART D: PROFIT & LOSS SUNBURST
+// ==========================================
+function drawSunburst(targetYear) {
+    const container = d3.select("#chart-sunburst");
+    container.html(""); // Clear old chart
+
+    // 1. DATA TRANSFORM: Build the Hierarchy Tree
+    const rootData = { name: "P&L", children: [] };
+
+    function addToTree(accountPath, amount, isExpense) {
+        if (!accountPath || amount <= 0) return;
+
+        let currentLevel = rootData.children;
+        const topLevelName = isExpense ? "Expenses" : "Income";
+
+        // Create Income/Expense root if missing
+        let topNode = currentLevel.find(d => d.name === topLevelName);
+        if (!topNode) {
+            topNode = { name: topLevelName, children: [] };
+            currentLevel.push(topNode);
+        }
+
+        currentLevel = topNode.children;
+        const parts = accountPath.split(':');
+
+        // Traverse and build branches
+        parts.forEach((part, index) => {
+            let existingNode = currentLevel.find(d => d.name === part);
+
+            if (index === parts.length - 1) { // It's a leaf node
+                if (existingNode) {
+                    existingNode.value = (existingNode.value || 0) + amount;
+                } else {
+                    currentLevel.push({ name: part, value: amount });
+                }
+            } else { // It's a parent branch
+                if (!existingNode) {
+                    existingNode = { name: part, children: [] };
+                    currentLevel.push(existingNode);
+                }
+                currentLevel = existingNode.children || [];
+            }
+        });
+    }
+
+    // Process all transactions for the selected year
+    function processForSunburst(records, isExpense) {
+        if (!records) return;
+        records.forEach(record => {
+            const year = new Date(record.TxnDate).getFullYear();
+            if (year === targetYear && record.Line) {
+                record.Line.forEach(line => {
+                    const amt = line.Amount;
+                    if (!amt) return;
+                    let acctName = "";
+                    if (isExpense && line.DetailType === "AccountBasedExpenseLineDetail" && line.AccountBasedExpenseLineDetail.AccountRef) {
+                        acctName = line.AccountBasedExpenseLineDetail.AccountRef.name;
+                    } else if (!isExpense && line.DetailType === "DepositLineDetail" && line.DepositLineDetail.AccountRef) {
+                        acctName = line.DepositLineDetail.AccountRef.name;
+                    }
+                    if (acctName) addToTree(acctName, amt, isExpense);
+                });
+            }
+        });
+    }
+
+    processForSunburst(globalData.Deposits, false);
+    processForSunburst(globalData.Expenses, true);
+
+    // If there's no data for the year, stop.
+    if (rootData.children.length === 0) {
+        container.html("<p style='color:#94a3b8; text-align:center; padding-top:50px;'>No data available for this year.</p>");
+        return;
+    }
+
+    // 2. D3 VISUALIZATION: The Zoomable Sunburst
+    const width = container.node().getBoundingClientRect().width || 800;
+    const radius = width / 6;
+
+    const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, rootData.children[0]?.children?.length || 10 + 1));
+
+    const hierarchy = d3.hierarchy(rootData)
+        .sum(d => d.value)
+        .sort((a, b) => b.value - a.value);
+
+    const root = d3.partition()
+        .size([2 * Math.PI, hierarchy.height + 1])
+        (hierarchy);
+
+    root.each(d => d.current = d);
+
+    const arc = d3.arc()
+        .startAngle(d => d.x0)
+        .endAngle(d => d.x1)
+        .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
+        .padRadius(radius * 1.5)
+        .innerRadius(d => d.y0 * radius)
+        .outerRadius(d => Math.max(d.y0 * radius, d.y1 * radius - 1));
+
+    const svg = container.append("svg")
+        .attr("viewBox", [0, 0, width, width])
+        .style("font", "10px sans-serif")
+        .style("max-width", "100%")
+        .style("height", "auto");
+
+    const g = svg.append("g")
+        .attr("transform", `translate(${width / 2},${width / 2})`);
+
+    const path = g.append("g")
+        .selectAll("path")
+        .data(root.descendants().slice(1)) // Skip the invisible center root
+        .join("path")
+        .attr("fill", d => {
+            // Expenses are red-tinted, Income is green/blue-tinted
+            while (d.depth > 2) d = d.parent;
+            if (d.depth === 1) return d.data.name === "Expenses" ? "#7f1d1d" : "#064e3b";
+            return color(d.data.name);
+        })
+        .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.8 : 0.6) : 0)
+        .attr("pointer-events", d => arcVisible(d.current) ? "auto" : "none")
+        .attr("d", d => arc(d.current));
+
+    path.filter(d => d.children)
+        .style("cursor", "pointer")
+        .on("click", clicked);
+
+    path.append("title")
+        .text(d => `${d.ancestors().map(d => d.data.name).reverse().slice(1).join(" → ")}\n$${d.value.toLocaleString()}`);
+
+    const label = g.append("g")
+        .attr("pointer-events", "none")
+        .attr("text-anchor", "middle")
+        .style("user-select", "none")
+        .selectAll("text")
+        .data(root.descendants().slice(1))
+        .join("text")
+        .attr("dy", "0.35em")
+        .attr("fill-opacity", d => +labelVisible(d.current))
+        .attr("transform", d => labelTransform(d.current))
+        .style("fill", "#f8fafc")
+        .style("font-size", "11px")
+        .text(d => {
+            const name = d.data.name;
+            return name.length > 15 ? name.substring(0, 15) + "..." : name;
+        });
+
+    const parent = g.append("circle")
+        .datum(root)
+        .attr("r", radius)
+        .attr("fill", "none")
+        .attr("pointer-events", "all")
+        .on("click", clicked);
+
+    // Add center text to explain navigation
+    const centerText = g.append("text")
+        .attr("text-anchor", "middle")
+        .attr("dy", "0em")
+        .style("fill", "#94a3b8")
+        .style("font-size", "14px")
+        .text("Click to Zoom In");
+
+    const centerValue = g.append("text")
+        .attr("text-anchor", "middle")
+        .attr("dy", "1.5em")
+        .style("fill", "#f8fafc")
+        .style("font-weight", "bold")
+        .style("font-size", "16px")
+        .text(`$${root.value.toLocaleString()}`);
+
+    function clicked(event, p) {
+        parent.datum(p.parent || root);
+
+        centerText.text(p.depth === 0 ? "Click to Zoom In" : "Click to Zoom Out");
+        centerValue.text(`$${p.value.toLocaleString()}`);
+
+        root.each(d => d.target = {
+            x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+            x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+            y0: Math.max(0, d.y0 - p.depth),
+            y1: Math.max(0, d.y1 - p.depth)
+        });
+
+        const t = g.transition().duration(750);
+
+        path.transition(t)
+            .tween("data", d => {
+                const i = d3.interpolate(d.current, d.target);
+                return t => d.current = i(t);
+            })
+            .filter(function (d) {
+                return +this.getAttribute("fill-opacity") || arcVisible(d.target);
+            })
+            .attr("fill-opacity", d => arcVisible(d.target) ? (d.children ? 0.8 : 0.6) : 0)
+            .attr("pointer-events", d => arcVisible(d.target) ? "auto" : "none")
+            .attrTween("d", d => () => arc(d.current));
+
+        label.filter(function (d) {
+            return +this.getAttribute("fill-opacity") || labelVisible(d.target);
+        }).transition(t)
+            .attr("fill-opacity", d => +labelVisible(d.target))
+            .attrTween("transform", d => () => labelTransform(d.current));
+    }
+
+    function arcVisible(d) {
+        return d.y1 <= 3 && d.y0 >= 1 && d.x1 > d.x0;
+    }
+
+    function labelVisible(d) {
+        return d.y1 <= 3 && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.05;
+    }
+
+    function labelTransform(d) {
+        const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
+        const y = (d.y0 + d.y1) / 2 * radius;
+        return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
+    }
+}
+
 window.toggleExplainer = function () {
     const el = document.getElementById("data-explainer");
     el.style.display = el.style.display === "none" || el.style.display === "" ? "block" : "none";
