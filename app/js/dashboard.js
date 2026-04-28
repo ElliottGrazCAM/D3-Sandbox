@@ -344,13 +344,19 @@ function renderEvent(eventType) {
     function drawYoYChart(containerId, chartData) {
         d3.select(containerId).html("");
         if (chartData.length === 0) return;
-        const margin = { top: 20, right: 30, bottom: 20, left: 60 }, width = 800 - margin.left - margin.right, height = 200 - margin.top - margin.bottom;
+
+        // FIX: Increased top margin to 40 (room for legend), bottom to 60 (room for rotated text)
+        const margin = { top: 40, right: 30, bottom: 60, left: 60 };
+        const width = 800 - margin.left - margin.right;
+        const height = 320 - margin.top - margin.bottom;
+
         const svg = d3.select(containerId).append("svg")
             .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
             .attr("width", "100%")
-            .style("height", "auto") // THIS IS THE CRITICAL FIX
+            .style("height", "auto") // Keep this! It lets the box shrink-wrap the chart.
             .attr("preserveAspectRatio", "xMidYMid meet")
             .append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
         const x0 = d3.scaleBand().domain(chartData.map(d => d.account)).range([0, width]).padding(0.2);
         const x1 = d3.scaleBand().domain(yoyYears).range([0, x0.bandwidth()]).padding(0.05);
         const maxVal = d3.max(chartData, d => d3.max(yoyYears, y => d[y])) * 1.1 || 1;
@@ -377,7 +383,7 @@ function renderEvent(eventType) {
                 tooltip.html(`<div style="font-weight:bold; font-size:14px; margin-bottom:4px; color:${colorScaleYoY(d.year)}">${d.fullData.account} (${d.year})</div><div style="font-size: 16px;">Total: <b>$${d.value.toLocaleString()}</b></div>${percentHtml}`).style("left", () => (event.pageX + 15 + tooltip.node().offsetWidth > window.innerWidth - 20) ? (event.pageX - tooltip.node().offsetWidth - 15) + "px" : (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
             }).on("mouseout", function () { d3.select(this).style("opacity", 1); tooltip.transition().duration(500).style("opacity", 0); });
 
-        const legend = svg.append("g").attr("transform", `translate(${width - 250}, -25)`);
+        const legend = svg.append("g").attr("transform", `translate(${width - 250}, -20)`);
         yoyYears.forEach((year, i) => {
             const legendRow = legend.append("g").attr("transform", `translate(${i * 80}, 0)`);
             legendRow.append("rect").attr("width", 12).attr("height", 12).attr("fill", colorScaleYoY(year)).attr("rx", 2);
