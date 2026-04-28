@@ -158,9 +158,9 @@ function renderOverview() {
     d3.select("#chart-ov-cashflow").html("");
 
     // We make the chart taller (350px base height) to give the bars vertical breathing room
-    const marginCf = { top: 20, right: 20, bottom: 30, left: 50 };
+    const marginCf = { top: 20, right: 20, bottom: 30, left:20 };
     const widthCf = 500 - marginCf.left - marginCf.right;
-    const heightCf = 350 - marginCf.top - marginCf.bottom; // Increased from 250!
+    const heightCf = 450 - marginCf.top - marginCf.bottom; // Increased from 250!
 
     const svgCf = d3.select("#chart-ov-cashflow").append("svg")
         .attr("viewBox", `0 0 ${widthCf + marginCf.left + marginCf.right} ${heightCf + marginCf.top + marginCf.bottom}`)
@@ -222,8 +222,8 @@ function renderOverview() {
         // Standardized to 500x350 so it perfectly matches the height of the Cash Flow card next to it
         const marginAd = { top: 20, right: 30, bottom: 20, left: 130 }; // Widened left margin for long text
         const widthAd = 500 - marginAd.left - marginAd.right; // Increased from 400!
-        const heightAd = 350 - marginAd.top - marginAd.bottom; // Increased from 250!
-        
+        const heightAd = 450 - marginAd.top - marginAd.bottom; // Increased from 250!
+
         const svgAd = d3.select("#chart-ov-admin").append("svg")
             .attr("viewBox", `0 0 ${widthAd + marginAd.left + marginAd.right} ${heightAd + marginAd.top + marginAd.bottom}`)
             .attr("width", "100%")
