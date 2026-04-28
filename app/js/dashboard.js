@@ -318,7 +318,7 @@ function renderEvent(eventType) {
             if (segWidth > 80) {
                 g.append("text").attr("x", segWidth / 2).attr("y", compHeight / 2).attr("dy", ".35em")
                     .style("text-anchor", "middle")
-                    .style("fill", "#000000") // Forces absolute black text
+                    .style("fill", "#ffffff") //White text
                     .style("font-size", "12px")
                     .style("font-weight", "700")
                     .style("pointer-events", "none")
