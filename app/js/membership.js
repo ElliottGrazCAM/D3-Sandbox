@@ -1,84 +1,8 @@
 let globalData = null;
 let usStatesData = null;
-let geoData = [];
-let currentYear = parseInt(document.getElementById("map-year-slider").value);
+let currentYear = parseInt(document.getElementById("map-year-slider").value) || 2025;
 
 const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("pointer-events", "none");
-
-// ==========================================
-// 1. INITIALIZE EVERYTHING
-// ==========================================
-// We use Promise.all to fetch the map shapes AND your financial/member data at the exact same time
-Promise.all([
-    d3.json("us-states.json"),
-    d3.json(`data.json?v=${new Date().getTime()}`)
-]).then(([states, data]) => {
-    usStatesData = states;
-    globalData = data;
-
-    // DATA TRAP CHECK: How is your geo data structured?
-    // If you nested it in your main export, we look for MemberLocations.
-    // If data.json is literally JUST the geo array, we use the root data.
-    if (data.MemberLocations) {
-        geoData = data.MemberLocations;
-    } else if (Array.isArray(data) && data[0] && data[0].lat) {
-        geoData = data;
-    } else {
-        console.warn("Could not find geographic data array. Bubbles will not render.");
-        geoData = [];
-    }
-
-    // Set up the Slider Listener
-    const slider = document.getElementById("map-year-slider");
-    slider.addEventListener("input", function (e) {
-        currentYear = parseInt(e.target.value);
-        document.getElementById("map-year-display").innerText = currentYear;
-
-        // ONLY update the dynamic parts, don't redraw the whole base map!
-        renderMapBubbles();
-        renderBreakdownChart();
-    });
-
-    // Draw the static map shapes ONCE
-    drawBaseMap();
-
-    // Draw the initial data for the default year
-    renderMapBubbles();
-    renderBreakdownChart();
-
-}).catch(error => console.error("CRITICAL ERROR: Failed to load JSON files.", error));
-
-
-// ==========================================
-// 2. THE GEOGRAPHIC MAP ENGINE
-// ==========================================
-const mapContainer = d3.select("#chart-mem-map");
-const mapWidth = mapContainer.node().getBoundingClientRect().width || 900;
-const mapHeight = 500;
-
-const svgMap = mapContainer.append("svg")
-    .attr("viewBox", `0 0 ${mapWidth} ${mapHeight}`)
-    .attr("width", "100%")
-    .attr("height", "100%")
-    .style("display", "block");
-
-// The Albers USA projection automatically curves the map perfectly and moves AK/HI to the bottom left
-const projection = d3.geoAlbersUsa()
-    .translate([mapWidth / 2, mapHeight / 2])
-    .scale(mapWidth * 1.2);
-
-const pathGenerator = d3.geoPath().projection(projection);
-
-function drawBaseMap() {
-    svgMap.append("g")
-        .selectAll("path")
-        .data(usStatesData.features)
-        .enter().append("path")
-        .attr("d", pathGenerator)
-        .attr("fill", "#1e293b") // Dark slate background for states
-        .attr("stroke", "#0f172a") // Deep border outlines
-        .attr("stroke-width", 1);
-}
 
 // Dictionary to translate your PrivateNote abbreviations into the full names D3 understands
 const stateDictionary = {
@@ -94,8 +18,72 @@ const stateDictionary = {
     "VA": "Virginia", "WA": "Washington", "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming"
 };
 
+// ==========================================
+// 1. SETUP SVG AND LAYERS (Z-INDEX FIX)
+// ==========================================
+const mapContainer = d3.select("#chart-mem-map");
+mapContainer.html("");
+
+const mapWidth = mapContainer.node().getBoundingClientRect().width || 900;
+const mapHeight = 500;
+
+const svgMap = mapContainer.append("svg")
+    .attr("viewBox", `0 0 ${mapWidth} ${mapHeight}`)
+    .attr("width", "100%")
+    .attr("height", "100%")
+    .style("display", "block");
+
+// SCALE FIX: Scaled down by 15% (0.85) to fit container safely without cutting off
+const projection = d3.geoAlbersUsa()
+    .translate([mapWidth / 2, mapHeight / 2])
+    .scale(mapWidth * 0.85);
+
+const pathGenerator = d3.geoPath().projection(projection);
+
+// LAYER FIX: We explicitly create two layers so the bubbles ALWAYS render on top of the states
+const stateLayer = svgMap.append("g").attr("id", "state-layer");
+const bubbleLayer = svgMap.append("g").attr("id", "bubble-layer");
+
+// ==========================================
+// 2. LOAD DATA AND INITIALIZE
+// ==========================================
+Promise.all([
+    d3.json("us-states.json"),
+    d3.json(`data.json?v=${new Date().getTime()}`)
+]).then(([states, data]) => {
+    usStatesData = states;
+    globalData = data;
+
+    // Draw the solid state background ONCE on the bottom layer
+    stateLayer.selectAll("path")
+        .data(usStatesData.features)
+        .enter().append("path")
+        .attr("d", pathGenerator)
+        .attr("fill", "#1e293b")
+        .attr("stroke", "#334155")
+        .attr("stroke-width", 1);
+
+    // Setup the Slider
+    const slider = document.getElementById("map-year-slider");
+    if (slider) {
+        slider.addEventListener("input", function (e) {
+            currentYear = parseInt(e.target.value);
+            document.getElementById("map-year-display").innerText = currentYear;
+            renderMapBubbles();
+            renderBreakdownChart();
+        });
+    }
+
+    renderMapBubbles();
+    renderBreakdownChart();
+
+}).catch(error => console.error("Error loading data:", error));
+
+
+// ==========================================
+// 3. RENDER THE BUBBLES
+// ==========================================
 function renderMapBubbles() {
-    // 1. DATA EXTRACTION: Scrape the PrivateNotes for the selected year
     const stateTotals = {};
     let topStateName = "--";
     let topStateCount = 0;
@@ -103,22 +91,14 @@ function renderMapBubbles() {
     if (globalData && globalData.Deposits) {
         globalData.Deposits.forEach(record => {
             const year = new Date(record.TxnDate).getFullYear();
-
-            // Only look at records for the slider's current year that actually have a PrivateNote
             if (year === currentYear && record.PrivateNote) {
-
-                // REGEX: Looks for "Geo: ", grabs the 2 uppercase letters, ignores the comma/zip
+                // Scrape the state abbreviation from the note
                 const match = record.PrivateNote.match(/Geo:\s*([A-Z]{2})/i);
-
                 if (match && match[1]) {
                     const abbrev = match[1].toUpperCase();
                     const fullName = stateDictionary[abbrev];
-
                     if (fullName) {
-                        if (!stateTotals[fullName]) stateTotals[fullName] = 0;
-                        stateTotals[fullName] += 1; // Add 1 member for this record
-
-                        // Keep track of the top state for the KPI card
+                        stateTotals[fullName] = (stateTotals[fullName] || 0) + 1;
                         if (stateTotals[fullName] > topStateCount) {
                             topStateCount = stateTotals[fullName];
                             topStateName = fullName;
@@ -129,18 +109,18 @@ function renderMapBubbles() {
         });
     }
 
-    // Update the KPI Card dynamically
-    document.getElementById("mem-top-state").innerText = topStateCount > 0 ? `${topStateName} (${topStateCount})` : "--";
+    // Update Top State KPI
+    const topStateEl = document.getElementById("mem-top-state");
+    if (topStateEl) topStateEl.innerText = topStateCount > 0 ? `${topStateName} (${topStateCount})` : "--";
 
-    // 2. MATH & SCALING: Size the bubbles based on the most populated state
+    // Set bubble scale limits
     const maxMembers = Math.max(...Object.values(stateTotals), 1);
-    const rScale = d3.scaleSqrt().domain([0, maxMembers]).range([0, 25]); // 25px max radius
+    const rScale = d3.scaleSqrt().domain([0, maxMembers]).range([0, 30]);
 
-    // 3. D3 RENDERING: We bind data directly to the physical state shapes we already drew
-    const bubbles = svgMap.selectAll(".mem-bubble")
+    // Draw bubbles on the dedicated TOP layer!
+    const bubbles = bubbleLayer.selectAll(".mem-bubble")
         .data(usStatesData.features, d => d.properties.name);
 
-    // Enter & Update bubbles
     bubbles.join(
         enter => enter.append("circle")
             .attr("class", "mem-bubble")
@@ -153,25 +133,23 @@ function renderMapBubbles() {
                 return (centroid && !isNaN(centroid[1])) ? centroid[1] : -100;
             })
             .attr("r", 0)
-            .attr("fill", "rgba(59, 130, 246, 0.6)") // Translucent Blue
+            .attr("fill", "rgba(59, 130, 246, 0.6)")
             .attr("stroke", "#60a5fa")
             .attr("stroke-width", 1)
             .style("cursor", "pointer")
-            // Add Tooltips!
             .on("mouseover", function (event, d) {
                 const count = stateTotals[d.properties.name] || 0;
-                if (count === 0) return; // Don't show tooltip if state is empty
+                if (count === 0) return;
 
                 d3.select(this).attr("stroke-width", 2).attr("fill", "rgba(59, 130, 246, 0.9)");
                 tooltip.transition().duration(200).style("opacity", 1);
-                tooltip.html(`<div style="font-weight:bold; font-size:14px;">${d.properties.name}</div><div style="color:#94a3b8; margin-top:4px;">Active Members: <b style="color:#f8fafc">${count}</b></div>`)
+                tooltip.html(`<div style="font-weight:bold; font-size:14px; color: #f8fafc;">${d.properties.name}</div><div style="color:#94a3b8; margin-top:4px;">Active Members: <b style="color:#3b82f6">${count}</b></div>`)
                     .style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
             })
             .on("mouseout", function () {
                 d3.select(this).attr("stroke-width", 1).attr("fill", "rgba(59, 130, 246, 0.6)");
                 tooltip.transition().duration(500).style("opacity", 0);
             })
-            // Animate them growing to the correct size
             .call(enter => enter.transition().duration(500)
                 .attr("r", d => rScale(stateTotals[d.properties.name] || 0))
             ),
@@ -183,18 +161,15 @@ function renderMapBubbles() {
     );
 }
 
-
 // ==========================================
-// 3. MEMBERSHIP TIER BREAKDOWN
+// 4. MEMBERSHIP TIER BREAKDOWN
 // ==========================================
 function renderBreakdownChart() {
     d3.select("#chart-mem-breakdown").html("");
-
     let totalRev = 0;
     let totalMembers = 0;
     const memberships = {};
 
-    // Sift through the raw financial data exactly like we did on the Overview page
     if (globalData && globalData.Deposits) {
         globalData.Deposits.forEach(record => {
             const year = new Date(record.TxnDate).getFullYear();
@@ -221,11 +196,12 @@ function renderBreakdownChart() {
         });
     }
 
-    // Update the top KPI row
-    document.getElementById("mem-total-count").innerText = totalMembers;
-    document.getElementById("mem-total-rev").innerText = `$${totalRev.toLocaleString()}`;
+    // Update Top KPIs
+    const countEl = document.getElementById("mem-total-count");
+    const revEl = document.getElementById("mem-total-rev");
+    if (countEl) countEl.innerText = totalMembers;
+    if (revEl) revEl.innerText = `$${totalRev.toLocaleString()}`;
 
-    // Sort and draw the horizontal bar chart
     const memData = Object.values(memberships).sort((a, b) => b.revenue - a.revenue);
     if (memData.length === 0) {
         d3.select("#chart-mem-breakdown").html("<p style='color:#94a3b8; text-align:center; padding-top:50px;'>No membership data found for this year.</p>");
