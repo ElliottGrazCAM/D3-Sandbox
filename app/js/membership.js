@@ -80,7 +80,7 @@ Promise.all([
 }).catch(error => console.error("Error loading data:", error));
 
 
-// ==========================================
+/// ==========================================
 // 3. RENDER THE BUBBLES
 // ==========================================
 function renderMapBubbles() {
@@ -88,11 +88,11 @@ function renderMapBubbles() {
     let topStateName = "--";
     let topStateCount = 0;
 
+    // 1. DATA EXTRACTION
     if (globalData && globalData.Deposits) {
         globalData.Deposits.forEach(record => {
             const year = new Date(record.TxnDate).getFullYear();
             if (year === currentYear && record.PrivateNote) {
-                // Scrape the state abbreviation from the note
                 const match = record.PrivateNote.match(/Geo:\s*([A-Z]{2})/i);
                 if (match && match[1]) {
                     const abbrev = match[1].toUpperCase();
@@ -117,9 +117,13 @@ function renderMapBubbles() {
     const maxMembers = Math.max(...Object.values(stateTotals), 1);
     const rScale = d3.scaleSqrt().domain([0, maxMembers]).range([0, 30]);
 
+    // NEW: The Universal State Name Finder
+    // This checks all common variations of how map files label their states
+    const getStateName = (d) => d.properties.name || d.properties.NAME || d.properties.STATE_NAME || d.properties.State || "Unknown";
+
     // Draw bubbles on the dedicated TOP layer!
     const bubbles = bubbleLayer.selectAll(".mem-bubble")
-        .data(usStatesData.features, d => d.properties.name);
+        .data(usStatesData.features, d => getStateName(d));
 
     bubbles.join(
         enter => enter.append("circle")
@@ -138,12 +142,13 @@ function renderMapBubbles() {
             .attr("stroke-width", 1)
             .style("cursor", "pointer")
             .on("mouseover", function (event, d) {
-                const count = stateTotals[d.properties.name] || 0;
+                const sName = getStateName(d);
+                const count = stateTotals[sName] || 0;
                 if (count === 0) return;
 
                 d3.select(this).attr("stroke-width", 2).attr("fill", "rgba(59, 130, 246, 0.9)");
                 tooltip.transition().duration(200).style("opacity", 1);
-                tooltip.html(`<div style="font-weight:bold; font-size:14px; color: #f8fafc;">${d.properties.name}</div><div style="color:#94a3b8; margin-top:4px;">Active Members: <b style="color:#3b82f6">${count}</b></div>`)
+                tooltip.html(`<div style="font-weight:bold; font-size:14px; color: #f8fafc;">${sName}</div><div style="color:#94a3b8; margin-top:4px;">Active Members: <b style="color:#3b82f6">${count}</b></div>`)
                     .style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
             })
             .on("mouseout", function () {
@@ -151,11 +156,11 @@ function renderMapBubbles() {
                 tooltip.transition().duration(500).style("opacity", 0);
             })
             .call(enter => enter.transition().duration(500)
-                .attr("r", d => rScale(stateTotals[d.properties.name] || 0))
+                .attr("r", d => rScale(stateTotals[getStateName(d)] || 0))
             ),
         update => update
             .call(update => update.transition().duration(500)
-                .attr("r", d => rScale(stateTotals[d.properties.name] || 0))
+                .attr("r", d => rScale(stateTotals[getStateName(d)] || 0))
             ),
         exit => exit.remove()
     );
