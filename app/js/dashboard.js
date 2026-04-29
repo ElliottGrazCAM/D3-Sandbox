@@ -238,7 +238,12 @@ function renderEvent(eventType) {
     }
 
     // CHART 1.5: ACCOUNT LEVEL ACTUALS 
-    d3.select("#chart-budget-actuals").html("");
+    const budgetContainer = d3.select("#chart-budget-actuals");
+    budgetContainer.html("");
+
+    // CRITICAL FIX: Override the flex-center trap so the chart anchors to the top!
+    budgetContainer.style("display", "block");
+
     const combinedData = [...sortedRev.map(d => ({ ...d, type: 'Rev' })), ...sortedExp.map(d => ({ ...d, type: 'Exp' }))];
     if (combinedData.length > 0) {
 
@@ -249,11 +254,12 @@ function renderEvent(eventType) {
         const heightAcc = Math.max((combinedData.length * 50), 350); // Kept your brilliant dynamic height logic!
 
         // FIX 2: Swapped attr("height", "100%") to style("height", "auto")
-        const svgAcc = d3.select("#chart-budget-actuals").append("svg")
+        const svgAcc = budgetContainer.append("svg")
             .attr("viewBox", `0 0 ${widthAcc + marginAcc.left + marginAcc.right} ${heightAcc + marginAcc.top + marginAcc.bottom}`)
             .attr("width", "100%")
             .style("height", "auto") // CRITICAL FIX: lets the box shrink-wrap the chart
-            .attr("preserveAspectRatio", "xMidYMid meet")
+            // Swapped to xMidYMin so the SVG math anchors to the top edge
+            .attr("preserveAspectRatio", "xMidYMin meet")
             .append("g").attr("transform", `translate(${marginAcc.left},${marginAcc.top})`);
 
         const yAcc = d3.scaleBand().domain(combinedData.map(d => d.name)).range([0, heightAcc]).padding(0.4);
