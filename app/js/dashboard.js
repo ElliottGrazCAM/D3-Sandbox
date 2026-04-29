@@ -244,7 +244,7 @@ function renderEvent(eventType) {
 
         // FIX 1: Shrank the base width from 800 to 500 (perfect for half-page cards)
         // Also tightened the left margin slightly to give the bars more room to breathe
-        const marginAcc = { top: 10, right: 30, bottom: 10, left: 110 };
+        const marginAcc = { top: 30, right: 30, bottom: 10, left: 110 };
         const widthAcc = 500 - marginAcc.left - marginAcc.right;
         const heightAcc = Math.max((combinedData.length * 50), 350); // Kept your brilliant dynamic height logic!
 
