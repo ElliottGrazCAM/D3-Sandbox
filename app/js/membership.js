@@ -6,8 +6,8 @@
 const mapContainer = d3.select("#chart-mem-map");
 mapContainer.html(""); // Clear out any old errors or HTML
 
-const mapWidth = mapContainer.node().getBoundingClientRect().width || 900;
-const mapHeight = 500;
+const mapWidth = mapContainer.node().getBoundingClientRect().width || 1000;
+const mapHeight = 600;
 
 const svgMap = mapContainer.append("svg")
     .attr("viewBox", `0 0 ${mapWidth} ${mapHeight}`)
